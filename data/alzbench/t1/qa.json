@@ -1,0 +1,17 @@
+[
+  {
+    "id": "t1_qa_001",
+    "question": "What CSF and imaging biomarker profile supports a diagnosis of Alzheimer's disease, and how does the ATN framework classify it?",
+    "answer": "Alzheimer's disease is supported by low CSF Aβ42 (or a low Aβ42/40 ratio) and amyloid-PET positivity (A+), elevated phosphorylated tau such as p-tau181 or p-tau217 (T+), and evidence of neurodegeneration—medial temporal/hippocampal atrophy on MRI, temporoparietal hypometabolism on FDG-PET, or elevated neurofilament light (N+). In the ATN framework this corresponds to an A+T+(N+) profile, which defines Alzheimer's disease along the biological continuum."
+  },
+  {
+    "id": "t1_qa_002",
+    "question": "Why is APOE genotyping relevant before starting an anti-amyloid monoclonal antibody such as lecanemab or donanemab?",
+    "answer": "APOE ε4 homozygotes have substantially higher risk of amyloid-related imaging abnormalities (ARIA-E edema and ARIA-H microhemorrhage/siderosis) than heterozygotes or non-carriers. Genotype therefore informs risk counseling, the intensity of MRI safety monitoring, and shared decision-making, and appropriate-use criteria advise particular caution in ε4 homozygotes."
+  },
+  {
+    "id": "t1_qa_003",
+    "question": "What is the first-line pharmacologic treatment for mild-to-moderate Alzheimer's dementia, and what are common adverse effects?",
+    "answer": "Cholinesterase inhibitors—donepezil, rivastigmine, and galantamine—are first-line for mild-to-moderate Alzheimer's dementia and provide modest symptomatic benefit. Common adverse effects are gastrointestinal (nausea, diarrhea, anorexia) and cholinergic cardiac effects such as bradycardia or syncope. Memantine, an NMDA antagonist, is added or substituted in moderate-to-severe disease."
+  }
+]

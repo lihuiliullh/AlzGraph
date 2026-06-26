@@ -1,0 +1,71 @@
+{
+  "n_entities": 67,
+  "n_entities_defined": 67,
+  "n_triplets": 107,
+  "n_cross_layer_triplets": 107,
+  "cross_layer_fraction": 1.0,
+  "n_relation_types": 10,
+  "n_layers": 5,
+  "entities_per_layer": {
+    "gene": 17,
+    "biomarker": 18,
+    "stage": 10,
+    "treatment": 10,
+    "outcome": 12
+  },
+  "relation_type_counts": {
+    "characterized_by_biomarker": 27,
+    "has_outcome": 22,
+    "treated_with": 14,
+    "risk_gene_for": 12,
+    "predicts_outcome": 11,
+    "modulates_biomarker": 10,
+    "associated_outcome": 4,
+    "pharmacogenomic_consideration": 3,
+    "causal_gene_for": 3,
+    "protective_gene_for": 1
+  },
+  "layer_pair_counts": {
+    "stage->biomarker": 27,
+    "treatment->outcome": 22,
+    "gene->stage": 16,
+    "stage->treatment": 14,
+    "biomarker->outcome": 11,
+    "gene->biomarker": 10,
+    "stage->outcome": 4,
+    "gene->treatment": 3
+  },
+  "median_evidence_tier": 2,
+  "tier_distribution": {
+    "3": 40,
+    "2": 55,
+    "1": 12
+  },
+  "n_sources": 10,
+  "sources": [
+    "AAN_AA_AUC",
+    "AAN_guideline",
+    "ADSP",
+    "ChEBI",
+    "GWAS_Catalog",
+    "HPO",
+    "MeSH",
+    "NIA_AA",
+    "OMIM",
+    "UMLS"
+  ],
+  "top_degree_entities": {
+    "Late-onset AD": 14,
+    "AD dementia": 13,
+    "Amyloid PET": 9,
+    "MCI due to AD": 8,
+    "Donanemab": 7,
+    "Lecanemab": 7,
+    "Mild AD dementia": 7,
+    "CSF Abeta42": 6,
+    "APOE": 6,
+    "Donepezil": 6,
+    "Severe AD dementia": 6,
+    "Symptomatic benefit": 5
+  }
+}

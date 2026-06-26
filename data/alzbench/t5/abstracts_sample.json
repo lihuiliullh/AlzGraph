@@ -1,0 +1,16 @@
+[
+  {
+    "pmc_id": "SAMPLE_0001",
+    "title": "Plasma p-tau217 trajectories and progression from preclinical to symptomatic Alzheimer's disease",
+    "abstract": "Plasma phosphorylated tau 217 (p-tau217) has emerged as a highly accurate, scalable biomarker of Alzheimer's disease pathology. However, the longitudinal dynamics of plasma p-tau217 across the preclinical-to-symptomatic transition, and its value for enriching prevention trials in cognitively unimpaired amyloid-positive individuals, remain incompletely characterized. This sample abstract is provided to exercise the AlzBench research-planning task.",
+    "expert_research_question": "",
+    "expert_plan": ""
+  },
+  {
+    "pmc_id": "SAMPLE_0002",
+    "title": "APOE genotype and ARIA risk stratification during anti-amyloid antibody therapy",
+    "abstract": "Amyloid-related imaging abnormalities (ARIA) are the principal safety concern of anti-amyloid monoclonal antibodies, and risk is strongly modified by APOE genotype, with the highest incidence in ε4 homozygotes. Optimal MRI monitoring schedules and dosing-titration strategies that minimize symptomatic ARIA while preserving efficacy are not established. This sample abstract is provided to exercise the AlzBench research-planning task.",
+    "expert_research_question": "",
+    "expert_plan": ""
+  }
+]

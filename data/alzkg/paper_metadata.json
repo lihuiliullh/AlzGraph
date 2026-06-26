@@ -1,0 +1,104 @@
+{
+  "description": "Source-provenance manifest for the curated seed AlzKG.",
+  "resources": {
+    "OMIM": "Gene-disease associations for causal/risk genes",
+    "ADSP": "Alzheimer's Disease Sequencing Project rare-variant genes",
+    "GWAS_Catalog": "Common-variant late-onset AD risk loci",
+    "NIA_AA": "NIA-AA ATN biomarker framework and staging",
+    "MeSH": "Imaging, cognitive instruments, and clinical terms",
+    "HPO": "Phenotype and adverse-event vocabulary",
+    "ChEBI": "Small-molecule drug identifiers",
+    "AAN_AA_AUC": "AAN / Alzheimer's Association appropriate-use criteria for anti-amyloid mAbs",
+    "AAN_guideline": "AAN dementia management guidelines",
+    "UMLS": "Cross-ontology linking for atypical AD syndromes"
+  },
+  "entities_by_source": {
+    "AAN_AA_AUC": [
+      "Aducanumab",
+      "Donanemab",
+      "Lecanemab"
+    ],
+    "AAN_guideline": [
+      "Cardiovascular risk management",
+      "Cognitive stimulation therapy",
+      "Physical exercise"
+    ],
+    "ADSP": [
+      "PLCG2",
+      "SORL1",
+      "TREM2"
+    ],
+    "ChEBI": [
+      "Donepezil",
+      "Galantamine",
+      "Memantine",
+      "Rivastigmine"
+    ],
+    "GWAS_Catalog": [
+      "ABCA7",
+      "BIN1",
+      "CD33",
+      "CLU",
+      "CR1",
+      "INPP5D",
+      "MS4A6A",
+      "PICALM",
+      "SPI1"
+    ],
+    "HPO": [
+      "Bradycardia",
+      "Cognitive decline",
+      "Functional decline",
+      "Nausea"
+    ],
+    "MeSH": [
+      "ADAS-Cog",
+      "ARIA-E",
+      "ARIA-H",
+      "Amyloid plaque reduction",
+      "CDR",
+      "FDG-PET hypometabolism",
+      "Hippocampal atrophy",
+      "Hospitalization",
+      "MMSE",
+      "MoCA",
+      "Mortality",
+      "Progression to AD dementia",
+      "Slowing of cognitive decline",
+      "Symptomatic benefit"
+    ],
+    "NIA_AA": [
+      "AD dementia",
+      "Amyloid PET",
+      "CSF Abeta42",
+      "CSF Abeta42/40 ratio",
+      "CSF p-tau181",
+      "CSF p-tau217",
+      "CSF total tau",
+      "MCI due to AD",
+      "Mild AD dementia",
+      "Moderate AD dementia",
+      "Plasma Abeta42/40",
+      "Plasma GFAP",
+      "Plasma NfL",
+      "Plasma p-tau181",
+      "Plasma p-tau217",
+      "Preclinical AD",
+      "Severe AD dementia",
+      "Tau PET"
+    ],
+    "OMIM": [
+      "APOE",
+      "APP",
+      "Early-onset AD",
+      "Late-onset AD",
+      "MAPT",
+      "PSEN1",
+      "PSEN2"
+    ],
+    "UMLS": [
+      "Logopenic variant PPA",
+      "Posterior cortical atrophy"
+    ]
+  }
+}

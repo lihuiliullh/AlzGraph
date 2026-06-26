@@ -1,0 +1,92 @@
+[
+  {
+    "id": "t3_c7275f772f3e",
+    "gene": "APOE e3/e4",
+    "clinical_scenario": "A patient with amyloid-positive (PET) mild AD dementia, no anticoagulation, <=4 cerebral microhemorrhages on MRI is APOE APOE e3/e4. Which treatment is most appropriate?",
+    "options": [
+      "A) Donanemab",
+      "B) Lecanemab",
+      "C) Rivastigmine",
+      "D) Donepezil"
+    ],
+    "correct_answer": "B",
+    "recommended": "Lecanemab",
+    "avoid": [],
+    "rationale": "Confirmed amyloid early symptomatic AD without ARIA contraindications is an appropriate anti-amyloid candidate with scheduled MRI monitoring."
+  },
+  {
+    "id": "t3_7183803cd40a",
+    "gene": "APOE e4/e4",
+    "clinical_scenario": "A patient with amyloid-positive mild AD dementia on chronic anticoagulation for atrial fibrillation is APOE APOE e4/e4. Which treatment is most appropriate?",
+    "options": [
+      "A) Donanemab",
+      "B) Memantine",
+      "C) Rivastigmine",
+      "D) Donepezil"
+    ],
+    "correct_answer": "D",
+    "recommended": "Donepezil",
+    "avoid": [
+      "Lecanemab",
+      "Donanemab",
+      "Aducanumab"
+    ],
+    "rationale": "Concurrent anticoagulation markedly raises ARIA-related hemorrhage risk; anti-amyloid mAbs are generally avoided and symptomatic therapy is appropriate."
+  },
+  {
+    "id": "t3_8baef0b1d121",
+    "gene": "APOE e3/e3",
+    "clinical_scenario": "A patient with amyloid-positive MCI due to AD with MRI showing >4 cerebral microhemorrhages is APOE APOE e3/e3. Which treatment is most appropriate?",
+    "options": [
+      "A) Rivastigmine",
+      "B) Galantamine",
+      "C) Donepezil",
+      "D) Aducanumab"
+    ],
+    "correct_answer": "C",
+    "recommended": "Donepezil",
+    "avoid": [
+      "Lecanemab",
+      "Donanemab",
+      "Aducanumab"
+    ],
+    "rationale": "More than four microhemorrhages or prior macrohemorrhage are AUC exclusions for anti-amyloid mAbs due to ARIA-H risk."
+  },
+  {
+    "id": "t3_7903e68d3db3",
+    "gene": "APOE e3/e3",
+    "clinical_scenario": "A patient with moderate-to-severe AD dementia (MMSE 12) is APOE APOE e3/e3. Which treatment is most appropriate?",
+    "options": [
+      "A) Memantine",
+      "B) Aducanumab",
+      "C) Donepezil",
+      "D) Donanemab"
+    ],
+    "correct_answer": "A",
+    "recommended": "Memantine",
+    "avoid": [
+      "Lecanemab",
+      "Donanemab"
+    ],
+    "rationale": "Anti-amyloid mAbs are indicated only for MCI / mild AD dementia; memantine is appropriate for moderate-to-severe disease."
+  },
+  {
+    "id": "t3_207c105db08a",
+    "gene": "APOE e3/e4",
+    "clinical_scenario": "A patient with mild AD dementia with symptomatic bradycardia and sick sinus syndrome is APOE APOE e3/e4. Which treatment is most appropriate?",
+    "options": [
+      "A) Memantine",
+      "B) Donepezil",
+      "C) Lecanemab",
+      "D) Donanemab"
+    ],
+    "correct_answer": "A",
+    "recommended": "Memantine",
+    "avoid": [
+      "Donepezil",
+      "Rivastigmine",
+      "Galantamine"
+    ],
+    "rationale": "Cholinesterase inhibitors increase vagal tone and can worsen bradycardia or cause syncope; memantine avoids cholinergic cardiac effects."
+  }
+]

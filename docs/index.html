@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="AlzGraph builds generalists for evidence-intensive Alzheimer's disease reasoning with an interactive knowledge graph (AlzKG) and a five-task benchmark (AlzBench)."
+    />
+    <title>AlzGraph | Building Generalists for Alzheimer's Reasoning</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top"><span class="brand-mark">A</span><span>AlzGraph</span></a>
+      <nav>
+        <a href="#kg">KG Explorer</a>
+        <a href="#benchmark">AlzBench</a>
+        <a href="#quickstart">Quick Start</a>
+        <a href="https://github.com/lihuiliullh/AlzGraph">GitHub</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Knowledge graph + benchmark for Alzheimer's AI</p>
+          <h1>AlzGraph</h1>
+          <p class="paper-title">
+            Building Generalists for Evidence-Intensive Alzheimer's Disease Reasoning in the Wild
+          </p>
+          <p class="lead">
+            AlzGraph couples <strong>AlzKG</strong>, a five-layer Alzheimer's knowledge graph over
+            genes, ATN biomarkers, disease stages, treatments, and outcomes, with
+            <strong>AlzBench</strong>, a five-task benchmark, and a <strong>Graph-RAG</strong>
+            retriever that serializes evidence-tiered, multi-hop reasoning paths for language models.
+          </p>
+          <div class="stat-row">
+            <div class="stat"><span class="stat-num" data-stat="entities">67</span><span class="stat-label">seed entities</span></div>
+            <div class="stat"><span class="stat-num" data-stat="triplets">107</span><span class="stat-label">triplets</span></div>
+            <div class="stat"><span class="stat-num">5</span><span class="stat-label">clinical layers</span></div>
+            <div class="stat"><span class="stat-num">5</span><span class="stat-label">benchmark tasks</span></div>
+            <div class="stat"><span class="stat-num">10</span><span class="stat-label">ontology sources</span></div>
+          </div>
+          <div class="cta">
+            <a class="btn primary" href="#kg">Explore AlzKG</a>
+            <a class="btn ghost" href="https://github.com/lihuiliullh/AlzGraph">View code</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="kg" class="panel">
+        <h2>Interactive AlzKG Explorer</h2>
+        <p class="section-lead">
+          The released seed graph, curated from public ontologies and AD clinical guidelines.
+          Search an entity, hover a node, or click an edge to inspect its evidence.
+        </p>
+        <div class="kg-toolbar">
+          <input id="kg-search" type="search" placeholder="Search e.g. APOE, lecanemab, amyloid PET, ARIA-E" />
+          <div id="kg-legend" class="legend"></div>
+        </div>
+        <div class="kg-stage">
+          <canvas id="kg-canvas"></canvas>
+          <aside id="kg-info" class="kg-info">
+            <h3>Inspect</h3>
+            <p class="muted">Hover or click a node / edge to see its layer, source, and evidence.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section id="benchmark" class="panel">
+        <h2>AlzBench: Five Reasoning Tasks</h2>
+        <div class="cards">
+          <article class="card"><h3>T1 · Clinical Decision Accuracy</h3><p>AD diagnosis, ATN biomarker interpretation, staging, and genetics as MCQ + open QA.</p><span class="tag">Top-1 · ROUGE-L</span></article>
+          <article class="card"><h3>T2 · Clinical Report Generation</h3><p>Cognitive + biomarker panel to a neurologist-style diagnostic impression. Private-data-aware.</p><span class="tag">ROUGE-L · alignment</span></article>
+          <article class="card"><h3>T3 · Biomarker Precision Medicine</h3><p>APOE genotype + biomarkers to anti-amyloid antibody selection with ARIA safety.</p><span class="tag">Top-1 · drug safety</span></article>
+          <article class="card"><h3>T4 · Treatment Recommendation</h3><p>Guideline-consistent dementia therapy under patient constraints.</p><span class="tag">Top-1 · KG coverage</span></article>
+          <article class="card"><h3>T5 · Deep Research Planning</h3><p>Literature-grounded AD research questions and feasible study plans.</p><span class="tag">ROUGE-L · LLM-judge</span></article>
+        </div>
+      </section>
+
+      <section id="quickstart" class="panel">
+        <h2>Quick Start</h2>
+        <pre class="code"><code>git clone https://github.com/lihuiliullh/AlzGraph.git
+cd AlzGraph
+pip install -r requirements.txt
+
+# Build the released seed AlzKG (real statistics)
+python scripts/build_seed_kg.py
+
+# Graph-RAG evaluation on Task 1
+export OPENROUTER_API_KEY="your_key"
+python tasks/t1_clinical_decision_accuracy.py \
+  --dataset data/alzbench/t1/mcq.json \
+  --triplets data/alzkg/triplets.json \
+  --model openai/gpt-4o --mode graph_rag</code></pre>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>AlzGraph · Apache-2.0 · Released seed graph curated from public ontologies and AD clinical guidelines.</p>
+    </footer>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

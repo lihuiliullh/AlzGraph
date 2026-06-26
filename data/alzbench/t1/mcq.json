@@ -1,0 +1,72 @@
+[
+  {
+    "id": "t1_mcq_001",
+    "question": "A 71-year-old with amyloid-positive PET and mild AD dementia is APOE ε4/ε4. Compared with ε4 non-carriers, which adverse event is most increased if lecanemab is started?",
+    "options": ["A) Nausea", "B) ARIA (amyloid-related imaging abnormalities)", "C) Bradycardia", "D) Hepatotoxicity"],
+    "correct_answer": "B",
+    "answer": "ARIA (amyloid-related imaging abnormalities)"
+  },
+  {
+    "id": "t1_mcq_002",
+    "question": "What is the recommended first-line pharmacologic therapy for mild-to-moderate Alzheimer's disease dementia?",
+    "options": ["A) Memantine", "B) A cholinesterase inhibitor (e.g., donepezil)", "C) Lecanemab", "D) Levodopa"],
+    "correct_answer": "B",
+    "answer": "A cholinesterase inhibitor (e.g., donepezil)"
+  },
+  {
+    "id": "t1_mcq_003",
+    "question": "Which cerebrospinal fluid (CSF) biomarker pattern is characteristic of Alzheimer's disease?",
+    "options": ["A) Low Aβ42 with elevated p-tau", "B) High Aβ42 with low p-tau", "C) Normal Aβ42 with normal tau", "D) High Aβ42 with high p-tau"],
+    "correct_answer": "A",
+    "answer": "Low Aβ42 with elevated p-tau"
+  },
+  {
+    "id": "t1_mcq_004",
+    "question": "Which fluid biomarker currently provides the strongest separation of Alzheimer's disease from non-AD cognitive disorders?",
+    "options": ["A) Plasma/CSF p-tau217", "B) Total tau", "C) MMSE score", "D) Plasma neurofilament light (NfL)"],
+    "correct_answer": "A",
+    "answer": "Plasma/CSF p-tau217"
+  },
+  {
+    "id": "t1_mcq_005",
+    "question": "Mutations in which gene are a classic cause of autosomal-dominant early-onset Alzheimer's disease?",
+    "options": ["A) APOE", "B) PSEN1", "C) MAPT", "D) LRRK2"],
+    "correct_answer": "B",
+    "answer": "PSEN1"
+  },
+  {
+    "id": "t1_mcq_006",
+    "question": "For which disease stage are anti-amyloid monoclonal antibodies (lecanemab, donanemab) currently indicated?",
+    "options": ["A) Severe AD dementia", "B) Amyloid-confirmed MCI due to AD or mild AD dementia", "C) Asymptomatic individuals without biomarkers", "D) All forms of dementia"],
+    "correct_answer": "B",
+    "answer": "Amyloid-confirmed MCI due to AD or mild AD dementia"
+  },
+  {
+    "id": "t1_mcq_007",
+    "question": "In the NIA-AA ATN biomarker framework, the 'A' refers to which pathologic process?",
+    "options": ["A) Amyloid-β deposition", "B) Atrophy", "C) ApoE status", "D) Astrocytosis"],
+    "correct_answer": "A",
+    "answer": "Amyloid-β deposition"
+  },
+  {
+    "id": "t1_mcq_008",
+    "question": "A patient with mild AD dementia takes chronic warfarin for atrial fibrillation. Which therapy raises the greatest concern for intracerebral hemorrhage?",
+    "options": ["A) Donepezil", "B) Memantine", "C) Lecanemab", "D) Cognitive stimulation therapy"],
+    "correct_answer": "C",
+    "answer": "Lecanemab"
+  },
+  {
+    "id": "t1_mcq_009",
+    "question": "What is the mechanism of action of memantine in Alzheimer's disease?",
+    "options": ["A) NMDA receptor antagonist", "B) Acetylcholinesterase inhibitor", "C) Anti-amyloid antibody", "D) MAO-B inhibitor"],
+    "correct_answer": "A",
+    "answer": "NMDA receptor antagonist"
+  },
+  {
+    "id": "t1_mcq_010",
+    "question": "Posterior cortical atrophy presenting with progressive visuospatial deficits is most commonly an atypical presentation of which disease?",
+    "options": ["A) Parkinson disease", "B) Alzheimer's disease", "C) Huntington disease", "D) Amyotrophic lateral sclerosis"],
+    "correct_answer": "B",
+    "answer": "Alzheimer's disease"
+  }
+]

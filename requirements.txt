@@ -1,0 +1,9 @@
+numpy>=1.24
+requests>=2.31
+tqdm>=4.66
+# networkx is optional: the Graph-RAG retriever has a self-contained PPR
+# fallback, but networkx provides a faster PageRank path when installed.
+networkx>=3.2
+scikit-learn>=1.3
+# Only needed by the MedQA/MMLU dataset builders in tasks/t4.
+datasets>=2.19

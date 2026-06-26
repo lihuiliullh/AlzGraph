@@ -1,0 +1,9 @@
+[
+  {
+    "id": "demo_mcq_001",
+    "question": "A 71-year-old with amyloid-positive PET and mild AD dementia is APOE ε4/ε4. Compared with ε4 non-carriers, which adverse event is most increased if lecanemab is started?",
+    "options": ["A) Nausea", "B) ARIA (amyloid-related imaging abnormalities)", "C) Bradycardia", "D) Hepatotoxicity"],
+    "correct_answer": "B",
+    "answer": "ARIA (amyloid-related imaging abnormalities)"
+  }
+]
