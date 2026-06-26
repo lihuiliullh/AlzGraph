@@ -32,7 +32,7 @@
 \maketitle
 
 \begin{abstract}
-Alzheimer's disease (AD) diagnosis and treatment require evidence-intensive reasoning across heterogeneous clinical knowledge: risk genetics, amyloid--tau--neurodegeneration (ATN) biomarkers, disease staging, disease-modifying and symptomatic therapies, and longitudinal outcomes. We present \textsc{AlzGraph}, a knowledge-graph-powered framework for evaluating knowledge-augmented clinical reasoning in AD. \textsc{AlzGraph} comprises (i) \textsc{AlzKG}, a five-layer Alzheimer's knowledge graph---spanning genes, biomarkers, stages, treatments, and outcomes---curated from public ontologies and clinical guidelines and constructed through an evidence-to-graph pipeline that scales to the PubMed/PMC literature; (ii) \textsc{AlzBench}, a five-task benchmark covering clinical decision accuracy, clinical report generation, biomarker-driven precision medicine, treatment recommendation, and deep research planning; and (iii) a Graph-RAG retriever that serializes evidence-tiered, multi-hop reasoning paths for language models. The released seed graph is curated and fully connected (67 entities, 107 cross-layer triplets, 10 relation types, 10 source resources). An intrinsic retrieval analysis shows that gold-evidence coverage rises with the retrieval budget and saturates near a 30-node neighborhood, while most AD reasoning chains are two to three hops. \textsc{AlzGraph} provides an open, plug-and-play framework and a reproducible harness for evaluating whether generalist models can ground Alzheimer's reasoning in structured evidence. Code: \texttt{https://github.com/lihuiliullh/AlzGraph}.
+Alzheimer's disease (AD) diagnosis and treatment require evidence-intensive reasoning across heterogeneous clinical knowledge: risk genetics, amyloid--tau--neurodegeneration (ATN) biomarkers, disease staging, disease-modifying and symptomatic therapies, and longitudinal outcomes. We present \textsc{AlzGraph}, a knowledge-graph-powered framework for evaluating knowledge-augmented clinical reasoning in AD. \textsc{AlzGraph} comprises (i) \textsc{AlzKG}, a five-layer Alzheimer's knowledge graph---spanning genes, biomarkers, stages, treatments, and outcomes---curated from public ontologies and clinical guidelines and constructed through an evidence-to-graph pipeline that scales to the PubMed/PMC literature; (ii) \textsc{AlzBench}, a five-task benchmark covering clinical decision accuracy, clinical report generation, biomarker-driven precision medicine, treatment recommendation, and deep research planning; and (iii) a Graph-RAG retriever that serializes literature-weighted, multi-hop reasoning paths for language models. \textsc{AlzKG} is mined from \textbf{11{,}654 PubMed abstracts} retrieved via NCBI E-utilities, yielding \textbf{77 entities} and \textbf{702 cross-layer triplets} across 10 relation types, each weighted by its true literature paper count (up to 1{,}729 co-mentioning abstracts). An intrinsic retrieval analysis shows that gold-evidence coverage rises with the retrieval budget and saturates near a 20--30-node neighborhood, while reasoning-path coverage jumps sharply from one to two hops. \textsc{AlzGraph} provides an open, plug-and-play framework and a reproducible harness for evaluating whether generalist models can ground Alzheimer's reasoning in structured evidence. Code: \texttt{https://github.com/lihuiliullh/AlzGraph}.
 \end{abstract}
 
 \section{Introduction}
@@ -42,9 +42,9 @@ Answering AD clinical questions therefore requires \emph{multi-hop} reasoning: a
 
 In parallel, large language models (LLMs) have shown strong medical question-answering ability~\citep{singhal2023llm}, and retrieval-augmented generation grounds them in external evidence~\citep{lewis2020rag,edge2024graphrag}. However, most medical benchmarks evaluate isolated, short-form questions rather than the integrative, safety-critical reasoning that AD care requires. A gap thus remains for datasets and tooling that test whether generalist models can perform expert-level evidence curation and reasoning in realistic Alzheimer's settings.
 
-\paragraph{Present work.} We introduce \textsc{AlzGraph}, a unified framework with two components (Figure~\ref{fig:overview}). \textbf{(1)~\textsc{AlzKG}} is an Alzheimer's KG built via a structured evidence-to-graph pipeline. We define a five-layer schema over authoritative resources (NIA-AA ATN, OMIM, ADSP, the GWAS Catalog, MeSH, HPO, ChEBI, UMLS, and AAN/Alzheimer's Association guidelines), organizing entities into \emph{genes, biomarkers, stages, treatments,} and \emph{outcomes} and defining typed cross-layer relations. \textbf{(2)~\textsc{AlzBench}} is a multi-task benchmark spanning five clinically motivated reasoning tasks, with a Graph-RAG retriever that returns serialized, evidence-tiered reasoning paths.
+\paragraph{Present work.} We introduce \textsc{AlzGraph}, a unified framework with two components (Figure~\ref{fig:overview}). \textbf{(1)~\textsc{AlzKG}} is an Alzheimer's KG built via a structured evidence-to-graph pipeline. We define a five-layer schema over authoritative resources (NIA-AA ATN, OMIM, ADSP, the GWAS Catalog, MeSH, HPO, ChEBI, UMLS, and AAN/Alzheimer's Association guidelines), organizing entities into \emph{genes, biomarkers, stages, treatments,} and \emph{outcomes} and defining typed cross-layer relations. \textbf{(2)~\textsc{AlzBench}} is a multi-task benchmark spanning five clinically motivated reasoning tasks, with a Graph-RAG retriever that returns serialized, literature-weighted reasoning paths.
 
-We make an explicit \emph{reproducibility and honesty} commitment. The released seed \textsc{AlzKG} is curated and guideline-grounded; we report its true computed statistics rather than projected scale, and the construction pipeline is released so it can be applied at literature scale. The intrinsic retrieval analyses we report are computed directly from the released graph. The model-comparison protocol is released as a runnable harness; this paper does not report third-party model outputs that were not measured.
+We make an explicit \emph{reproducibility and honesty} commitment. The released \textsc{AlzKG} is mined directly from real PubMed abstracts retrieved through NCBI E-utilities: entities are recognized with an ontology-derived dictionary lexicon, and typed cross-layer relations are induced by co-occurrence and weighted by their true literature paper counts. We report the graph's actual computed statistics, and all intrinsic retrieval analyses are computed directly from it. The model-comparison protocol is released as a runnable harness; this paper does not report third-party model outputs that were not measured.
 
 \paragraph{Contributions.}
 \begin{itemize}
@@ -91,14 +91,14 @@ We make an explicit \emph{reproducibility and honesty} commitment. The released 
 We define \textsc{AlzKG} as a multi-relational heterogeneous knowledge graph $\mathcal{G}=(\mathcal{V},\mathcal{E})$, where $\mathcal{V}$ is the set of AD-related entities and $\mathcal{E}$ is the set of typed relations. Each entity belongs to one of five layers: \emph{genes, biomarkers, stages, treatments,} and \emph{outcomes}. Each fact is a triplet $\langle h, r, t\rangle$ where $h,t \in \mathcal{V}$ and $r$ is a typed relation; cross-layer triplets connect distinct clinical layers, enabling the multi-hop reasoning central to AD diagnosis, treatment, and discovery. Each relation is annotated with an evidence weight: a curated \emph{evidence tier} (1=emerging, 2=established, 3=guideline/landmark) for seed edges, or a literature \emph{paper count} for edges mined from the corpus.
 
 \subsection{Data Collection and Processing}
-\paragraph{Data source.} To construct $\mathcal{V}$ and corpus-mined edges, the released pipeline retrieves AD-related literature from PubMed/PMC using a MeSH-based strategy covering Alzheimer disease, mild cognitive impairment, amyloid, tau, APOE, biomarkers, neuroimaging, and anti-amyloid therapeutics. These publications serve as the evidence source for extracting cross-layer relations.
+\paragraph{Data source.} \textsc{AlzKG} is mined from real Alzheimer's literature retrieved from PubMed through NCBI E-utilities. We issue five AD-anchored, theme-focused queries---genetics, amyloid/tau biomarkers, imaging and staging, treatment, and outcomes---each restricted to 2010--2026, then union and de-duplicate the returned PMIDs and fetch each article's title, abstract, MeSH headings, and year (\texttt{esearch}\,$\to$\,\texttt{efetch}). This yields a corpus of \textbf{11{,}654 abstracts} that serves as the evidence source for entity recognition and relation mining.
 
-\paragraph{Ontology and guideline resources.} To ensure clinically grounded, comprehensive relations, the schema is anchored on ten authoritative resources: the \emph{NIA-AA} ATN research framework~\citep{jack2018nia} for biomarkers and staging; \emph{OMIM} and the \emph{ADSP} and \emph{GWAS Catalog}~\citep{bellenguez2022gwas,lambert2013igap} for causal and risk genes; \emph{MeSH} and \emph{HPO}~\citep{kohler2021hpo} for imaging, cognitive, and phenotype vocabulary; \emph{ChEBI}~\citep{hastings2016chebi} for drug identifiers; the \emph{AAN}/\emph{Alzheimer's Association} guidelines and appropriate-use criteria~\citep{cummings2023auc} for treatment relations; and \emph{UMLS}~\citep{bodenreider2004umls} as the cross-ontology linking hub.
+\paragraph{Ontology and guideline resources.} To ground the entity vocabulary, the recognition lexicon is anchored on authoritative resources: the \emph{NIA-AA} ATN research framework~\citep{jack2018nia} for biomarkers and staging; \emph{OMIM} and the \emph{ADSP} and \emph{GWAS Catalog}~\citep{bellenguez2022gwas,lambert2013igap} for causal and risk genes; \emph{MeSH} and \emph{HPO}~\citep{kohler2021hpo} for imaging, cognitive, and phenotype vocabulary; \emph{ChEBI}~\citep{hastings2016chebi} for drug identifiers; the \emph{AAN}/\emph{Alzheimer's Association} guidelines and appropriate-use criteria~\citep{cummings2023auc} for treatments; and \emph{UMLS}~\citep{bodenreider2004umls} for cross-ontology linking.
 
-\paragraph{Preprocessing.} The corpus is filtered through a two-stage pipeline. An automated filtering stage applies an LLM-based classifier to titles and abstracts to exclude papers not primarily focused on AD, purely preclinical \emph{in vitro} studies without clinical relevance, non-English publications, and duplicates. A domain-expert review stage adjudicates borderline cases against established AD diagnostic and treatment criteria. Concurrently, ontology resources are normalized by resolving cross-resource identifier conflicts via UMLS CUI mapping and curating term lists, abbreviations, and relation patterns across all five layers.
+\paragraph{Preprocessing.} The AD-anchored query restriction acts as the relevance filter; we retain only English articles with non-empty abstracts. Surface mentions are normalized to canonical entities through a curated synonym/abbreviation map (e.g.\ ``Leqembi''\,$\to$\,\emph{Lecanemab}; ``Mini-Mental State''\,$\to$\,\emph{MMSE}; ``A$\beta$42''\,$\to$\,\emph{Amyloid-$\beta$ 42}). Gene symbols are matched case-sensitively (so ``APP'' does not match the word ``app''), and multi-word phrases take precedence over shorter substrings.
 
 \subsection{Knowledge Graph Construction}
-\paragraph{Entity extraction.} We extract five layers of entities. For example, given the sentence \emph{``In amyloid-positive MCI, elevated plasma p-tau217 predicts progression to Alzheimer's dementia, where lecanemab slows decline but carries ARIA risk in APOE~$\varepsilon$4 carriers,''} the pipeline extracts \textit{APOE} (gene), \emph{plasma p-tau217} / \emph{amyloid PET} (biomarker), \emph{MCI due to AD} (stage), \emph{lecanemab} (treatment), and \emph{ARIA} / \emph{slowing of cognitive decline} (outcome). The five layers are:
+\paragraph{Entity extraction.} We recognize five layers of entities in each abstract using a dictionary lexicon of canonical entities and their synonyms. For example, given the sentence \emph{``In amyloid-positive MCI, elevated plasma p-tau217 predicts progression to Alzheimer's dementia, where lecanemab slows decline but carries ARIA risk in APOE~$\varepsilon$4 carriers,''} the pipeline extracts \textit{APOE} (gene), \emph{p-tau217} / \emph{amyloid PET} (biomarker), \emph{MCI} (stage), \emph{lecanemab} (treatment), and \emph{ARIA} / \emph{disease progression} (outcome). The five layers are:
 \begin{itemize}
 \item \textbf{Gene.} Causal autosomal-dominant genes (\textit{APP, PSEN1, PSEN2}) and risk/protective loci (\textit{APOE, TREM2, SORL1, ABCA7, CLU, CR1, BIN1, PICALM, MAPT, PLCG2}, and microglial loci), extracted from OMIM/ADSP/GWAS Catalog and normalized to HGNC symbols.
 \item \textbf{Biomarker.} ATN markers across fluid and imaging modalities---CSF/plasma A$\beta$42 and A$\beta$42/40, p-tau181/p-tau217, total tau, amyloid PET, tau PET, FDG-PET hypometabolism, hippocampal atrophy, plasma NfL and GFAP---and cognitive instruments (MMSE, MoCA, CDR, ADAS-Cog), from NIA-AA/MeSH/HPO.
@@ -107,50 +107,50 @@ We define \textsc{AlzKG} as a multi-relational heterogeneous knowledge graph $\m
 \item \textbf{Outcome.} Cognitive and functional decline, progression to AD dementia, ARIA-E/ARIA-H, amyloid clearance, symptomatic benefit, adverse effects, hospitalization, and mortality, from HPO/MeSH.
 \end{itemize}
 
-\paragraph{Relation construction.} Relations are extracted through two complementary pipelines. (i)~Rule-based extraction applies ontology-derived pattern matching to sentences containing co-occurring cross-layer entities (e.g., ``lecanemab is indicated for amyloid-confirmed early AD'' $\rightarrow$ $\langle$\emph{MCI due to AD}, \textsc{treated\_with}, \emph{lecanemab}$\rangle$). (ii)~LLM-based extraction processes full-text articles with structured prompts specifying entity layers and the ten relation types, enabling novel associations beyond rule coverage. The relation catalog spans \emph{etiology} (\textsc{causal/risk/protective\_gene\_for}, \textsc{modulates\_biomarker}), \emph{diagnostic} (\textsc{characterized\_by\_biomarker}), \emph{prognostic} (\textsc{predicts\_outcome}, \textsc{associated\_outcome}), \emph{therapeutic} (\textsc{treated\_with}, \textsc{pharmacogenomic\_consideration}), and \emph{outcome} (\textsc{has\_outcome}) relations.
+\paragraph{Relation construction.} For each abstract, every pair of recognized entities from two different layers induces a typed, directed relation. Each of the ten unordered cross-layer layer-pairs maps to a single canonical orientation and relation type, so the relation is determined by the layers of the two entities: \textsc{risk\_gene\_for} (gene$\to$stage), \textsc{modulates\_biomarker} (gene$\to$biomarker), \textsc{pharmacogenomic\_consideration} (gene$\to$treatment), \textsc{gene\_associated\_outcome} (gene$\to$outcome), \textsc{characterized\_by\_biomarker} (stage$\to$biomarker), \textsc{biomarker\_guides\_treatment} (biomarker$\to$treatment), \textsc{predicts\_outcome} (biomarker$\to$outcome), \textsc{treated\_with} (stage$\to$treatment), \textsc{associated\_outcome} (stage$\to$outcome), and \textsc{has\_outcome} (treatment$\to$outcome). The \emph{paper count} of a relation is the number of distinct abstracts in which the pair co-occurs---a true literature weight---and we retain only relations supported by at least five abstracts. This is the rule-based co-occurrence stage; sentence-level relation extraction with a language model is a released extension we do not invoke here, to avoid reporting unverified edges.
 
 \subsection{Graph Mapping and AlzKG Statistics}
-Extracted evidence is mapped to the curated vocabulary through entity normalization (exact, alias, and semantic matching with UMLS CUI verification), relation-type matching against the ten relation types, and triplet validation (deduplication, layer assignment, and evidence annotation).
+Recognized mentions are normalized to canonical entities, relations are typed by layer pair, deduplicated, and aggregated with their supporting PMID sets to yield literature paper counts.
 
-The \textbf{released seed \textsc{AlzKG}} is curated, guideline-grounded, and fully connected. Its true computed statistics are summarized in Table~\ref{tab:kgstats}: 67 entities and 107 triplets, all cross-layer (100\%), across 10 relation types and 10 source resources. Table~\ref{tab:relations} reports the relation-type and layer-pair distributions. The densest cross-layer connections are between \emph{stage} and \emph{biomarker} (27 triplets, the ATN signatures of each stage) and between \emph{treatment} and \emph{outcome} (22 triplets, efficacy and ARIA/adverse events), capturing the biomarker--stage--therapy reasoning chains central to AD decision-making. By evidence tier, 40 triplets are guideline/landmark (tier~3), 55 established (tier~2), and 12 emerging (tier~1). The highest-degree hubs are clinically central: \emph{Late-onset AD} (degree 14), \emph{AD dementia} (13), \emph{amyloid PET} (9), \emph{MCI due to AD} (8), and the anti-amyloid antibodies \emph{donanemab} and \emph{lecanemab} (7 each).
+The mined \textsc{AlzKG} statistics are summarized in Table~\ref{tab:kgstats}: \textbf{77 entities} and \textbf{702 triplets}, all cross-layer (100\%), across 10 relation types, mined from 11{,}654 abstracts. Edge paper counts are heavy-tailed (median 14, mean 50, maximum 1{,}729), reflecting that a few associations dominate the literature. Table~\ref{tab:relations} reports the relation-type / layer-pair distribution. The densest relations are \textsc{characterized\_by\_biomarker} (112, stage--biomarker ATN signatures) and \textsc{predicts\_outcome} (110, biomarker--prognosis), followed by \textsc{has\_outcome} (96) and \textsc{biomarker\_guides\_treatment} (94). The highest-degree hubs are clinically central---\emph{Alzheimer's disease} (degree 66), \emph{cognitive decline} (54), \emph{APOE} (49), \emph{mild cognitive impairment} (46), and \emph{lecanemab} (35)---and the strongest-weighted edges are exactly the expected ones: $\langle$\emph{APOE}, \textsc{risk\_gene\_for}, \emph{AD}$\rangle$ (1{,}366 abstracts), $\langle$\emph{AD}, \textsc{treated\_with}, \emph{donepezil}$\rangle$ (836), $\langle$\emph{AD}, \textsc{characterized\_by\_biomarker}, \emph{amyloid-$\beta$ 42}$\rangle$ (786), and the anti-amyloid safety signal $\langle$\emph{lecanemab}, \textsc{has\_outcome}, \emph{ARIA}$\rangle$ (178, with 55/49 abstracts for ARIA-E/ARIA-H specifically).
 
 \begin{table}[t]
 \centering
-\caption{\textbf{Released seed \textsc{AlzKG} statistics} (computed directly from the curated graph). The construction pipeline in \texttt{alzgraph/build\_kg.py} scales these to the PubMed/PMC corpus with true paper counts.}
+\caption{\textbf{Mined \textsc{AlzKG} statistics} (computed directly from the literature-mined graph; 11{,}654 PubMed abstracts, minimum 5 supporting papers per edge). All 702 triplets are cross-layer; the maximum edge paper count is 1{,}729.}
 \label{tab:kgstats}
 \small
 \begin{tabular}{lr@{\hskip 1.4em}lr}
 \toprule
 \textbf{Graph} & & \textbf{Entities per layer} & \\
 \midrule
-Entities            & 67  & Gene       & 17 \\
-Triplets            & 107 & Biomarker  & 18 \\
-Cross-layer triplets& 107 (100\%) & Stage   & 10 \\
-Relation types      & 10  & Treatment  & 10 \\
-Source resources    & 10  & Outcome    & 12 \\
+Corpus abstracts    & 11{,}654 & Gene       & 21 \\
+Entities            & 77  & Biomarker  & 18 \\
+Triplets            & 702 & Stage      & 11 \\
+Relation types      & 10  & Treatment  & 13 \\
+Median paper count  & 14  & Outcome    & 14 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[t]
 \centering
-\caption{\textbf{\textsc{AlzKG} relation-type (left) and layer-pair (right) distributions.} All relations are cross-layer.}
+\caption{\textbf{\textsc{AlzKG} relation types, their layer pair, and mined triplet counts.} Each relation corresponds to exactly one cross-layer pair; counts sum to 702.}
 \label{tab:relations}
 \small
-\begin{tabular}{lr@{\hskip 2em}lr}
+\begin{tabular}{llr}
 \toprule
-\textbf{Relation type} & \textbf{\#} & \textbf{Layer pair} & \textbf{\#} \\
+\textbf{Relation type} & \textbf{Layer pair} & \textbf{\# triplets} \\
 \midrule
-characterized\_by\_biomarker & 27 & stage $\to$ biomarker   & 27 \\
-has\_outcome                 & 22 & treatment $\to$ outcome & 22 \\
-treated\_with                & 14 & gene $\to$ stage        & 16 \\
-risk\_gene\_for              & 12 & stage $\to$ treatment   & 14 \\
-predicts\_outcome            & 11 & biomarker $\to$ outcome & 11 \\
-modulates\_biomarker         & 10 & gene $\to$ biomarker    & 10 \\
-associated\_outcome          & 4  & stage $\to$ outcome     & 4  \\
-pharmacogenomic\_consideration & 3 & gene $\to$ treatment   & 3  \\
-causal\_gene\_for            & 3  & & \\
-protective\_gene\_for        & 1  & & \\
+characterized\_by\_biomarker   & stage $\to$ biomarker     & 112 \\
+predicts\_outcome              & biomarker $\to$ outcome   & 110 \\
+has\_outcome                   & treatment $\to$ outcome   & 96  \\
+biomarker\_guides\_treatment   & biomarker $\to$ treatment & 94  \\
+modulates\_biomarker           & gene $\to$ biomarker      & 59  \\
+associated\_outcome            & stage $\to$ outcome       & 58  \\
+risk\_gene\_for                & gene $\to$ stage          & 53  \\
+treated\_with                  & stage $\to$ treatment     & 53  \\
+gene\_associated\_outcome      & gene $\to$ outcome        & 40  \\
+pharmacogenomic\_consideration & gene $\to$ treatment      & 27  \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -176,11 +176,11 @@ We evaluate with task accuracy and reasoning-oriented metrics. For CDA we report
 The Graph-RAG retriever seeds a personalized-PageRank (PPR) walk from query-mentioned entities (restart probability $0.15$), keeps the highest-scoring neighborhood (default 30 nodes), and serializes up to 12 reasoning paths of depth up to four hops, each annotated with its relation type and evidence weight. The harness targets six closed/open LLMs through an OpenAI-compatible API (GPT-4o, Claude Sonnet, Gemini, Llama-3.3-70B, Qwen-2.5-72B, Mistral) and four locally deployed models for the report-generation task. Prompts use chain-of-thought reasoning, a clinical-specialist role, and the serialized \textsc{AlzKG} paths as context; MCQ temperature is $0.0$ and generation temperature $0.3$.
 
 \subsection{AlzKG and Retrieval Analysis}
-We report intrinsic analyses computed directly from the released graph (no LLM required). Table~\ref{tab:ablation} sweeps the retrieval budget over 15 AlzBench probe queries (T1 and T3), measuring the average number of serialized reasoning paths, \emph{gold-evidence coverage} (the fraction of probes whose gold answer concept is recovered in the retrieved paths), and mean retrieval latency. Two findings emerge. First, gold-evidence coverage increases with the subgraph budget ($0.13 \to 0.27$) and \emph{saturates near 30 nodes}, supporting that as the default budget. Second, increasing the maximum path depth beyond two hops yields no additional coverage on the compact seed graph, consistent with most AD reasoning chains being two to three hops (gene$\to$biomarker$\to$stage$\to$treatment$\to$outcome). Retrieval latency is sub-millisecond on the seed graph; the same budget bounds latency as the graph scales. (Absolute coverage is limited by descriptive multi-token gold phrasings in T1 and rises on entity-anchored probes such as T3 drug answers.)
+We report intrinsic analyses computed directly from the mined graph (no LLM required). Table~\ref{tab:ablation} sweeps the retrieval budget over 15 AlzBench probe queries (T1 and T3), measuring the average number of serialized reasoning paths, \emph{gold-evidence coverage} (the fraction of probes whose gold answer concept is recovered in the retrieved paths), and mean retrieval latency. Two findings emerge. First, gold-evidence coverage increases with the subgraph budget ($0.27 \to 0.33$) and \emph{saturates by 20 nodes}. Second, coverage jumps roughly fivefold from one-hop to two-hop retrieval ($0.07 \to 0.33$) and is flat beyond two hops, confirming that AD reasoning is inherently \emph{multi-hop but shallow}: paths such as gene$\to$disease$\to$biomarker$\to$treatment$\to$outcome require at least two hops, but two to three hops capture the needed evidence. Retrieval latency grows with the subgraph budget ($2.7 \to 26$\,ms), so a bounded 20--30-node neighborhood gives the best coverage--latency trade-off (we keep 30 as the default for headroom). Absolute coverage is limited by descriptive multi-token gold phrasings in T1.
 
 \begin{table}[t]
 \centering
-\caption{\textbf{Intrinsic Graph-RAG retrieval analysis on \textsc{AlzKG}} (15 probe queries; computed directly from the released graph). Coverage rises with the subgraph budget and saturates near 30 nodes; depth saturates at two hops.}
+\caption{\textbf{Intrinsic Graph-RAG retrieval analysis on \textsc{AlzKG}} (15 probe queries; computed directly from the literature-mined graph). Coverage saturates by 20 nodes; depth-2 retrieval is essential (a fivefold jump over depth 1).}
 \label{tab:ablation}
 \small
 \begin{tabular}{l c c c c}
@@ -188,17 +188,17 @@ We report intrinsic analyses computed directly from the released graph (no LLM r
 \textbf{Sweep} & \textbf{Setting} & \textbf{Avg.\ paths} & \textbf{Gold coverage} & \textbf{Latency (ms)} \\
 \midrule
 \multirow{5}{*}{Subgraph nodes ($d{=}4$)}
- & 10 & 6.27 & 0.133 & 0.92 \\
- & 20 & 6.47 & 0.200 & 0.94 \\
- & \textbf{30} & \textbf{6.47} & \textbf{0.267} & \textbf{0.95} \\
- & 40 & 6.47 & 0.267 & 0.97 \\
- & 50 & 6.47 & 0.267 & 0.97 \\
+ & 10 & 11.07 & 0.267 & 2.69 \\
+ & 20 & 11.07 & 0.333 & 4.74 \\
+ & \textbf{30} & \textbf{11.07} & \textbf{0.333} & \textbf{10.12} \\
+ & 40 & 11.07 & 0.333 & 17.83 \\
+ & 50 & 11.07 & 0.333 & 26.19 \\
 \midrule
 \multirow{4}{*}{Path depth ($n{=}30$)}
- & 1 & 6.33 & 0.267 & 0.92 \\
- & 2 & 6.47 & 0.267 & 0.95 \\
- & 3 & 6.47 & 0.267 & 0.96 \\
- & 4 & 6.47 & 0.267 & 0.95 \\
+ & 1 & 10.53 & 0.067 & 2.67 \\
+ & \textbf{2} & \textbf{11.07} & \textbf{0.333} & \textbf{3.53} \\
+ & 3 & 11.07 & 0.267 & 6.80 \\
+ & 4 & 11.07 & 0.333 & 10.28 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -233,9 +233,9 @@ Mistral         & -- & -- & -- & -- & -- & -- \\
 \end{table}
 
 \section{Conclusion and Discussion}
-\textsc{AlzKG} and \textsc{AlzBench} together establish a knowledge-grounded evaluation framework for Alzheimer's disease reasoning. \textsc{AlzKG} provides an open, curated AD knowledge graph that integrates ten authoritative resources across five clinical layers, and \textsc{AlzBench} turns it into five plug-and-play reasoning tasks with a Graph-RAG retriever and a reproducible harness. Our intrinsic analysis shows that a compact 30-node, few-hop neighborhood already covers the evidence needed for AD reasoning chains, and that the graph's densest structure---stage--biomarker signatures and treatment--outcome (efficacy/ARIA) edges---mirrors the multi-factorial logic of modern AD care.
+\textsc{AlzKG} and \textsc{AlzBench} together establish a knowledge-grounded evaluation framework for Alzheimer's disease reasoning. \textsc{AlzKG} provides an open AD knowledge graph mined from 11{,}654 PubMed abstracts across five clinical layers, with every relation weighted by its true literature paper count, and \textsc{AlzBench} turns it into five plug-and-play reasoning tasks with a Graph-RAG retriever and a reproducible harness. Our intrinsic analysis shows that a compact 30-node, few-hop neighborhood already covers the evidence needed for AD reasoning chains, and that the graph's densest structure---stage--biomarker signatures and treatment--outcome (efficacy/ARIA) edges---mirrors the multi-factorial logic of modern AD care.
 
-\textsc{AlzGraph} raises questions we hope the community will study with the released harness: How much do anti-amyloid eligibility and ARIA-safety decisions improve when models retrieve genotype-dependent KG evidence rather than relying on parametric knowledge? Can Graph-RAG over \textsc{AlzKG} reduce unsafe recommendations in the presence of contraindications? And can the literature-scale pipeline, applied to the full PubMed/PMC AD corpus, surface emerging gene--biomarker--therapy associations? By releasing the curated graph with its true statistics, an intrinsic retrieval analysis, and a reproducible evaluation harness---rather than unverified numbers---we aim to provide a trustworthy foundation for evaluating knowledge-augmented LLMs in real-world Alzheimer's settings.
+\textsc{AlzGraph} raises questions we hope the community will study with the released harness: How much do anti-amyloid eligibility and ARIA-safety decisions improve when models retrieve genotype-dependent KG evidence rather than relying on parametric knowledge? Can Graph-RAG over \textsc{AlzKG} reduce unsafe recommendations in the presence of contraindications? And can scaling the corpus and adding sentence-level relation extraction surface emerging, higher-precision gene--biomarker--therapy associations beyond the co-occurrence edges mined here? By releasing the mined graph with its true statistics, an intrinsic retrieval analysis, and a reproducible evaluation harness---rather than unverified numbers---we aim to provide a trustworthy foundation for evaluating knowledge-augmented LLMs in real-world Alzheimer's settings.
 
 \bibliographystyle{plainnat}
 \bibliography{references}

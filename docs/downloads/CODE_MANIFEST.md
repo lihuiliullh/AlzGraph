@@ -8,9 +8,11 @@ evidence-intensive reasoning benchmark (AlzBench), and a Graph-RAG retriever.
 
 | Paper component | Release code | Notes |
 |---|---|---|
-| AlzKG five-layer schema and curated ontology seed | `alzgraph/ontology.py` | Layers: gene, biomarker, stage, treatment, outcome; curated cross-layer relations with evidence tiers and source provenance |
-| AlzKG construction from literature | `alzgraph/build_kg.py` | Lightweight reproducible co-occurrence builder for PMC/PubMed XML; populates true literature paper counts |
-| Released seed AlzKG builder | `scripts/build_seed_kg.py` | Materializes `data/alzkg/triplets.json`, `paper_metadata.json`, and the project-page demo graph from the curated ontology; prints real graph statistics |
+| AD corpus collection | `scripts/fetch_pubmed.py` | Fetches real AD abstracts from PubMed via NCBI E-utilities (standard library only) |
+| NER lexicon | `alzgraph/lexicon.py` | AD entity vocabulary + synonyms mapped to canonical entity + layer (case-sensitive gene symbols) |
+| AlzKG mining (primary) | `scripts/build_kg_from_corpus.py` | Recognizes entities in abstracts and mines cross-layer co-occurrence relations with true paper counts; writes `data/alzkg/*` and the demo graph |
+| AlzKG schema + curated seed (optional) | `alzgraph/ontology.py`, `scripts/build_seed_kg.py` | Curated, guideline-tiered five-layer seed graph alternative |
+| PMC XML builder (optional) | `alzgraph/build_kg.py` | Co-occurrence builder for local PMC/PubMed XML files |
 | Graph-RAG retrieval | `alzgraph/retrieval.py` | Personalized-PageRank neighborhood retrieval and reasoning-path serialization; pure-Python PPR fallback, optional networkx fast path |
 | Evaluation metrics | `alzgraph/metrics.py` | Task accuracy, ROUGE-L, Token-F1, BLEU-1, ranking metrics, drug-safety (ARIA/contraindication), guideline concordance, KG evidence coverage |
 | T1 Clinical Decision Accuracy | `tasks/t1_clinical_decision_accuracy.py` | AD diagnosis/staging MCQ and open-ended QA |
@@ -21,11 +23,14 @@ evidence-intensive reasoning benchmark (AlzBench), and a Graph-RAG retriever.
 
 ## Data Provenance and Honesty Notes
 
-- The released **seed AlzKG** (`data/alzkg/triplets.json`) is curated from public
-  ontologies and clinical guidelines. For seed edges, `paper_count` carries an
-  **evidence tier** (1 = emerging, 2 = established, 3 = guideline/landmark),
-  surfaced in serialized paths as `[N tier]`. The `build_kg.py` PMC pipeline
-  instead populates true literature paper counts, surfaced as `[N papers]`.
+- The released **AlzKG** (`data/alzkg/triplets.json`) is **mined from 11,654 real
+  PubMed abstracts** retrieved via NCBI E-utilities. Each edge's `paper_count` is the
+  true number of co-mentioning abstracts (surfaced in paths as `[N papers]`); edges
+  with fewer than 5 supporting abstracts are dropped. Relations are induced by
+  cross-layer co-occurrence (a coarse but transparent signal); sentence-level
+  relation extraction is a documented extension not invoked here.
+- An optional curated, guideline-tiered seed graph is available via
+  `scripts/build_seed_kg.py` (there `paper_count` carries an evidence tier 1-3).
 - The benchmark task builders construct items from curated clinical rules and
   public datasets. The Graph-RAG model-evaluation tables in the paper are
   produced by running `tasks/t*.py` against an LLM endpoint; this release ships

@@ -1,9 +1,9 @@
 {
   "meta": {
-    "name": "AlzGraph seed subgraph",
-    "description": "The released AlzKG seed graph, curated from public ontologies and AD clinical guidelines.",
-    "nodes": 67,
-    "links": 107,
+    "name": "AlzKG (literature-mined) subgraph",
+    "description": "Top-degree subgraph of AlzKG, mined by cross-layer co-occurrence over PubMed abstracts.",
+    "nodes": 54,
+    "links": 150,
     "layers": [
       "gene",
       "biomarker",
@@ -21,362 +21,242 @@
   },
   "nodes": [
     {
-      "id": "Late-onset AD",
-      "label": "Late-onset AD",
+      "id": "Alzheimer's disease",
+      "label": "Alzheimer's disease",
       "layer": "stage",
-      "source": "OMIM",
+      "source": "NIA-AA/UMLS",
       "color": "#EAB308",
-      "degree": 14
-    },
-    {
-      "id": "AD dementia",
-      "label": "AD dementia",
-      "layer": "stage",
-      "source": "NIA_AA",
-      "color": "#EAB308",
-      "degree": 13
-    },
-    {
-      "id": "Amyloid PET",
-      "label": "Amyloid PET",
-      "layer": "biomarker",
-      "source": "NIA_AA",
-      "color": "#0EA5E9",
-      "degree": 9
-    },
-    {
-      "id": "MCI due to AD",
-      "label": "MCI due to AD",
-      "layer": "stage",
-      "source": "NIA_AA",
-      "color": "#EAB308",
-      "degree": 8
-    },
-    {
-      "id": "Mild AD dementia",
-      "label": "Mild AD dementia",
-      "layer": "stage",
-      "source": "NIA_AA",
-      "color": "#EAB308",
-      "degree": 7
-    },
-    {
-      "id": "Lecanemab",
-      "label": "Lecanemab",
-      "layer": "treatment",
-      "source": "AAN_AA_AUC",
-      "color": "#14B8A6",
-      "degree": 7
-    },
-    {
-      "id": "Donanemab",
-      "label": "Donanemab",
-      "layer": "treatment",
-      "source": "AAN_AA_AUC",
-      "color": "#14B8A6",
-      "degree": 7
-    },
-    {
-      "id": "Severe AD dementia",
-      "label": "Severe AD dementia",
-      "layer": "stage",
-      "source": "NIA_AA",
-      "color": "#EAB308",
-      "degree": 6
-    },
-    {
-      "id": "APOE",
-      "label": "APOE",
-      "layer": "gene",
-      "source": "OMIM",
-      "color": "#7C3AED",
-      "degree": 6
-    },
-    {
-      "id": "CSF Abeta42",
-      "label": "CSF Abeta42",
-      "layer": "biomarker",
-      "source": "NIA_AA",
-      "color": "#0EA5E9",
-      "degree": 6
-    },
-    {
-      "id": "Donepezil",
-      "label": "Donepezil",
-      "layer": "treatment",
-      "source": "ChEBI",
-      "color": "#14B8A6",
-      "degree": 6
-    },
-    {
-      "id": "Moderate AD dementia",
-      "label": "Moderate AD dementia",
-      "layer": "stage",
-      "source": "NIA_AA",
-      "color": "#EAB308",
-      "degree": 5
+      "degree": 46
     },
     {
       "id": "Cognitive decline",
       "label": "Cognitive decline",
       "layer": "outcome",
-      "source": "HPO",
+      "source": "HPO/MeSH",
       "color": "#EF4444",
-      "degree": 5
+      "degree": 28
     },
     {
-      "id": "Symptomatic benefit",
-      "label": "Symptomatic benefit",
+      "id": "APOE",
+      "label": "APOE",
+      "layer": "gene",
+      "source": "OMIM/GWAS",
+      "color": "#7C3AED",
+      "degree": 24
+    },
+    {
+      "id": "Mild cognitive impairment",
+      "label": "Mild cognitive impairment",
+      "layer": "stage",
+      "source": "NIA-AA/UMLS",
+      "color": "#EAB308",
+      "degree": 20
+    },
+    {
+      "id": "Disease progression",
+      "label": "Disease progression",
       "layer": "outcome",
-      "source": "MeSH",
+      "source": "HPO/MeSH",
       "color": "#EF4444",
-      "degree": 5
+      "degree": 13
+    },
+    {
+      "id": "Amyloid plaques",
+      "label": "Amyloid plaques",
+      "layer": "biomarker",
+      "source": "NIA-AA/MeSH",
+      "color": "#0EA5E9",
+      "degree": 12
+    },
+    {
+      "id": "Lecanemab",
+      "label": "Lecanemab",
+      "layer": "treatment",
+      "source": "ChEBI/AAN",
+      "color": "#14B8A6",
+      "degree": 11
+    },
+    {
+      "id": "Amyloid-beta 42",
+      "label": "Amyloid-beta 42",
+      "layer": "biomarker",
+      "source": "NIA-AA/MeSH",
+      "color": "#0EA5E9",
+      "degree": 9
+    },
+    {
+      "id": "APP",
+      "label": "APP",
+      "layer": "gene",
+      "source": "OMIM/GWAS",
+      "color": "#7C3AED",
+      "degree": 9
+    },
+    {
+      "id": "ARIA",
+      "label": "ARIA",
+      "layer": "outcome",
+      "source": "HPO/MeSH",
+      "color": "#EF4444",
+      "degree": 8
+    },
+    {
+      "id": "Mortality",
+      "label": "Mortality",
+      "layer": "outcome",
+      "source": "HPO/MeSH",
+      "color": "#EF4444",
+      "degree": 8
+    },
+    {
+      "id": "Amyloid PET",
+      "label": "Amyloid PET",
+      "layer": "biomarker",
+      "source": "NIA-AA/MeSH",
+      "color": "#0EA5E9",
+      "degree": 7
+    },
+    {
+      "id": "CDR",
+      "label": "CDR",
+      "layer": "biomarker",
+      "source": "NIA-AA/MeSH",
+      "color": "#0EA5E9",
+      "degree": 6
+    },
+    {
+      "id": "Neurofibrillary tangles",
+      "label": "Neurofibrillary tangles",
+      "layer": "biomarker",
+      "source": "NIA-AA/MeSH",
+      "color": "#0EA5E9",
+      "degree": 6
     },
     {
       "id": "MMSE",
       "label": "MMSE",
       "layer": "biomarker",
-      "source": "MeSH",
+      "source": "NIA-AA/MeSH",
+      "color": "#0EA5E9",
+      "degree": 5
+    },
+    {
+      "id": "Donanemab",
+      "label": "Donanemab",
+      "layer": "treatment",
+      "source": "ChEBI/AAN",
+      "color": "#14B8A6",
+      "degree": 5
+    },
+    {
+      "id": "PSEN1",
+      "label": "PSEN1",
+      "layer": "gene",
+      "source": "OMIM/GWAS",
+      "color": "#7C3AED",
+      "degree": 5
+    },
+    {
+      "id": "Donepezil",
+      "label": "Donepezil",
+      "layer": "treatment",
+      "source": "ChEBI/AAN",
+      "color": "#14B8A6",
+      "degree": 5
+    },
+    {
+      "id": "Tau PET",
+      "label": "Tau PET",
+      "layer": "biomarker",
+      "source": "NIA-AA/MeSH",
       "color": "#0EA5E9",
       "degree": 4
     },
     {
-      "id": "Progression to AD dementia",
-      "label": "Progression to AD dementia",
-      "layer": "outcome",
-      "source": "MeSH",
-      "color": "#EF4444",
+      "id": "Plasma NfL",
+      "label": "Plasma NfL",
+      "layer": "biomarker",
+      "source": "NIA-AA/MeSH",
+      "color": "#0EA5E9",
       "degree": 4
     },
     {
-      "id": "Slowing of cognitive decline",
-      "label": "Slowing of cognitive decline",
-      "layer": "outcome",
-      "source": "MeSH",
-      "color": "#EF4444",
+      "id": "p-tau217",
+      "label": "p-tau217",
+      "layer": "biomarker",
+      "source": "NIA-AA/MeSH",
+      "color": "#0EA5E9",
+      "degree": 4
+    },
+    {
+      "id": "Plasma GFAP",
+      "label": "Plasma GFAP",
+      "layer": "biomarker",
+      "source": "NIA-AA/MeSH",
+      "color": "#0EA5E9",
       "degree": 4
     },
     {
       "id": "Aducanumab",
       "label": "Aducanumab",
       "layer": "treatment",
-      "source": "AAN_AA_AUC",
+      "source": "ChEBI/AAN",
       "color": "#14B8A6",
       "degree": 4
-    },
-    {
-      "id": "Rivastigmine",
-      "label": "Rivastigmine",
-      "layer": "treatment",
-      "source": "ChEBI",
-      "color": "#14B8A6",
-      "degree": 3
-    },
-    {
-      "id": "Galantamine",
-      "label": "Galantamine",
-      "layer": "treatment",
-      "source": "ChEBI",
-      "color": "#14B8A6",
-      "degree": 3
-    },
-    {
-      "id": "Early-onset AD",
-      "label": "Early-onset AD",
-      "layer": "stage",
-      "source": "OMIM",
-      "color": "#EAB308",
-      "degree": 3
-    },
-    {
-      "id": "PSEN1",
-      "label": "PSEN1",
-      "layer": "gene",
-      "source": "OMIM",
-      "color": "#7C3AED",
-      "degree": 3
-    },
-    {
-      "id": "Amyloid plaque reduction",
-      "label": "Amyloid plaque reduction",
-      "layer": "outcome",
-      "source": "MeSH",
-      "color": "#EF4444",
-      "degree": 3
-    },
-    {
-      "id": "CDR",
-      "label": "CDR",
-      "layer": "biomarker",
-      "source": "MeSH",
-      "color": "#0EA5E9",
-      "degree": 3
-    },
-    {
-      "id": "APP",
-      "label": "APP",
-      "layer": "gene",
-      "source": "OMIM",
-      "color": "#7C3AED",
-      "degree": 3
-    },
-    {
-      "id": "Functional decline",
-      "label": "Functional decline",
-      "layer": "outcome",
-      "source": "HPO",
-      "color": "#EF4444",
-      "degree": 3
-    },
-    {
-      "id": "Nausea",
-      "label": "Nausea",
-      "layer": "outcome",
-      "source": "HPO",
-      "color": "#EF4444",
-      "degree": 3
-    },
-    {
-      "id": "CSF p-tau217",
-      "label": "CSF p-tau217",
-      "layer": "biomarker",
-      "source": "NIA_AA",
-      "color": "#0EA5E9",
-      "degree": 3
-    },
-    {
-      "id": "Memantine",
-      "label": "Memantine",
-      "layer": "treatment",
-      "source": "ChEBI",
-      "color": "#14B8A6",
-      "degree": 3
-    },
-    {
-      "id": "ARIA-E",
-      "label": "ARIA-E",
-      "layer": "outcome",
-      "source": "MeSH",
-      "color": "#EF4444",
-      "degree": 3
     },
     {
       "id": "Hippocampal atrophy",
       "label": "Hippocampal atrophy",
       "layer": "biomarker",
-      "source": "MeSH",
+      "source": "NIA-AA/MeSH",
       "color": "#0EA5E9",
-      "degree": 3
+      "degree": 4
     },
     {
-      "id": "CSF p-tau181",
-      "label": "CSF p-tau181",
+      "id": "p-tau181",
+      "label": "p-tau181",
       "layer": "biomarker",
-      "source": "NIA_AA",
+      "source": "NIA-AA/MeSH",
       "color": "#0EA5E9",
-      "degree": 3
+      "degree": 4
     },
     {
-      "id": "FDG-PET hypometabolism",
-      "label": "FDG-PET hypometabolism",
+      "id": "ADAS-Cog",
+      "label": "ADAS-Cog",
       "layer": "biomarker",
-      "source": "MeSH",
+      "source": "NIA-AA/MeSH",
       "color": "#0EA5E9",
       "degree": 3
     },
     {
-      "id": "ARIA-H",
-      "label": "ARIA-H",
-      "layer": "outcome",
-      "source": "MeSH",
-      "color": "#EF4444",
+      "id": "Anti-amyloid antibody",
+      "label": "Anti-amyloid antibody",
+      "layer": "treatment",
+      "source": "ChEBI/AAN",
+      "color": "#14B8A6",
+      "degree": 3
+    },
+    {
+      "id": "MoCA",
+      "label": "MoCA",
+      "layer": "biomarker",
+      "source": "NIA-AA/MeSH",
+      "color": "#0EA5E9",
       "degree": 3
     },
     {
       "id": "Preclinical AD",
       "label": "Preclinical AD",
       "layer": "stage",
-      "source": "NIA_AA",
+      "source": "NIA-AA/UMLS",
       "color": "#EAB308",
-      "degree": 2
+      "degree": 3
     },
     {
-      "id": "MAPT",
-      "label": "MAPT",
-      "layer": "gene",
-      "source": "OMIM",
-      "color": "#7C3AED",
-      "degree": 2
-    },
-    {
-      "id": "TREM2",
-      "label": "TREM2",
-      "layer": "gene",
-      "source": "ADSP",
-      "color": "#7C3AED",
-      "degree": 2
-    },
-    {
-      "id": "Plasma p-tau181",
-      "label": "Plasma p-tau181",
-      "layer": "biomarker",
-      "source": "NIA_AA",
-      "color": "#0EA5E9",
-      "degree": 2
-    },
-    {
-      "id": "Tau PET",
-      "label": "Tau PET",
-      "layer": "biomarker",
-      "source": "NIA_AA",
-      "color": "#0EA5E9",
-      "degree": 2
-    },
-    {
-      "id": "Posterior cortical atrophy",
-      "label": "Posterior cortical atrophy",
-      "layer": "stage",
-      "source": "UMLS",
-      "color": "#EAB308",
-      "degree": 2
-    },
-    {
-      "id": "Plasma GFAP",
-      "label": "Plasma GFAP",
-      "layer": "biomarker",
-      "source": "NIA_AA",
-      "color": "#0EA5E9",
-      "degree": 2
-    },
-    {
-      "id": "PSEN2",
-      "label": "PSEN2",
-      "layer": "gene",
-      "source": "OMIM",
-      "color": "#7C3AED",
-      "degree": 2
-    },
-    {
-      "id": "Hospitalization",
-      "label": "Hospitalization",
-      "layer": "outcome",
-      "source": "MeSH",
-      "color": "#EF4444",
-      "degree": 2
-    },
-    {
-      "id": "CSF total tau",
-      "label": "CSF total tau",
-      "layer": "biomarker",
-      "source": "NIA_AA",
-      "color": "#0EA5E9",
-      "degree": 2
-    },
-    {
-      "id": "Cognitive stimulation therapy",
-      "label": "Cognitive stimulation therapy",
+      "id": "Memantine",
+      "label": "Memantine",
       "layer": "treatment",
-      "source": "AAN_guideline",
+      "source": "ChEBI/AAN",
       "color": "#14B8A6",
       "degree": 2
     },
@@ -384,928 +264,1245 @@
       "id": "Physical exercise",
       "label": "Physical exercise",
       "layer": "treatment",
-      "source": "AAN_guideline",
+      "source": "ChEBI/AAN",
       "color": "#14B8A6",
       "degree": 2
     },
     {
-      "id": "Cardiovascular risk management",
-      "label": "Cardiovascular risk management",
-      "layer": "treatment",
-      "source": "AAN_guideline",
-      "color": "#14B8A6",
+      "id": "Total tau",
+      "label": "Total tau",
+      "layer": "biomarker",
+      "source": "NIA-AA/MeSH",
+      "color": "#0EA5E9",
       "degree": 2
     },
     {
-      "id": "Bradycardia",
-      "label": "Bradycardia",
+      "id": "AD dementia",
+      "label": "AD dementia",
+      "layer": "stage",
+      "source": "NIA-AA/UMLS",
+      "color": "#EAB308",
+      "degree": 2
+    },
+    {
+      "id": "ARIA-E",
+      "label": "ARIA-E",
       "layer": "outcome",
-      "source": "HPO",
+      "source": "HPO/MeSH",
+      "color": "#EF4444",
+      "degree": 2
+    },
+    {
+      "id": "Amyloid-beta 42/40 ratio",
+      "label": "Amyloid-beta 42/40 ratio",
+      "layer": "biomarker",
+      "source": "NIA-AA/MeSH",
+      "color": "#0EA5E9",
+      "degree": 2
+    },
+    {
+      "id": "ARIA-H",
+      "label": "ARIA-H",
+      "layer": "outcome",
+      "source": "HPO/MeSH",
+      "color": "#EF4444",
+      "degree": 2
+    },
+    {
+      "id": "Early-onset AD",
+      "label": "Early-onset AD",
+      "layer": "stage",
+      "source": "NIA-AA/UMLS",
+      "color": "#EAB308",
+      "degree": 2
+    },
+    {
+      "id": "FDG-PET hypometabolism",
+      "label": "FDG-PET hypometabolism",
+      "layer": "biomarker",
+      "source": "NIA-AA/MeSH",
+      "color": "#0EA5E9",
+      "degree": 1
+    },
+    {
+      "id": "Gantenerumab",
+      "label": "Gantenerumab",
+      "layer": "treatment",
+      "source": "ChEBI/AAN",
+      "color": "#14B8A6",
+      "degree": 1
+    },
+    {
+      "id": "Adverse events",
+      "label": "Adverse events",
+      "layer": "outcome",
+      "source": "HPO/MeSH",
       "color": "#EF4444",
       "degree": 1
     },
     {
-      "id": "CLU",
-      "label": "CLU",
-      "layer": "gene",
-      "source": "GWAS_Catalog",
-      "color": "#7C3AED",
-      "degree": 1
-    },
-    {
-      "id": "CR1",
-      "label": "CR1",
-      "layer": "gene",
-      "source": "GWAS_Catalog",
-      "color": "#7C3AED",
-      "degree": 1
-    },
-    {
-      "id": "SPI1",
-      "label": "SPI1",
-      "layer": "gene",
-      "source": "GWAS_Catalog",
-      "color": "#7C3AED",
-      "degree": 1
-    },
-    {
-      "id": "PLCG2",
-      "label": "PLCG2",
-      "layer": "gene",
-      "source": "ADSP",
-      "color": "#7C3AED",
+      "id": "Solanezumab",
+      "label": "Solanezumab",
+      "layer": "treatment",
+      "source": "ChEBI/AAN",
+      "color": "#14B8A6",
       "degree": 1
     },
     {
       "id": "BIN1",
       "label": "BIN1",
       "layer": "gene",
-      "source": "GWAS_Catalog",
+      "source": "OMIM/GWAS",
       "color": "#7C3AED",
       "degree": 1
     },
     {
-      "id": "CSF Abeta42/40 ratio",
-      "label": "CSF Abeta42/40 ratio",
-      "layer": "biomarker",
-      "source": "NIA_AA",
-      "color": "#0EA5E9",
-      "degree": 1
-    },
-    {
-      "id": "Plasma NfL",
-      "label": "Plasma NfL",
-      "layer": "biomarker",
-      "source": "NIA_AA",
-      "color": "#0EA5E9",
-      "degree": 1
-    },
-    {
-      "id": "CD33",
-      "label": "CD33",
+      "id": "PSEN2",
+      "label": "PSEN2",
       "layer": "gene",
-      "source": "GWAS_Catalog",
+      "source": "OMIM/GWAS",
       "color": "#7C3AED",
       "degree": 1
     },
     {
-      "id": "Mortality",
-      "label": "Mortality",
-      "layer": "outcome",
-      "source": "MeSH",
-      "color": "#EF4444",
-      "degree": 1
-    },
-    {
-      "id": "INPP5D",
-      "label": "INPP5D",
-      "layer": "gene",
-      "source": "GWAS_Catalog",
-      "color": "#7C3AED",
-      "degree": 1
-    },
-    {
-      "id": "Plasma p-tau217",
-      "label": "Plasma p-tau217",
-      "layer": "biomarker",
-      "source": "NIA_AA",
-      "color": "#0EA5E9",
-      "degree": 1
-    },
-    {
-      "id": "Plasma Abeta42/40",
-      "label": "Plasma Abeta42/40",
-      "layer": "biomarker",
-      "source": "NIA_AA",
-      "color": "#0EA5E9",
-      "degree": 1
-    },
-    {
-      "id": "Logopenic variant PPA",
-      "label": "Logopenic variant PPA",
+      "id": "Late-onset AD",
+      "label": "Late-onset AD",
       "layer": "stage",
-      "source": "UMLS",
+      "source": "NIA-AA/UMLS",
       "color": "#EAB308",
       "degree": 1
     },
     {
-      "id": "SORL1",
-      "label": "SORL1",
+      "id": "Amyloid clearance",
+      "label": "Amyloid clearance",
+      "layer": "outcome",
+      "source": "HPO/MeSH",
+      "color": "#EF4444",
+      "degree": 1
+    },
+    {
+      "id": "Vascular dementia",
+      "label": "Vascular dementia",
+      "layer": "stage",
+      "source": "NIA-AA/UMLS",
+      "color": "#EAB308",
+      "degree": 1
+    },
+    {
+      "id": "Dementia with Lewy bodies",
+      "label": "Dementia with Lewy bodies",
+      "layer": "stage",
+      "source": "NIA-AA/UMLS",
+      "color": "#EAB308",
+      "degree": 1
+    },
+    {
+      "id": "MAPT",
+      "label": "MAPT",
       "layer": "gene",
-      "source": "ADSP",
+      "source": "OMIM/GWAS",
       "color": "#7C3AED",
       "degree": 1
     },
     {
-      "id": "MS4A6A",
-      "label": "MS4A6A",
+      "id": "Cholinesterase inhibitor",
+      "label": "Cholinesterase inhibitor",
+      "layer": "treatment",
+      "source": "ChEBI/AAN",
+      "color": "#14B8A6",
+      "degree": 1
+    },
+    {
+      "id": "Rivastigmine",
+      "label": "Rivastigmine",
+      "layer": "treatment",
+      "source": "ChEBI/AAN",
+      "color": "#14B8A6",
+      "degree": 1
+    },
+    {
+      "id": "Functional decline",
+      "label": "Functional decline",
+      "layer": "outcome",
+      "source": "HPO/MeSH",
+      "color": "#EF4444",
+      "degree": 1
+    },
+    {
+      "id": "Hospitalization",
+      "label": "Hospitalization",
+      "layer": "outcome",
+      "source": "HPO/MeSH",
+      "color": "#EF4444",
+      "degree": 1
+    },
+    {
+      "id": "Galantamine",
+      "label": "Galantamine",
+      "layer": "treatment",
+      "source": "ChEBI/AAN",
+      "color": "#14B8A6",
+      "degree": 1
+    },
+    {
+      "id": "TREM2",
+      "label": "TREM2",
       "layer": "gene",
-      "source": "GWAS_Catalog",
-      "color": "#7C3AED",
-      "degree": 1
-    },
-    {
-      "id": "PICALM",
-      "label": "PICALM",
-      "layer": "gene",
-      "source": "GWAS_Catalog",
-      "color": "#7C3AED",
-      "degree": 1
-    },
-    {
-      "id": "MoCA",
-      "label": "MoCA",
-      "layer": "biomarker",
-      "source": "MeSH",
-      "color": "#0EA5E9",
-      "degree": 1
-    },
-    {
-      "id": "ADAS-Cog",
-      "label": "ADAS-Cog",
-      "layer": "biomarker",
-      "source": "MeSH",
-      "color": "#0EA5E9",
-      "degree": 1
-    },
-    {
-      "id": "ABCA7",
-      "label": "ABCA7",
-      "layer": "gene",
-      "source": "GWAS_Catalog",
+      "source": "OMIM/GWAS",
       "color": "#7C3AED",
       "degree": 1
     }
   ],
   "links": [
     {
-      "source": "AD dementia",
+      "source": "Alzheimer's disease",
+      "target": "Cognitive decline",
+      "relation": "associated_outcome",
+      "papers": 1729,
+      "evidence": "1729 co-mentioning abstracts"
+    },
+    {
+      "source": "APOE",
+      "target": "Alzheimer's disease",
+      "relation": "risk_gene_for",
+      "papers": 1366,
+      "evidence": "1366 co-mentioning abstracts"
+    },
+    {
+      "source": "APP",
+      "target": "Alzheimer's disease",
+      "relation": "risk_gene_for",
+      "papers": 1123,
+      "evidence": "1123 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Disease progression",
+      "relation": "associated_outcome",
+      "papers": 904,
+      "evidence": "904 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Mortality",
+      "relation": "associated_outcome",
+      "papers": 858,
+      "evidence": "858 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Donepezil",
+      "relation": "treated_with",
+      "papers": 836,
+      "evidence": "836 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Amyloid-beta 42",
+      "relation": "characterized_by_biomarker",
+      "papers": 786,
+      "evidence": "786 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Amyloid plaques",
+      "relation": "characterized_by_biomarker",
+      "papers": 676,
+      "evidence": "676 co-mentioning abstracts"
+    },
+    {
+      "source": "PSEN1",
+      "target": "Alzheimer's disease",
+      "relation": "risk_gene_for",
+      "papers": 634,
+      "evidence": "634 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Lecanemab",
+      "relation": "treated_with",
+      "papers": 569,
+      "evidence": "569 co-mentioning abstracts"
+    },
+    {
+      "source": "Mild cognitive impairment",
+      "target": "Cognitive decline",
+      "relation": "associated_outcome",
+      "papers": 510,
+      "evidence": "510 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Neurofibrillary tangles",
+      "relation": "characterized_by_biomarker",
+      "papers": 495,
+      "evidence": "495 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "MMSE",
+      "relation": "characterized_by_biomarker",
+      "papers": 430,
+      "evidence": "430 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
       "target": "Amyloid PET",
       "relation": "characterized_by_biomarker",
-      "tier": 3,
-      "evidence": "AD dementia shows cortical amyloid PET positivity."
+      "papers": 422,
+      "evidence": "422 co-mentioning abstracts"
     },
     {
-      "source": "AD dementia",
-      "target": "CSF Abeta42",
+      "source": "Alzheimer's disease",
+      "target": "Memantine",
+      "relation": "treated_with",
+      "papers": 348,
+      "evidence": "348 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Plasma GFAP",
       "relation": "characterized_by_biomarker",
-      "tier": 3,
-      "evidence": "Low CSF Abeta42 is a core AD biomarker."
+      "papers": 339,
+      "evidence": "339 co-mentioning abstracts"
     },
     {
-      "source": "AD dementia",
-      "target": "CSF Abeta42/40 ratio",
+      "source": "APOE",
+      "target": "Cognitive decline",
+      "relation": "gene_associated_outcome",
+      "papers": 333,
+      "evidence": "333 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "ARIA",
+      "relation": "associated_outcome",
+      "papers": 324,
+      "evidence": "324 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "p-tau217",
       "relation": "characterized_by_biomarker",
-      "tier": 3,
-      "evidence": "The CSF Abeta42/40 ratio improves amyloid classification over Abeta42 alone."
+      "papers": 304,
+      "evidence": "304 co-mentioning abstracts"
     },
     {
-      "source": "AD dementia",
-      "target": "CSF p-tau181",
+      "source": "Alzheimer's disease",
+      "target": "CDR",
       "relation": "characterized_by_biomarker",
-      "tier": 3,
-      "evidence": "Elevated CSF p-tau181 is a core AD tau biomarker."
+      "papers": 292,
+      "evidence": "292 co-mentioning abstracts"
     },
     {
-      "source": "AD dementia",
+      "source": "Alzheimer's disease",
+      "target": "Aducanumab",
+      "relation": "treated_with",
+      "papers": 285,
+      "evidence": "285 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Plasma NfL",
+      "relation": "characterized_by_biomarker",
+      "papers": 276,
+      "evidence": "276 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Donanemab",
+      "relation": "treated_with",
+      "papers": 273,
+      "evidence": "273 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Anti-amyloid antibody",
+      "relation": "treated_with",
+      "papers": 264,
+      "evidence": "264 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Rivastigmine",
+      "relation": "treated_with",
+      "papers": 262,
+      "evidence": "262 co-mentioning abstracts"
+    },
+    {
+      "source": "APOE",
+      "target": "Mild cognitive impairment",
+      "relation": "risk_gene_for",
+      "papers": 258,
+      "evidence": "258 co-mentioning abstracts"
+    },
+    {
+      "source": "TREM2",
+      "target": "Alzheimer's disease",
+      "relation": "risk_gene_for",
+      "papers": 248,
+      "evidence": "248 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "p-tau181",
+      "relation": "characterized_by_biomarker",
+      "papers": 242,
+      "evidence": "242 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Galantamine",
+      "relation": "treated_with",
+      "papers": 241,
+      "evidence": "241 co-mentioning abstracts"
+    },
+    {
+      "source": "Mild cognitive impairment",
+      "target": "MMSE",
+      "relation": "characterized_by_biomarker",
+      "papers": 238,
+      "evidence": "238 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Tau PET",
+      "relation": "characterized_by_biomarker",
+      "papers": 232,
+      "evidence": "232 co-mentioning abstracts"
+    },
+    {
+      "source": "Mild cognitive impairment",
+      "target": "Disease progression",
+      "relation": "associated_outcome",
+      "papers": 208,
+      "evidence": "208 co-mentioning abstracts"
+    },
+    {
+      "source": "MMSE",
+      "target": "Cognitive decline",
+      "relation": "predicts_outcome",
+      "papers": 197,
+      "evidence": "197 co-mentioning abstracts"
+    },
+    {
+      "source": "Mild cognitive impairment",
+      "target": "MoCA",
+      "relation": "characterized_by_biomarker",
+      "papers": 182,
+      "evidence": "182 co-mentioning abstracts"
+    },
+    {
+      "source": "Lecanemab",
+      "target": "ARIA",
+      "relation": "has_outcome",
+      "papers": 178,
+      "evidence": "178 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Cholinesterase inhibitor",
+      "relation": "treated_with",
+      "papers": 176,
+      "evidence": "176 co-mentioning abstracts"
+    },
+    {
+      "source": "APP",
+      "target": "Cognitive decline",
+      "relation": "gene_associated_outcome",
+      "papers": 169,
+      "evidence": "169 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
       "target": "Hippocampal atrophy",
       "relation": "characterized_by_biomarker",
-      "tier": 3,
-      "evidence": "Hippocampal and medial temporal atrophy are hallmark MRI findings."
+      "papers": 168,
+      "evidence": "168 co-mentioning abstracts"
     },
     {
-      "source": "APOE",
-      "target": "Amyloid PET",
+      "source": "APP",
+      "target": "Amyloid-beta 42",
       "relation": "modulates_biomarker",
-      "tier": 3,
-      "evidence": "APOE e4 accelerates fibrillar amyloid deposition and amyloid PET positivity."
+      "papers": 166,
+      "evidence": "166 co-mentioning abstracts"
+    },
+    {
+      "source": "Amyloid plaques",
+      "target": "Cognitive decline",
+      "relation": "predicts_outcome",
+      "papers": 164,
+      "evidence": "164 co-mentioning abstracts"
+    },
+    {
+      "source": "Neurofibrillary tangles",
+      "target": "Cognitive decline",
+      "relation": "predicts_outcome",
+      "papers": 147,
+      "evidence": "147 co-mentioning abstracts"
+    },
+    {
+      "source": "Amyloid-beta 42",
+      "target": "Cognitive decline",
+      "relation": "predicts_outcome",
+      "papers": 146,
+      "evidence": "146 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Total tau",
+      "relation": "characterized_by_biomarker",
+      "papers": 145,
+      "evidence": "145 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Amyloid-beta 42/40 ratio",
+      "relation": "characterized_by_biomarker",
+      "papers": 144,
+      "evidence": "144 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Functional decline",
+      "relation": "associated_outcome",
+      "papers": 143,
+      "evidence": "143 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "MoCA",
+      "relation": "characterized_by_biomarker",
+      "papers": 142,
+      "evidence": "142 co-mentioning abstracts"
     },
     {
       "source": "APOE",
-      "target": "Donanemab",
-      "relation": "pharmacogenomic_consideration",
-      "tier": 3,
-      "evidence": "APOE e4 status stratifies ARIA risk during donanemab therapy."
+      "target": "Amyloid-beta 42",
+      "relation": "modulates_biomarker",
+      "papers": 137,
+      "evidence": "137 co-mentioning abstracts"
+    },
+    {
+      "source": "APP",
+      "target": "Amyloid plaques",
+      "relation": "modulates_biomarker",
+      "papers": 135,
+      "evidence": "135 co-mentioning abstracts"
+    },
+    {
+      "source": "APOE",
+      "target": "Disease progression",
+      "relation": "gene_associated_outcome",
+      "papers": 132,
+      "evidence": "132 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Adverse events",
+      "relation": "associated_outcome",
+      "papers": 129,
+      "evidence": "129 co-mentioning abstracts"
     },
     {
       "source": "APOE",
       "target": "Late-onset AD",
       "relation": "risk_gene_for",
-      "tier": 3,
-      "evidence": "APOE e4 is the strongest common genetic risk factor; e2 is protective."
+      "papers": 125,
+      "evidence": "125 co-mentioning abstracts"
     },
     {
       "source": "APOE",
-      "target": "Lecanemab",
-      "relation": "pharmacogenomic_consideration",
-      "tier": 3,
-      "evidence": "APOE e4 homozygotes have markedly higher ARIA risk; genotype-informed counseling and MRI monitoring are advised."
-    },
-    {
-      "source": "APP",
       "target": "Amyloid PET",
       "relation": "modulates_biomarker",
-      "tier": 3,
-      "evidence": "APP mutations drive fibrillar amyloid deposition detected by amyloid PET."
+      "papers": 121,
+      "evidence": "121 co-mentioning abstracts"
     },
     {
-      "source": "APP",
-      "target": "CSF Abeta42",
+      "source": "Alzheimer's disease",
+      "target": "Amyloid clearance",
+      "relation": "associated_outcome",
+      "papers": 119,
+      "evidence": "119 co-mentioning abstracts"
+    },
+    {
+      "source": "Mild cognitive impairment",
+      "target": "Lecanemab",
+      "relation": "treated_with",
+      "papers": 117,
+      "evidence": "117 co-mentioning abstracts"
+    },
+    {
+      "source": "Mild cognitive impairment",
+      "target": "Amyloid PET",
+      "relation": "characterized_by_biomarker",
+      "papers": 114,
+      "evidence": "114 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Physical exercise",
+      "relation": "treated_with",
+      "papers": 112,
+      "evidence": "112 co-mentioning abstracts"
+    },
+    {
+      "source": "Lecanemab",
+      "target": "Cognitive decline",
+      "relation": "has_outcome",
+      "papers": 112,
+      "evidence": "112 co-mentioning abstracts"
+    },
+    {
+      "source": "APOE",
+      "target": "Amyloid plaques",
       "relation": "modulates_biomarker",
-      "tier": 3,
-      "evidence": "APP mutations increase amyloidogenic Abeta42 production, lowering CSF Abeta42."
+      "papers": 110,
+      "evidence": "110 co-mentioning abstracts"
     },
     {
-      "source": "APP",
-      "target": "Early-onset AD",
-      "relation": "causal_gene_for",
-      "tier": 3,
-      "evidence": "Autosomal-dominant amyloid precursor protein mutations cause early-onset AD."
+      "source": "PSEN1",
+      "target": "Cognitive decline",
+      "relation": "gene_associated_outcome",
+      "papers": 110,
+      "evidence": "110 co-mentioning abstracts"
     },
     {
-      "source": "Aducanumab",
-      "target": "ARIA-E",
-      "relation": "has_outcome",
-      "tier": 3,
-      "evidence": "ARIA-E was the most common aducanumab adverse event."
+      "source": "Mild cognitive impairment",
+      "target": "CDR",
+      "relation": "characterized_by_biomarker",
+      "papers": 108,
+      "evidence": "108 co-mentioning abstracts"
     },
     {
-      "source": "Donanemab",
-      "target": "ARIA-E",
-      "relation": "has_outcome",
-      "tier": 3,
-      "evidence": "ARIA-E is the principal donanemab safety risk."
+      "source": "Alzheimer's disease",
+      "target": "ADAS-Cog",
+      "relation": "characterized_by_biomarker",
+      "papers": 107,
+      "evidence": "107 co-mentioning abstracts"
     },
     {
-      "source": "Donanemab",
-      "target": "Amyloid plaque reduction",
-      "relation": "has_outcome",
-      "tier": 3,
-      "evidence": "Donanemab produces rapid amyloid clearance (TRAILBLAZER-ALZ 2)."
-    },
-    {
-      "source": "Donanemab",
-      "target": "Slowing of cognitive decline",
-      "relation": "has_outcome",
-      "tier": 3,
-      "evidence": "Donanemab slowed iADRS decline, greatest in low-tau participants."
+      "source": "APOE",
+      "target": "MMSE",
+      "relation": "modulates_biomarker",
+      "papers": 106,
+      "evidence": "106 co-mentioning abstracts"
     },
     {
       "source": "Donepezil",
-      "target": "Symptomatic benefit",
+      "target": "Cognitive decline",
       "relation": "has_outcome",
-      "tier": 3,
-      "evidence": "Donepezil yields modest symptomatic cognitive benefit."
+      "papers": 105,
+      "evidence": "105 co-mentioning abstracts"
     },
     {
-      "source": "Galantamine",
-      "target": "Symptomatic benefit",
-      "relation": "has_outcome",
-      "tier": 3,
-      "evidence": "Galantamine yields modest symptomatic benefit."
+      "source": "CDR",
+      "target": "Cognitive decline",
+      "relation": "predicts_outcome",
+      "papers": 104,
+      "evidence": "104 co-mentioning abstracts"
     },
     {
-      "source": "Lecanemab",
+      "source": "PSEN1",
+      "target": "Amyloid-beta 42",
+      "relation": "modulates_biomarker",
+      "papers": 104,
+      "evidence": "104 co-mentioning abstracts"
+    },
+    {
+      "source": "APOE",
+      "target": "Mortality",
+      "relation": "gene_associated_outcome",
+      "papers": 103,
+      "evidence": "103 co-mentioning abstracts"
+    },
+    {
+      "source": "APOE",
+      "target": "Plasma NfL",
+      "relation": "modulates_biomarker",
+      "papers": 102,
+      "evidence": "102 co-mentioning abstracts"
+    },
+    {
+      "source": "Donanemab",
+      "target": "ARIA",
+      "relation": "has_outcome",
+      "papers": 101,
+      "evidence": "101 co-mentioning abstracts"
+    },
+    {
+      "source": "MoCA",
+      "target": "Cognitive decline",
+      "relation": "predicts_outcome",
+      "papers": 101,
+      "evidence": "101 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
       "target": "ARIA-E",
-      "relation": "has_outcome",
-      "tier": 3,
-      "evidence": "ARIA-E (edema) is the principal lecanemab safety risk, elevated in e4 homozygotes."
-    },
-    {
-      "source": "Lecanemab",
-      "target": "Amyloid plaque reduction",
-      "relation": "has_outcome",
-      "tier": 3,
-      "evidence": "Lecanemab produces marked amyloid PET reduction (CLARITY-AD)."
-    },
-    {
-      "source": "Lecanemab",
-      "target": "Slowing of cognitive decline",
-      "relation": "has_outcome",
-      "tier": 3,
-      "evidence": "Lecanemab slowed CDR-SB decline by ~27% over 18 months."
-    },
-    {
-      "source": "MCI due to AD",
-      "target": "Amyloid PET",
-      "relation": "characterized_by_biomarker",
-      "tier": 3,
-      "evidence": "MCI due to AD requires biomarker evidence of amyloid pathology."
-    },
-    {
-      "source": "MCI due to AD",
-      "target": "Donanemab",
-      "relation": "treated_with",
-      "tier": 3,
-      "evidence": "Donanemab is indicated for early symptomatic amyloid-positive AD."
-    },
-    {
-      "source": "MCI due to AD",
-      "target": "Lecanemab",
-      "relation": "treated_with",
-      "tier": 3,
-      "evidence": "Lecanemab is indicated for amyloid-confirmed MCI due to AD and mild AD dementia."
-    },
-    {
-      "source": "Memantine",
-      "target": "Symptomatic benefit",
-      "relation": "has_outcome",
-      "tier": 3,
-      "evidence": "Memantine provides modest benefit in moderate-severe AD."
-    },
-    {
-      "source": "Mild AD dementia",
-      "target": "Donanemab",
-      "relation": "treated_with",
-      "tier": 3,
-      "evidence": "Donanemab targets early symptomatic AD with confirmed amyloid."
-    },
-    {
-      "source": "Mild AD dementia",
-      "target": "Donepezil",
-      "relation": "treated_with",
-      "tier": 3,
-      "evidence": "Cholinesterase inhibitors are first-line for mild-moderate AD dementia."
-    },
-    {
-      "source": "Mild AD dementia",
-      "target": "Galantamine",
-      "relation": "treated_with",
-      "tier": 3,
-      "evidence": "Galantamine is indicated for mild-moderate AD dementia."
-    },
-    {
-      "source": "Mild AD dementia",
-      "target": "Lecanemab",
-      "relation": "treated_with",
-      "tier": 3,
-      "evidence": "Lecanemab targets early symptomatic AD with confirmed amyloid."
-    },
-    {
-      "source": "Mild AD dementia",
-      "target": "Rivastigmine",
-      "relation": "treated_with",
-      "tier": 3,
-      "evidence": "Rivastigmine is indicated for mild-moderate AD dementia."
-    },
-    {
-      "source": "Moderate AD dementia",
-      "target": "Donepezil",
-      "relation": "treated_with",
-      "tier": 3,
-      "evidence": "Donepezil is indicated across mild-to-severe AD dementia."
-    },
-    {
-      "source": "Moderate AD dementia",
-      "target": "Memantine",
-      "relation": "treated_with",
-      "tier": 3,
-      "evidence": "Memantine is indicated for moderate-to-severe AD dementia."
-    },
-    {
-      "source": "PSEN1",
-      "target": "Amyloid PET",
-      "relation": "modulates_biomarker",
-      "tier": 3,
-      "evidence": "PSEN1 carriers show early amyloid PET positivity."
-    },
-    {
-      "source": "PSEN1",
-      "target": "CSF Abeta42",
-      "relation": "modulates_biomarker",
-      "tier": 3,
-      "evidence": "PSEN1 alters gamma-secretase cleavage, raising Abeta42/40 aggregation propensity."
-    },
-    {
-      "source": "PSEN1",
-      "target": "Early-onset AD",
-      "relation": "causal_gene_for",
-      "tier": 3,
-      "evidence": "PSEN1 mutations are the most common cause of autosomal-dominant early-onset AD."
-    },
-    {
-      "source": "PSEN2",
-      "target": "Early-onset AD",
-      "relation": "causal_gene_for",
-      "tier": 3,
-      "evidence": "PSEN2 mutations cause autosomal-dominant early-onset AD."
-    },
-    {
-      "source": "Preclinical AD",
-      "target": "Amyloid PET",
-      "relation": "characterized_by_biomarker",
-      "tier": 3,
-      "evidence": "Preclinical AD is defined by amyloid positivity with normal cognition."
-    },
-    {
-      "source": "Rivastigmine",
-      "target": "Symptomatic benefit",
-      "relation": "has_outcome",
-      "tier": 3,
-      "evidence": "Rivastigmine yields modest symptomatic benefit."
-    },
-    {
-      "source": "Severe AD dementia",
-      "target": "Donepezil",
-      "relation": "treated_with",
-      "tier": 3,
-      "evidence": "Donepezil is approved for severe AD dementia."
-    },
-    {
-      "source": "Severe AD dementia",
-      "target": "Memantine",
-      "relation": "treated_with",
-      "tier": 3,
-      "evidence": "Memantine is indicated for moderate-to-severe AD dementia."
-    },
-    {
-      "source": "ABCA7",
-      "target": "Late-onset AD",
-      "relation": "risk_gene_for",
-      "tier": 2,
-      "evidence": "ABCA7 loss-of-function variants increase late-onset AD risk."
-    },
-    {
-      "source": "AD dementia",
-      "target": "ADAS-Cog",
-      "relation": "characterized_by_biomarker",
-      "tier": 2,
-      "evidence": "ADAS-Cog is the standard cognitive endpoint in AD trials."
-    },
-    {
-      "source": "AD dementia",
-      "target": "CSF p-tau217",
-      "relation": "characterized_by_biomarker",
-      "tier": 2,
-      "evidence": "p-tau217 has the strongest separation of AD from non-AD."
-    },
-    {
-      "source": "AD dementia",
-      "target": "CSF total tau",
-      "relation": "characterized_by_biomarker",
-      "tier": 2,
-      "evidence": "Elevated CSF total tau indexes neuronal injury (N) in AD."
-    },
-    {
-      "source": "AD dementia",
-      "target": "Cognitive stimulation therapy",
-      "relation": "treated_with",
-      "tier": 2,
-      "evidence": "Cognitive stimulation therapy is recommended for mild-moderate dementia."
-    },
-    {
-      "source": "AD dementia",
-      "target": "FDG-PET hypometabolism",
-      "relation": "characterized_by_biomarker",
-      "tier": 2,
-      "evidence": "Temporoparietal FDG-PET hypometabolism is typical of AD."
-    },
-    {
-      "source": "AD dementia",
-      "target": "Functional decline",
       "relation": "associated_outcome",
-      "tier": 2,
-      "evidence": "Progressive loss of activities of daily living defines AD dementia course."
+      "papers": 97,
+      "evidence": "97 co-mentioning abstracts"
     },
     {
-      "source": "AD dementia",
-      "target": "Tau PET",
-      "relation": "characterized_by_biomarker",
-      "tier": 2,
-      "evidence": "Tau PET tracks neurofibrillary tangle burden in AD dementia."
-    },
-    {
-      "source": "APOE",
-      "target": "Aducanumab",
-      "relation": "pharmacogenomic_consideration",
-      "tier": 2,
-      "evidence": "APOE e4 carriers show higher ARIA-E incidence with aducanumab."
-    },
-    {
-      "source": "APOE",
-      "target": "CSF Abeta42",
-      "relation": "modulates_biomarker",
-      "tier": 2,
-      "evidence": "APOE e4 lowers CSF Abeta42 reflecting amyloid sequestration."
-    },
-    {
-      "source": "Aducanumab",
+      "source": "Alzheimer's disease",
       "target": "ARIA-H",
-      "relation": "has_outcome",
-      "tier": 2,
-      "evidence": "ARIA-H is observed with aducanumab."
-    },
-    {
-      "source": "Aducanumab",
-      "target": "Amyloid plaque reduction",
-      "relation": "has_outcome",
-      "tier": 2,
-      "evidence": "Aducanumab reduces amyloid PET dose-dependently."
+      "relation": "associated_outcome",
+      "papers": 96,
+      "evidence": "96 co-mentioning abstracts"
     },
     {
       "source": "Amyloid PET",
-      "target": "Progression to AD dementia",
-      "relation": "predicts_outcome",
-      "tier": 2,
-      "evidence": "Amyloid positivity in MCI predicts progression to AD dementia."
-    },
-    {
-      "source": "BIN1",
-      "target": "Late-onset AD",
-      "relation": "risk_gene_for",
-      "tier": 2,
-      "evidence": "BIN1 is the second strongest common late-onset AD risk locus after APOE."
-    },
-    {
-      "source": "CLU",
-      "target": "Late-onset AD",
-      "relation": "risk_gene_for",
-      "tier": 2,
-      "evidence": "CLU (clusterin) is a GWAS-confirmed late-onset AD risk locus."
-    },
-    {
-      "source": "CR1",
-      "target": "Late-onset AD",
-      "relation": "risk_gene_for",
-      "tier": 2,
-      "evidence": "CR1 complement-pathway locus is associated with late-onset AD."
-    },
-    {
-      "source": "CSF p-tau181",
       "target": "Cognitive decline",
       "relation": "predicts_outcome",
-      "tier": 2,
-      "evidence": "Elevated p-tau181 predicts faster cognitive decline."
+      "papers": 96,
+      "evidence": "96 co-mentioning abstracts"
     },
     {
-      "source": "CSF p-tau217",
-      "target": "Progression to AD dementia",
-      "relation": "predicts_outcome",
-      "tier": 2,
-      "evidence": "p-tau217 strongly predicts progression and tau accumulation."
+      "source": "APOE",
+      "target": "ARIA",
+      "relation": "gene_associated_outcome",
+      "papers": 95,
+      "evidence": "95 co-mentioning abstracts"
     },
     {
-      "source": "Cardiovascular risk management",
-      "target": "Slowing of cognitive decline",
+      "source": "APOE",
+      "target": "p-tau217",
+      "relation": "modulates_biomarker",
+      "papers": 95,
+      "evidence": "95 co-mentioning abstracts"
+    },
+    {
+      "source": "Anti-amyloid antibody",
+      "target": "ARIA",
       "relation": "has_outcome",
-      "tier": 2,
-      "evidence": "Vascular risk control slows decline and lowers dementia incidence."
-    },
-    {
-      "source": "Cognitive stimulation therapy",
-      "target": "Symptomatic benefit",
-      "relation": "has_outcome",
-      "tier": 2,
-      "evidence": "Cognitive stimulation improves cognition/quality of life in mild-moderate dementia."
-    },
-    {
-      "source": "Donanemab",
-      "target": "ARIA-H",
-      "relation": "has_outcome",
-      "tier": 2,
-      "evidence": "ARIA-H occurs with donanemab and requires MRI monitoring."
-    },
-    {
-      "source": "Donepezil",
-      "target": "Bradycardia",
-      "relation": "has_outcome",
-      "tier": 2,
-      "evidence": "Donepezil can cause bradycardia/syncope via cholinergic tone."
-    },
-    {
-      "source": "Donepezil",
-      "target": "Nausea",
-      "relation": "has_outcome",
-      "tier": 2,
-      "evidence": "Cholinergic nausea/GI effects are common with donepezil."
-    },
-    {
-      "source": "FDG-PET hypometabolism",
-      "target": "Functional decline",
-      "relation": "predicts_outcome",
-      "tier": 2,
-      "evidence": "Temporoparietal hypometabolism predicts functional decline."
-    },
-    {
-      "source": "Galantamine",
-      "target": "Nausea",
-      "relation": "has_outcome",
-      "tier": 2,
-      "evidence": "GI adverse effects are common with galantamine."
-    },
-    {
-      "source": "Hippocampal atrophy",
-      "target": "Cognitive decline",
-      "relation": "predicts_outcome",
-      "tier": 2,
-      "evidence": "Hippocampal atrophy rate predicts cognitive trajectory."
-    },
-    {
-      "source": "Late-onset AD",
-      "target": "Cardiovascular risk management",
-      "relation": "treated_with",
-      "tier": 2,
-      "evidence": "Midlife vascular risk control reduces dementia risk."
-    },
-    {
-      "source": "Lecanemab",
-      "target": "ARIA-H",
-      "relation": "has_outcome",
-      "tier": 2,
-      "evidence": "ARIA-H (microhemorrhage/siderosis) occurs with lecanemab."
-    },
-    {
-      "source": "Logopenic variant PPA",
-      "target": "Amyloid PET",
-      "relation": "characterized_by_biomarker",
-      "tier": 2,
-      "evidence": "Logopenic variant PPA is most often an atypical amyloid-positive AD presentation."
+      "papers": 95,
+      "evidence": "95 co-mentioning abstracts"
     },
     {
       "source": "MAPT",
-      "target": "Tau PET",
-      "relation": "modulates_biomarker",
-      "tier": 2,
-      "evidence": "MAPT influences tau aggregation measured by tau PET."
-    },
-    {
-      "source": "MCI due to AD",
-      "target": "CSF p-tau217",
-      "relation": "characterized_by_biomarker",
-      "tier": 2,
-      "evidence": "p-tau217 elevation supports AD as the cause of MCI."
-    },
-    {
-      "source": "MCI due to AD",
-      "target": "Hippocampal atrophy",
-      "relation": "characterized_by_biomarker",
-      "tier": 2,
-      "evidence": "Medial temporal atrophy supports neurodegeneration in prodromal AD."
-    },
-    {
-      "source": "MCI due to AD",
-      "target": "MoCA",
-      "relation": "characterized_by_biomarker",
-      "tier": 2,
-      "evidence": "The MoCA is sensitive to amnestic MCI."
-    },
-    {
-      "source": "MCI due to AD",
-      "target": "Plasma Abeta42/40",
-      "relation": "characterized_by_biomarker",
-      "tier": 2,
-      "evidence": "A low plasma Abeta42/40 ratio is an accessible amyloid screening marker."
-    },
-    {
-      "source": "MCI due to AD",
-      "target": "Plasma p-tau181",
-      "relation": "characterized_by_biomarker",
-      "tier": 2,
-      "evidence": "Plasma p-tau181 rises early along the AD continuum."
-    },
-    {
-      "source": "Mild AD dementia",
-      "target": "CDR",
-      "relation": "characterized_by_biomarker",
-      "tier": 2,
-      "evidence": "Mild AD dementia corresponds to CDR 1."
-    },
-    {
-      "source": "Mild AD dementia",
-      "target": "MMSE",
-      "relation": "characterized_by_biomarker",
-      "tier": 2,
-      "evidence": "Mild AD dementia typically corresponds to MMSE ~21-26."
-    },
-    {
-      "source": "Moderate AD dementia",
-      "target": "CDR",
-      "relation": "characterized_by_biomarker",
-      "tier": 2,
-      "evidence": "Moderate AD dementia corresponds to CDR 2."
-    },
-    {
-      "source": "Moderate AD dementia",
-      "target": "MMSE",
-      "relation": "characterized_by_biomarker",
-      "tier": 2,
-      "evidence": "Moderate AD dementia typically corresponds to MMSE ~10-20."
-    },
-    {
-      "source": "PICALM",
-      "target": "Late-onset AD",
+      "target": "Alzheimer's disease",
       "relation": "risk_gene_for",
-      "tier": 2,
-      "evidence": "PICALM modulates APP processing and is a confirmed AD risk locus."
+      "papers": 95,
+      "evidence": "95 co-mentioning abstracts"
     },
     {
-      "source": "PLCG2",
-      "target": "Late-onset AD",
-      "relation": "protective_gene_for",
-      "tier": 2,
-      "evidence": "PLCG2 P522R is a protective microglial variant."
+      "source": "Mild cognitive impairment",
+      "target": "Amyloid-beta 42",
+      "relation": "characterized_by_biomarker",
+      "papers": 95,
+      "evidence": "95 co-mentioning abstracts"
     },
     {
-      "source": "PSEN2",
-      "target": "CSF Abeta42",
+      "source": "APOE",
+      "target": "Plasma GFAP",
       "relation": "modulates_biomarker",
-      "tier": 2,
-      "evidence": "PSEN2 alters gamma-secretase cleavage and amyloid processing."
+      "papers": 93,
+      "evidence": "93 co-mentioning abstracts"
+    },
+    {
+      "source": "Amyloid plaques",
+      "target": "Lecanemab",
+      "relation": "biomarker_guides_treatment",
+      "papers": 91,
+      "evidence": "91 co-mentioning abstracts"
+    },
+    {
+      "source": "APOE",
+      "target": "Lecanemab",
+      "relation": "pharmacogenomic_consideration",
+      "papers": 90,
+      "evidence": "90 co-mentioning abstracts"
+    },
+    {
+      "source": "Neurofibrillary tangles",
+      "target": "Disease progression",
+      "relation": "predicts_outcome",
+      "papers": 90,
+      "evidence": "90 co-mentioning abstracts"
+    },
+    {
+      "source": "APP",
+      "target": "Donepezil",
+      "relation": "pharmacogenomic_consideration",
+      "papers": 89,
+      "evidence": "89 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "FDG-PET hypometabolism",
+      "relation": "characterized_by_biomarker",
+      "papers": 89,
+      "evidence": "89 co-mentioning abstracts"
+    },
+    {
+      "source": "APP",
+      "target": "Disease progression",
+      "relation": "gene_associated_outcome",
+      "papers": 88,
+      "evidence": "88 co-mentioning abstracts"
+    },
+    {
+      "source": "APOE",
+      "target": "p-tau181",
+      "relation": "modulates_biomarker",
+      "papers": 86,
+      "evidence": "86 co-mentioning abstracts"
+    },
+    {
+      "source": "Mild cognitive impairment",
+      "target": "Amyloid plaques",
+      "relation": "characterized_by_biomarker",
+      "papers": 86,
+      "evidence": "86 co-mentioning abstracts"
+    },
+    {
+      "source": "Plasma GFAP",
+      "target": "Cognitive decline",
+      "relation": "predicts_outcome",
+      "papers": 85,
+      "evidence": "85 co-mentioning abstracts"
+    },
+    {
+      "source": "Neurofibrillary tangles",
+      "target": "Mortality",
+      "relation": "predicts_outcome",
+      "papers": 84,
+      "evidence": "84 co-mentioning abstracts"
+    },
+    {
+      "source": "APOE",
+      "target": "CDR",
+      "relation": "modulates_biomarker",
+      "papers": 83,
+      "evidence": "83 co-mentioning abstracts"
+    },
+    {
+      "source": "p-tau217",
+      "target": "Cognitive decline",
+      "relation": "predicts_outcome",
+      "papers": 81,
+      "evidence": "81 co-mentioning abstracts"
+    },
+    {
+      "source": "Amyloid plaques",
+      "target": "Disease progression",
+      "relation": "predicts_outcome",
+      "papers": 80,
+      "evidence": "80 co-mentioning abstracts"
+    },
+    {
+      "source": "Lecanemab",
+      "target": "Disease progression",
+      "relation": "has_outcome",
+      "papers": 78,
+      "evidence": "78 co-mentioning abstracts"
+    },
+    {
+      "source": "Preclinical AD",
+      "target": "Cognitive decline",
+      "relation": "associated_outcome",
+      "papers": 78,
+      "evidence": "78 co-mentioning abstracts"
+    },
+    {
+      "source": "Aducanumab",
+      "target": "ARIA",
+      "relation": "has_outcome",
+      "papers": 77,
+      "evidence": "77 co-mentioning abstracts"
+    },
+    {
+      "source": "Mild cognitive impairment",
+      "target": "ARIA",
+      "relation": "associated_outcome",
+      "papers": 77,
+      "evidence": "77 co-mentioning abstracts"
     },
     {
       "source": "Plasma NfL",
       "target": "Cognitive decline",
       "relation": "predicts_outcome",
-      "tier": 2,
-      "evidence": "Plasma NfL indexes neurodegeneration and predicts decline."
+      "papers": 77,
+      "evidence": "77 co-mentioning abstracts"
     },
     {
-      "source": "Plasma p-tau181",
-      "target": "Cognitive decline",
-      "relation": "predicts_outcome",
-      "tier": 2,
-      "evidence": "Plasma p-tau181 predicts subsequent cognitive decline."
+      "source": "APP",
+      "target": "Mortality",
+      "relation": "gene_associated_outcome",
+      "papers": 75,
+      "evidence": "75 co-mentioning abstracts"
     },
     {
-      "source": "Plasma p-tau217",
-      "target": "Progression to AD dementia",
-      "relation": "predicts_outcome",
-      "tier": 2,
-      "evidence": "Plasma p-tau217 predicts incident AD dementia in at-risk individuals."
+      "source": "APP",
+      "target": "Neurofibrillary tangles",
+      "relation": "modulates_biomarker",
+      "papers": 74,
+      "evidence": "74 co-mentioning abstracts"
     },
     {
-      "source": "Posterior cortical atrophy",
-      "target": "Amyloid PET",
-      "relation": "characterized_by_biomarker",
-      "tier": 2,
-      "evidence": "Most PCA cases are amyloid-positive (atypical AD)."
+      "source": "Donepezil",
+      "target": "Mortality",
+      "relation": "has_outcome",
+      "papers": 74,
+      "evidence": "74 co-mentioning abstracts"
     },
     {
-      "source": "Posterior cortical atrophy",
-      "target": "FDG-PET hypometabolism",
-      "relation": "characterized_by_biomarker",
-      "tier": 2,
-      "evidence": "PCA shows occipito-parietal hypometabolism with underlying AD pathology."
+      "source": "PSEN1",
+      "target": "Amyloid plaques",
+      "relation": "modulates_biomarker",
+      "papers": 74,
+      "evidence": "74 co-mentioning abstracts"
+    },
+    {
+      "source": "APOE",
+      "target": "Preclinical AD",
+      "relation": "risk_gene_for",
+      "papers": 73,
+      "evidence": "73 co-mentioning abstracts"
+    },
+    {
+      "source": "PSEN1",
+      "target": "Early-onset AD",
+      "relation": "risk_gene_for",
+      "papers": 71,
+      "evidence": "71 co-mentioning abstracts"
     },
     {
       "source": "Preclinical AD",
-      "target": "CSF Abeta42",
+      "target": "Amyloid PET",
       "relation": "characterized_by_biomarker",
-      "tier": 2,
-      "evidence": "Low CSF Abeta42 marks the earliest amyloid (A+) stage."
+      "papers": 71,
+      "evidence": "71 co-mentioning abstracts"
     },
     {
-      "source": "Rivastigmine",
-      "target": "Nausea",
-      "relation": "has_outcome",
-      "tier": 2,
-      "evidence": "GI adverse effects are common; patch reduces them."
-    },
-    {
-      "source": "SORL1",
-      "target": "Late-onset AD",
-      "relation": "risk_gene_for",
-      "tier": 2,
-      "evidence": "SORL1 variants affect APP trafficking and increase AD risk."
-    },
-    {
-      "source": "Severe AD dementia",
-      "target": "CDR",
-      "relation": "characterized_by_biomarker",
-      "tier": 2,
-      "evidence": "Severe AD dementia corresponds to CDR 3."
-    },
-    {
-      "source": "Severe AD dementia",
-      "target": "Hospitalization",
-      "relation": "associated_outcome",
-      "tier": 2,
-      "evidence": "Advanced AD is associated with frequent hospitalization."
-    },
-    {
-      "source": "Severe AD dementia",
-      "target": "MMSE",
-      "relation": "characterized_by_biomarker",
-      "tier": 2,
-      "evidence": "Severe AD dementia typically corresponds to MMSE <10."
-    },
-    {
-      "source": "Severe AD dementia",
-      "target": "Mortality",
-      "relation": "associated_outcome",
-      "tier": 2,
-      "evidence": "Severe AD dementia carries high short-term mortality."
-    },
-    {
-      "source": "TREM2",
-      "target": "Late-onset AD",
-      "relation": "risk_gene_for",
-      "tier": 2,
-      "evidence": "Rare TREM2 R47H variant confers substantially increased AD risk via microglial dysfunction."
-    },
-    {
-      "source": "AD dementia",
-      "target": "Physical exercise",
-      "relation": "treated_with",
-      "tier": 1,
-      "evidence": "Physical activity is recommended as supportive management."
-    },
-    {
-      "source": "CD33",
-      "target": "Late-onset AD",
-      "relation": "risk_gene_for",
-      "tier": 1,
-      "evidence": "CD33 microglial locus is associated with late-onset AD."
-    },
-    {
-      "source": "CSF total tau",
+      "source": "Tau PET",
       "target": "Cognitive decline",
       "relation": "predicts_outcome",
-      "tier": 1,
-      "evidence": "High total tau is associated with faster decline."
+      "papers": 71,
+      "evidence": "71 co-mentioning abstracts"
     },
     {
-      "source": "INPP5D",
-      "target": "Late-onset AD",
-      "relation": "risk_gene_for",
-      "tier": 1,
-      "evidence": "INPP5D (SHIP1) microglial locus is associated with AD."
-    },
-    {
-      "source": "MAPT",
-      "target": "CSF p-tau181",
-      "relation": "modulates_biomarker",
-      "tier": 1,
-      "evidence": "MAPT haplotypes modulate tau phosphorylation markers."
-    },
-    {
-      "source": "MMSE",
-      "target": "Functional decline",
+      "source": "Hippocampal atrophy",
+      "target": "Cognitive decline",
       "relation": "predicts_outcome",
-      "tier": 1,
-      "evidence": "Lower MMSE tracks loss of instrumental function."
+      "papers": 70,
+      "evidence": "70 co-mentioning abstracts"
     },
     {
-      "source": "MS4A6A",
-      "target": "Late-onset AD",
-      "relation": "risk_gene_for",
-      "tier": 1,
-      "evidence": "MS4A gene cluster is associated with late-onset AD risk."
+      "source": "Mild cognitive impairment",
+      "target": "Mortality",
+      "relation": "associated_outcome",
+      "papers": 70,
+      "evidence": "70 co-mentioning abstracts"
     },
     {
-      "source": "Moderate AD dementia",
+      "source": "CDR",
+      "target": "Disease progression",
+      "relation": "predicts_outcome",
+      "papers": 69,
+      "evidence": "69 co-mentioning abstracts"
+    },
+    {
+      "source": "CDR",
+      "target": "Lecanemab",
+      "relation": "biomarker_guides_treatment",
+      "papers": 69,
+      "evidence": "69 co-mentioning abstracts"
+    },
+    {
+      "source": "Mild cognitive impairment",
+      "target": "p-tau217",
+      "relation": "characterized_by_biomarker",
+      "papers": 69,
+      "evidence": "69 co-mentioning abstracts"
+    },
+    {
+      "source": "Amyloid plaques",
+      "target": "Mortality",
+      "relation": "predicts_outcome",
+      "papers": 68,
+      "evidence": "68 co-mentioning abstracts"
+    },
+    {
+      "source": "Mild cognitive impairment",
+      "target": "p-tau181",
+      "relation": "characterized_by_biomarker",
+      "papers": 68,
+      "evidence": "68 co-mentioning abstracts"
+    },
+    {
+      "source": "p-tau181",
+      "target": "Cognitive decline",
+      "relation": "predicts_outcome",
+      "papers": 67,
+      "evidence": "67 co-mentioning abstracts"
+    },
+    {
+      "source": "Amyloid plaques",
+      "target": "ARIA",
+      "relation": "predicts_outcome",
+      "papers": 66,
+      "evidence": "66 co-mentioning abstracts"
+    },
+    {
+      "source": "APOE",
+      "target": "Hippocampal atrophy",
+      "relation": "modulates_biomarker",
+      "papers": 64,
+      "evidence": "64 co-mentioning abstracts"
+    },
+    {
+      "source": "APOE",
+      "target": "Neurofibrillary tangles",
+      "relation": "modulates_biomarker",
+      "papers": 64,
+      "evidence": "64 co-mentioning abstracts"
+    },
+    {
+      "source": "Amyloid-beta 42",
+      "target": "Mortality",
+      "relation": "predicts_outcome",
+      "papers": 64,
+      "evidence": "64 co-mentioning abstracts"
+    },
+    {
+      "source": "Amyloid-beta 42",
+      "target": "Disease progression",
+      "relation": "predicts_outcome",
+      "papers": 63,
+      "evidence": "63 co-mentioning abstracts"
+    },
+    {
+      "source": "APOE",
+      "target": "Tau PET",
+      "relation": "modulates_biomarker",
+      "papers": 62,
+      "evidence": "62 co-mentioning abstracts"
+    },
+    {
+      "source": "Amyloid PET",
+      "target": "Lecanemab",
+      "relation": "biomarker_guides_treatment",
+      "papers": 62,
+      "evidence": "62 co-mentioning abstracts"
+    },
+    {
+      "source": "Mild cognitive impairment",
+      "target": "Hippocampal atrophy",
+      "relation": "characterized_by_biomarker",
+      "papers": 62,
+      "evidence": "62 co-mentioning abstracts"
+    },
+    {
+      "source": "Mild cognitive impairment",
+      "target": "Plasma NfL",
+      "relation": "characterized_by_biomarker",
+      "papers": 58,
+      "evidence": "58 co-mentioning abstracts"
+    },
+    {
+      "source": "Tau PET",
+      "target": "Disease progression",
+      "relation": "predicts_outcome",
+      "papers": 58,
+      "evidence": "58 co-mentioning abstracts"
+    },
+    {
+      "source": "APOE",
+      "target": "Amyloid-beta 42/40 ratio",
+      "relation": "modulates_biomarker",
+      "papers": 57,
+      "evidence": "57 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
       "target": "Hospitalization",
       "relation": "associated_outcome",
-      "tier": 1,
-      "evidence": "Behavioral and medical complications drive hospitalization in moderate AD."
+      "papers": 57,
+      "evidence": "57 co-mentioning abstracts"
+    },
+    {
+      "source": "Amyloid PET",
+      "target": "Disease progression",
+      "relation": "predicts_outcome",
+      "papers": 57,
+      "evidence": "57 co-mentioning abstracts"
+    },
+    {
+      "source": "PSEN2",
+      "target": "Alzheimer's disease",
+      "relation": "risk_gene_for",
+      "papers": 57,
+      "evidence": "57 co-mentioning abstracts"
+    },
+    {
+      "source": "Amyloid-beta 42",
+      "target": "Donepezil",
+      "relation": "biomarker_guides_treatment",
+      "papers": 56,
+      "evidence": "56 co-mentioning abstracts"
+    },
+    {
+      "source": "APOE",
+      "target": "AD dementia",
+      "relation": "risk_gene_for",
+      "papers": 55,
+      "evidence": "55 co-mentioning abstracts"
+    },
+    {
+      "source": "Lecanemab",
+      "target": "ARIA-E",
+      "relation": "has_outcome",
+      "papers": 55,
+      "evidence": "55 co-mentioning abstracts"
+    },
+    {
+      "source": "Donanemab",
+      "target": "Disease progression",
+      "relation": "has_outcome",
+      "papers": 54,
+      "evidence": "54 co-mentioning abstracts"
+    },
+    {
+      "source": "APP",
+      "target": "Early-onset AD",
+      "relation": "risk_gene_for",
+      "papers": 53,
+      "evidence": "53 co-mentioning abstracts"
     },
     {
       "source": "Physical exercise",
-      "target": "Slowing of cognitive decline",
+      "target": "Cognitive decline",
       "relation": "has_outcome",
-      "tier": 1,
-      "evidence": "Exercise has modest supportive cognitive benefits."
+      "papers": 53,
+      "evidence": "53 co-mentioning abstracts"
     },
     {
-      "source": "Plasma GFAP",
-      "target": "Progression to AD dementia",
-      "relation": "predicts_outcome",
-      "tier": 1,
-      "evidence": "Plasma GFAP (astrocytic) predicts progression along the AD continuum."
+      "source": "Vascular dementia",
+      "target": "Cognitive decline",
+      "relation": "associated_outcome",
+      "papers": 52,
+      "evidence": "52 co-mentioning abstracts"
     },
     {
-      "source": "SPI1",
-      "target": "Late-onset AD",
-      "relation": "risk_gene_for",
-      "tier": 1,
-      "evidence": "SPI1 (PU.1) regulates myeloid AD risk genes."
+      "source": "Alzheimer's disease",
+      "target": "Gantenerumab",
+      "relation": "treated_with",
+      "papers": 51,
+      "evidence": "51 co-mentioning abstracts"
     },
     {
-      "source": "TREM2",
+      "source": "Dementia with Lewy bodies",
+      "target": "Cognitive decline",
+      "relation": "associated_outcome",
+      "papers": 51,
+      "evidence": "51 co-mentioning abstracts"
+    },
+    {
+      "source": "Mild cognitive impairment",
+      "target": "ADAS-Cog",
+      "relation": "characterized_by_biomarker",
+      "papers": 51,
+      "evidence": "51 co-mentioning abstracts"
+    },
+    {
+      "source": "Mild cognitive impairment",
       "target": "Plasma GFAP",
+      "relation": "characterized_by_biomarker",
+      "papers": 51,
+      "evidence": "51 co-mentioning abstracts"
+    },
+    {
+      "source": "AD dementia",
+      "target": "Cognitive decline",
+      "relation": "associated_outcome",
+      "papers": 50,
+      "evidence": "50 co-mentioning abstracts"
+    },
+    {
+      "source": "ADAS-Cog",
+      "target": "Cognitive decline",
+      "relation": "predicts_outcome",
+      "papers": 50,
+      "evidence": "50 co-mentioning abstracts"
+    },
+    {
+      "source": "MMSE",
+      "target": "Disease progression",
+      "relation": "predicts_outcome",
+      "papers": 50,
+      "evidence": "50 co-mentioning abstracts"
+    },
+    {
+      "source": "Amyloid plaques",
+      "target": "Aducanumab",
+      "relation": "biomarker_guides_treatment",
+      "papers": 49,
+      "evidence": "49 co-mentioning abstracts"
+    },
+    {
+      "source": "Lecanemab",
+      "target": "ARIA-H",
+      "relation": "has_outcome",
+      "papers": 49,
+      "evidence": "49 co-mentioning abstracts"
+    },
+    {
+      "source": "APOE",
+      "target": "Total tau",
       "relation": "modulates_biomarker",
-      "tier": 1,
-      "evidence": "TREM2 microglial dysfunction is reflected in astro-microglial activation markers."
+      "papers": 48,
+      "evidence": "48 co-mentioning abstracts"
+    },
+    {
+      "source": "Aducanumab",
+      "target": "Cognitive decline",
+      "relation": "has_outcome",
+      "papers": 48,
+      "evidence": "48 co-mentioning abstracts"
+    },
+    {
+      "source": "BIN1",
+      "target": "Alzheimer's disease",
+      "relation": "risk_gene_for",
+      "papers": 48,
+      "evidence": "48 co-mentioning abstracts"
+    },
+    {
+      "source": "Memantine",
+      "target": "Cognitive decline",
+      "relation": "has_outcome",
+      "papers": 48,
+      "evidence": "48 co-mentioning abstracts"
+    },
+    {
+      "source": "Mild cognitive impairment",
+      "target": "Donanemab",
+      "relation": "treated_with",
+      "papers": 48,
+      "evidence": "48 co-mentioning abstracts"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Solanezumab",
+      "relation": "treated_with",
+      "papers": 47,
+      "evidence": "47 co-mentioning abstracts"
+    },
+    {
+      "source": "Amyloid plaques",
+      "target": "Donanemab",
+      "relation": "biomarker_guides_treatment",
+      "papers": 47,
+      "evidence": "47 co-mentioning abstracts"
+    },
+    {
+      "source": "Mild cognitive impairment",
+      "target": "Anti-amyloid antibody",
+      "relation": "treated_with",
+      "papers": 47,
+      "evidence": "47 co-mentioning abstracts"
     }
   ]
 }

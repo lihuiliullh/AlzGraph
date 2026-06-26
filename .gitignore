@@ -13,6 +13,9 @@ runs/*.json
 # Private clinical data (never commit ADNI / memory-clinic exports)
 data/private/
 
+# Fetched PubMed corpus (large; reproducible via scripts/fetch_pubmed.py)
+data/corpus/
+
 # LaTeX build artifacts
 paper/*.aux
 paper/*.log

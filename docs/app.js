@@ -18,8 +18,7 @@
   let transform = { s: 1, x: 0, y: 0 };
 
   fetch("./data/demo_graph.json").then((r) => r.json()).then((g) => {
-    document.querySelectorAll('[data-stat="entities"]').forEach((e) => (e.textContent = g.meta.nodes));
-    document.querySelectorAll('[data-stat="triplets"]').forEach((e) => (e.textContent = g.meta.links));
+    // Hero stats show the full KG (set in HTML); the explorer renders a subgraph.
     nodes = g.nodes.map((n, i) => ({
       ...n,
       x: Math.cos((i / g.nodes.length) * 6.283) * 220 + (Math.random() - 0.5) * 40,
@@ -113,7 +112,7 @@
       const a = toScreen(l.source), b = toScreen(l.target);
       const active = focus && (l.source === focus || l.target === focus);
       ctx.strokeStyle = active ? "rgba(94,234,212,0.7)" : "rgba(120,140,190,0.16)";
-      ctx.lineWidth = active ? 1.8 : 0.7 + (l.tier || 1) * 0.25;
+      ctx.lineWidth = active ? 1.8 : 0.5 + Math.min(2.0, Math.log10((l.papers || 1) + 1) * 0.7);
       ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
     });
 
@@ -153,7 +152,7 @@
       const other = out ? l.target : l.source;
       return `<div class="row"><span class="rel">${out ? "" : "← "}${l.relation}${out ? " →" : ""}</span> <strong>${other.label}</strong>
         <span class="pill" style="background:${COLOR[other.layer]}">${other.layer}</span>
-        <div class="ev">tier ${l.tier} · ${l.evidence || ""}</div></div>`;
+        <div class="ev">${l.papers ?? l.tier ?? 0} co-mentioning abstracts</div></div>`;
     }).join("");
     info.innerHTML = `<h3>${n.label}</h3>
       <span class="pill" style="background:${COLOR[n.layer]}">${n.layer}</span>

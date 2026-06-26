@@ -12,9 +12,9 @@
   <img alt="Python 3.10+" src="https://img.shields.io/badge/python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white">
   <img alt="Graph-RAG" src="https://img.shields.io/badge/Graph--RAG-PPR%20%2B%20Paths-7C3AED?style=flat-square">
   <img alt="AlzBench: 5 tasks" src="https://img.shields.io/badge/AlzBench-5%20tasks-14B8A6?style=flat-square">
-  <img alt="Entities: 67" src="https://img.shields.io/badge/seed%20entities-67-0EA5E9?style=flat-square">
-  <img alt="Triplets: 107" src="https://img.shields.io/badge/seed%20triplets-107-EC4899?style=flat-square">
-  <img alt="Sources: 10" src="https://img.shields.io/badge/ontology%20sources-10-EAB308?style=flat-square">
+  <img alt="Abstracts: 11,654" src="https://img.shields.io/badge/PubMed%20abstracts-11%2C654-EAB308?style=flat-square">
+  <img alt="Entities: 77" src="https://img.shields.io/badge/entities-77-0EA5E9?style=flat-square">
+  <img alt="Triplets: 702" src="https://img.shields.io/badge/triplets-702-EC4899?style=flat-square">
 </p>
 
 <h3>5-Layer Alzheimer's Knowledge Graph · 5 Evidence-Intensive Reasoning Tasks · Graph-RAG out of the box</h3>
@@ -51,8 +51,8 @@ This repository provides a paper-aligned code release for:
 
 | Component | What it gives you |
 |---|---|
-| **AlzKG** | An Alzheimer's knowledge graph over genes, biomarkers, stages, treatments, and outcomes, curated from public ontologies and clinical guidelines, plus a literature-scale PMC builder |
-| **Graph-RAG** | Retrieval over graph neighborhoods with personalized-PageRank ranking and serialized, evidence-tiered reasoning paths |
+| **AlzKG** | An Alzheimer's knowledge graph over genes, biomarkers, stages, treatments, and outcomes, **mined from 11,654 PubMed abstracts** via NCBI E-utilities (with a curated-seed option) |
+| **Graph-RAG** | Retrieval over graph neighborhoods with personalized-PageRank ranking and serialized, literature-weighted reasoning paths |
 | **AlzBench** | Five benchmark tasks spanning diagnosis QA, report generation, biomarker precision medicine, treatment recommendation, and research planning |
 | **Metrics** | Task-specific evaluation utilities (accuracy, ROUGE-L, drug/ARIA safety, KG evidence coverage, ...) |
 | **Project page** | A GitHub Pages-ready site with an interactive KG explorer |
@@ -72,45 +72,41 @@ links them with evidence-grounded, typed relations to enable multi-hop reasoning
 | **treatment** | donepezil, rivastigmine, galantamine, memantine, lecanemab, donanemab, aducanumab | ChEBI, AAN/AA AUC |
 | **outcome** | cognitive/functional decline, ARIA-E, ARIA-H, amyloid clearance, mortality | HPO, MeSH |
 
-The **released seed AlzKG** is curated, guideline-grounded, and fully connected:
+The released **AlzKG** is **mined from 11,654 real PubMed abstracts** (retrieved via NCBI E-utilities):
 
 | Statistic | Value |
 |---|---:|
-| Entities | **67** |
-| Triplets | **107** |
-| Cross-layer triplets | **107 (100%)** |
+| PubMed abstracts mined | **11,654** |
+| Entities | **77** |
+| Cross-layer triplets | **702** |
 | Relation types | **10** |
-| Source ontologies/guidelines | **10** |
+| Edge paper count (median / max) | **14 / 1,729** |
 
-> **Honesty note.** For the curated seed graph, each edge's weight is an **evidence
-> tier** (1 = emerging, 2 = established, 3 = guideline/landmark), surfaced in
-> serialized paths as `[N tier]`. The literature-scale builder
-> (`alzgraph/build_kg.py`) instead populates **true paper counts** from a PMC/PubMed
-> corpus and surfaces them as `[N papers]`. The benchmark model-comparison tables
-> are produced by running the task runners against an LLM endpoint; this release
-> ships the runners and metrics, not third-party model outputs.
+> **Honesty note.** Relations are mined by cross-layer **co-occurrence** over real
+> abstracts; each edge's `paper_count` is the **true number of supporting abstracts**
+> (surfaced in reasoning paths as `[N papers]`), keeping edges with ≥5 supporting
+> papers. Entity recognition uses an ontology-derived dictionary lexicon
+> (`alzgraph/lexicon.py`). The benchmark model-comparison tables are produced by
+> running the task runners against an LLM endpoint; this release ships the runners
+> and metrics, not third-party model outputs. A smaller curated, guideline-tiered
+> seed graph is also available via `scripts/build_seed_kg.py`.
 
-Build the seed graph and reproduce its statistics:
-
-```bash
-python scripts/build_seed_kg.py
-```
-
-Build a literature-scale preview from local PMC XML files:
+Reproduce the mined graph from scratch (fetch real abstracts, then mine):
 
 ```bash
-python -m alzgraph.build_kg --pmc_dir /path/to/pmc_xml --out_dir data/alzkg
+python scripts/fetch_pubmed.py --max_papers 12000       # download real AD abstracts
+python scripts/build_kg_from_corpus.py --min_papers 5   # mine the KG (prints real stats)
 ```
 
-Triplets follow the schema:
+Mined triplets follow the schema:
 
 ```json
 {
-  "head": "APOE", "relation": "pharmacogenomic_consideration", "tail": "Lecanemab",
-  "head_layer": "gene", "tail_layer": "treatment",
-  "paper_count": 3, "weight_label": "tier", "evidence_tier": 3,
-  "evidence": "APOE e4 homozygotes have markedly higher ARIA risk; ...",
-  "head_source": "OMIM", "tail_source": "AAN_AA_AUC"
+  "head": "Lecanemab", "relation": "has_outcome", "tail": "ARIA",
+  "head_layer": "treatment", "tail_layer": "outcome",
+  "paper_count": 178, "weight_label": "papers",
+  "head_source": "ChEBI/AAN", "tail_source": "HPO/MeSH",
+  "paper_ids": ["38302750", "..."]
 }
 ```
 
@@ -136,8 +132,9 @@ cd AlzGraph
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
-# 1) Build the released seed AlzKG (prints real statistics)
-python scripts/build_seed_kg.py
+# 1) Build the literature-mined AlzKG from scratch (fetch real abstracts + mine)
+python scripts/fetch_pubmed.py --max_papers 12000
+python scripts/build_kg_from_corpus.py --min_papers 5
 
 # 2) Intrinsic retrieval ablation (no API key needed)
 python scripts/retrieval_ablation.py
@@ -179,17 +176,21 @@ python tasks/t2_clinical_report_generation.py build \
 ```text
 AlzGraph/
   alzgraph/
-    ontology.py      # curated AD 5-layer ontology + relations (evidence-tiered)
-    build_kg.py      # literature-scale PMC/PubMed co-occurrence builder
+    lexicon.py       # AD NER lexicon: entities + synonyms -> canonical + layer
+    ontology.py      # curated AD 5-layer ontology + relations (for the seed graph)
+    build_kg.py      # PMC/PubMed XML co-occurrence builder (local files)
     retrieval.py     # Graph-RAG: PPR neighborhood + path serialization
     metrics.py       # accuracy, ROUGE-L, drug/ARIA safety, KG evidence coverage
     common.py        # IO + OpenRouter-compatible ChatClient
   tasks/             # t1..t5 AlzBench task runners
   scripts/
-    build_seed_kg.py       # materializes the released seed AlzKG + demo graph
-    retrieval_ablation.py  # intrinsic Graph-RAG ablation (no LLM)
+    fetch_pubmed.py         # collect real AD abstracts via NCBI E-utilities
+    build_kg_from_corpus.py # mine AlzKG (co-occurrence + real paper counts)
+    build_seed_kg.py        # optional curated, guideline-tiered seed graph
+    retrieval_ablation.py   # intrinsic Graph-RAG ablation (no LLM)
     run_all.sh
   data/
+    corpus/          # fetched abstracts (gitignored; reproducible via fetch_pubmed)
     alzkg/           # triplets.json, kg_stats.json, retrieval_ablation.json
     alzbench/        # t1..t5 task datasets
   docs/              # GitHub Pages site + interactive KG explorer
