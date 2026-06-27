@@ -20,6 +20,7 @@ evidence-intensive reasoning benchmark (AlzBench), and a Graph-RAG retriever.
 | T3 Biomarker-Driven Precision Medicine | `tasks/t3_biomarker_precision_medicine.py` | APOE-genotype and biomarker-aware anti-amyloid mAb selection with ARIA safety scoring |
 | T4 Treatment Recommendation | `tasks/t4_treatment_recommendation.py` | Dementia-filtered MedQA-USMLE / MMLU builder plus treatment safety and KG evidence coverage |
 | T5 Deep Research Planning | `tasks/t5_deep_research_planning.py` | Builds literature-grounded research-planning instances and evaluates generated study plans |
+| KG-only MCQ baseline | `tasks/kg_baseline.py` | Deterministic, no-LLM baseline that answers MCQs from AlzKG evidence alone (lexicon NER + literature-weighted PPR); writes `data/alzkg/kg_baseline_results.json`. Measured: T1 = 0.70, T3 = 0.60 accuracy vs. 0.25 random |
 
 ## Data Provenance and Honesty Notes
 

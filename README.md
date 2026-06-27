@@ -139,7 +139,15 @@ python scripts/build_kg_from_corpus.py --min_papers 5
 # 2) Intrinsic retrieval ablation (no API key needed)
 python scripts/retrieval_ablation.py
 
-# 3) Evaluate an LLM with Graph-RAG (needs an API key)
+# 3) KG-only MCQ baseline -- deterministic, no LLM, no API key
+#    Answers MCQs from AlzKG evidence alone (PPR over the mined graph).
+#    Measured: T1 = 0.70, T3 = 0.60 accuracy (vs. 0.25 random).
+python tasks/kg_baseline.py --dataset data/alzbench/t1/mcq.json \
+  --out runs/t1_kg_baseline.json
+python tasks/kg_baseline.py --dataset data/alzbench/t3/bpm_mcq.json \
+  --question-field clinical_scenario --out runs/t3_kg_baseline.json
+
+# 4) Evaluate an LLM with Graph-RAG (needs an API key)
 export OPENROUTER_API_KEY="your_key_here"
 python tasks/t1_clinical_decision_accuracy.py \
   --dataset data/alzbench/t1/mcq.json \

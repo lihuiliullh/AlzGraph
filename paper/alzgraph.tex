@@ -203,6 +203,24 @@ We report intrinsic analyses computed directly from the mined graph (no LLM requ
 \end{tabular}
 \end{table}
 
+\subsection{KG-only Baseline (Measured)}
+Beyond the intrinsic retrieval analysis, we report a fully reproducible \emph{KG-only} baseline that answers AlzBench multiple-choice items using nothing but \textsc{AlzKG} evidence---no language model and no network access. For each item it (i) recognizes the AD entities in the question stem via the lexicon, (ii) runs the same literature-weighted personalized PageRank (PPR) used by Graph-RAG, seeded from those entities, and (iii) scores each option by the PPR evidence mass reaching the \textsc{AlzKG} entities named in that option, breaking ties with the direct co-mention paper count between question and option entities; the highest-scoring option is selected. Because it is deterministic and depends only on the released graph, the numbers are exactly reproducible (\texttt{python tasks/kg\_baseline.py --dataset data/alzbench/t1/mcq.json}). Table~\ref{tab:kgbaseline} reports the result. On T1 the KG-only baseline reaches \textbf{0.70} accuracy and on T3 \textbf{0.60}, both far above the 0.25 random-choice rate, while \emph{grounding coverage}---the fraction of items for which some option is connected to the question in the graph---is 0.80 (T1) and 1.00 (T3). This isolates how much of AD multiple-choice reasoning is already carried by the structured literature evidence alone, and provides a model-free floor against which LLM and Graph-RAG systems can be compared.
+
+\begin{table}[t]
+\centering
+\caption{\textbf{KG-only baseline (no LLM; deterministic, exactly reproducible).} Multiple-choice accuracy using only \textsc{AlzKG} PPR evidence. \emph{Coverage} is the fraction of items with at least one graph-grounded option; \emph{Acc.\ (grounded)} restricts accuracy to those items. Both tasks far exceed the 0.25 random-choice rate.}
+\label{tab:kgbaseline}
+\small
+\begin{tabular}{l c c c c c}
+\toprule
+\textbf{Task} & \textbf{Items} & \textbf{Accuracy} & \textbf{Random} & \textbf{Coverage} & \textbf{Acc.\ (grounded)} \\
+\midrule
+T1 CDA (MCQ) & 10 & \textbf{0.70} & 0.25 & 0.80 & 0.75 \\
+T3 BPM (MCQ) & 5  & \textbf{0.60} & 0.25 & 1.00 & 0.60 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \subsection{Benchmark Protocol (Runnable Harness)}
 Table~\ref{tab:bench} defines the model-comparison protocol released with \textsc{AlzBench}. Each task runner evaluates a no-retrieval baseline (\textsc{No-RAG}) against the Graph-RAG setting and reports the metrics of \S3.3. We deliberately leave the cells unpopulated: the values depend on third-party model endpoints and an API key, and we report only measurements we have actually run. Populating the table is a single command per cell, e.g.,
 \begin{center}

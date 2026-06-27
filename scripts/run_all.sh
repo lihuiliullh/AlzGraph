@@ -19,6 +19,12 @@ python3 tasks/t5_deep_research_planning.py build \
 echo "==> Retrieval ablation (no LLM required)"
 python3 scripts/retrieval_ablation.py
 
+echo "==> KG-only MCQ baseline (no LLM required)"
+python3 tasks/kg_baseline.py --dataset data/alzbench/t1/mcq.json \
+  --out runs/t1_kg_baseline.json
+python3 tasks/kg_baseline.py --dataset data/alzbench/t3/bpm_mcq.json \
+  --question-field clinical_scenario --out runs/t3_kg_baseline.json
+
 if [[ -n "${OPENROUTER_API_KEY:-}" ]]; then
   echo "==> Task 1 (Graph-RAG) with ${MODEL}"
   python3 tasks/t1_clinical_decision_accuracy.py \
