@@ -7,8 +7,13 @@ export PYTHONPATH="${PYTHONPATH:-.}"
 
 MODEL="${MODEL:-openai/gpt-4o}"
 
-echo "==> Building released seed AlzKG"
-python3 scripts/build_seed_kg.py
+if [[ -f data/corpus/fulltext_sentences.jsonl ]]; then
+  echo "==> Mining released AlzKG from PMC full text"
+  python3 scripts/build_kg_from_fulltext.py --min_papers 3
+else
+  echo "==> No fetched corpus found; keeping the released data/alzkg/triplets.json."
+  echo "    (Reproduce from scratch: scripts/fetch_pubmed.py + scripts/fetch_pmc_fulltext.py)"
+fi
 
 echo "==> Building AlzBench datasets"
 python3 tasks/t3_biomarker_precision_medicine.py build --out data/alzbench/t3/bpm_mcq.json

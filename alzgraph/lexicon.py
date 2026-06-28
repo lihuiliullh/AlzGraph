@@ -15,7 +15,11 @@ import re
 from typing import Dict, List, Tuple
 
 # canonical -> {layer, ci:[...], cs:[...]}
-LEXICON: Dict[str, dict] = {
+# Hand-curated AD seed vocabulary. Always present; the large ontology-derived
+# vocabulary (data/lexicon/lexicon_full.json, built by
+# scripts/build_lexicon_from_ontologies.py following EpiGraph's ontology step)
+# is merged on top when available.
+_SEED_LEXICON: Dict[str, dict] = {
     # ------------------------------------------------------------------ genes
     "APP": {"layer": "gene", "cs": ["APP"], "ci": ["amyloid precursor protein"]},
     "PSEN1": {"layer": "gene", "cs": ["PSEN1", "PS1"], "ci": ["presenilin 1", "presenilin-1"]},
@@ -109,41 +113,113 @@ LEXICON: Dict[str, dict] = {
 }
 
 
+def _load_lexicon() -> Dict[str, dict]:
+    """Seed vocabulary, with the large ontology-derived vocabulary merged on top
+    when ``data/lexicon/lexicon_full.json`` exists (or ``$ALZKG_LEXICON``)."""
+    import json
+    import os
+    from pathlib import Path
+
+    lex: Dict[str, dict] = {c: dict(s) for c, s in _SEED_LEXICON.items()}
+    # surface (casefold) -> owning canonical, so an ontology entity that shares any
+    # surface form with an existing concept is merged into it (light entity
+    # resolution in lieu of EpiGraph's UMLS CUI mapping). Seed concepts win.
+    owner: Dict[str, str] = {}
+    for canon, spec in lex.items():
+        for s in spec.get("ci", []) + spec.get("cs", []):
+            owner.setdefault(s.casefold(), canon)
+
+    path = os.environ.get("ALZKG_LEXICON") or str(
+        Path(__file__).resolve().parents[1] / "data" / "lexicon" / "lexicon_full.json"
+    )
+    p = Path(path)
+    if not p.exists():
+        return lex
+    try:
+        full = json.loads(p.read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001
+        return lex
+
+    for canon, spec in full.items():
+        surfaces = spec.get("ci", []) + spec.get("cs", [])
+        target = canon if canon in lex else None
+        if target is None:
+            for s in surfaces:  # merge into an existing concept sharing a surface form
+                if s.casefold() in owner:
+                    target = owner[s.casefold()]
+                    break
+        if target is None:
+            target = canon
+            lex[canon] = {"layer": spec["layer"], "ci": [], "cs": []}
+        lex[target]["ci"] = sorted(set(lex[target].get("ci", [])) | set(spec.get("ci", [])))
+        lex[target]["cs"] = sorted(set(lex[target].get("cs", [])) | set(spec.get("cs", [])))
+        for s in surfaces:
+            owner.setdefault(s.casefold(), target)
+    return lex
+
+
+LEXICON: Dict[str, dict] = _load_lexicon()
+
+# Token-based gazetteer matcher (scales to ~10^5 surface forms, unlike a single
+# regex alternation). Greedy longest-match over word tokens, so multi-word
+# phrases win over their substrings and each span is counted once.
+_TOKEN_RE = re.compile(r"[^\W_]+", re.UNICODE)
+_MAX_NGRAM = 8
+
+
+def _norm(s: str) -> List[str]:
+    return _TOKEN_RE.findall(s)
+
+
 def _compile():
     ci_map: Dict[str, Tuple[str, str]] = {}
     cs_map: Dict[str, Tuple[str, str]] = {}
-    ci_surfaces: List[str] = []
-    cs_surfaces: List[str] = []
+    ci_starts: set = set()
+    cs_starts: set = set()
+    max_n = 1
     for canon, spec in LEXICON.items():
         layer = spec["layer"]
         for s in spec.get("ci", []):
-            ci_map[s.casefold()] = (canon, layer)
-            ci_surfaces.append(s)
+            toks = _norm(s.casefold())
+            if not toks or len(toks) > _MAX_NGRAM:
+                continue
+            ci_map.setdefault(" ".join(toks), (canon, layer))
+            ci_starts.add(toks[0])
+            max_n = max(max_n, len(toks))
         for s in spec.get("cs", []):
-            cs_map[s] = (canon, layer)
-            cs_surfaces.append(s)
-    # Longest-first so multi-word phrases win over shorter substrings.
-    ci_surfaces.sort(key=len, reverse=True)
-    cs_surfaces.sort(key=len, reverse=True)
-    ci_re = re.compile(r"(?<![A-Za-z0-9])(" + "|".join(re.escape(s) for s in ci_surfaces) + r")(?![A-Za-z0-9])", re.IGNORECASE)
-    cs_re = re.compile(r"(?<![A-Za-z0-9])(" + "|".join(re.escape(s) for s in cs_surfaces) + r")(?![A-Za-z0-9])")
-    return ci_re, ci_map, cs_re, cs_map
+            toks = _norm(s)
+            if not toks or len(toks) > _MAX_NGRAM:
+                continue
+            cs_map.setdefault(" ".join(toks), (canon, layer))
+            cs_starts.add(toks[0])
+            max_n = max(max_n, len(toks))
+    return ci_map, cs_map, ci_starts, cs_starts, max_n
 
 
-_CI_RE, _CI_MAP, _CS_RE, _CS_MAP = _compile()
+_CI_MAP, _CS_MAP, _CI_STARTS, _CS_STARTS, _MAX_N = _compile()
 
 
 def detect(text: str) -> Dict[str, set]:
     """Return {layer: set(canonical entities)} recognized in ``text``."""
+    raw = _TOKEN_RE.findall(text)
+    low = [t.casefold() for t in raw]
     found: Dict[str, set] = {}
-    for m in _CI_RE.finditer(text):
-        hit = _CI_MAP.get(m.group(1).casefold())
-        if hit:
-            found.setdefault(hit[1], set()).add(hit[0])
-    for m in _CS_RE.finditer(text):
-        hit = _CS_MAP.get(m.group(1))
-        if hit:
-            found.setdefault(hit[1], set()).add(hit[0])
+    i, n_tok = 0, len(raw)
+    while i < n_tok:
+        if low[i] not in _CI_STARTS and raw[i] not in _CS_STARTS:
+            i += 1
+            continue
+        hi = min(_MAX_N, n_tok - i)
+        matched = 0
+        for n in range(hi, 0, -1):
+            hit = _CS_MAP.get(" ".join(raw[i:i + n]))
+            if hit is None:
+                hit = _CI_MAP.get(" ".join(low[i:i + n]))
+            if hit is not None:
+                found.setdefault(hit[1], set()).add(hit[0])
+                matched = n
+                break
+        i += matched if matched else 1
     return found
 
 

@@ -152,7 +152,7 @@
       const other = out ? l.target : l.source;
       return `<div class="row"><span class="rel">${out ? "" : "← "}${l.relation}${out ? " →" : ""}</span> <strong>${other.label}</strong>
         <span class="pill" style="background:${COLOR[other.layer]}">${other.layer}</span>
-        <div class="ev">${l.papers ?? l.tier ?? 0} co-mentioning abstracts</div></div>`;
+        <div class="ev">${l.papers ?? l.tier ?? 0} supporting papers</div></div>`;
     }).join("");
     info.innerHTML = `<h3>${n.label}</h3>
       <span class="pill" style="background:${COLOR[n.layer]}">${n.layer}</span>

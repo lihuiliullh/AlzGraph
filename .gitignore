@@ -16,6 +16,10 @@ data/private/
 # Fetched PubMed corpus (large; reproducible via scripts/fetch_pubmed.py)
 data/corpus/
 
+# Raw ontology downloads (large; reproducible via build_lexicon_from_ontologies.py)
+# The compiled vocabulary data/lexicon/lexicon_full.json IS tracked.
+data/lexicon/sources/
+
 # LaTeX build artifacts
 paper/*.aux
 paper/*.log

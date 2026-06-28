@@ -7,7 +7,7 @@ maximum reasoning-path depth:
     concept is recovered inside the retrieved paths,
   - mean retrieval latency.
 
-All numbers are computed directly from the released seed AlzKG and the AlzBench
+All numbers are computed directly from the released AlzKG and the AlzBench
 probe queries; nothing is fabricated.
 """
 

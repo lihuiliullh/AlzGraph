@@ -4,67 +4,67 @@
     {
       "max_subgraph_nodes": 10,
       "max_depth": 4,
-      "avg_paths": 11.07,
-      "gold_coverage": 0.267,
-      "mean_latency_ms": 2.69
+      "avg_paths": 11.2,
+      "gold_coverage": 0.067,
+      "mean_latency_ms": 29.68
     },
     {
       "max_subgraph_nodes": 20,
       "max_depth": 4,
-      "avg_paths": 11.07,
-      "gold_coverage": 0.333,
-      "mean_latency_ms": 4.74
+      "avg_paths": 11.2,
+      "gold_coverage": 0.133,
+      "mean_latency_ms": 31.43
     },
     {
       "max_subgraph_nodes": 30,
       "max_depth": 4,
-      "avg_paths": 11.07,
-      "gold_coverage": 0.333,
-      "mean_latency_ms": 10.12
+      "avg_paths": 11.2,
+      "gold_coverage": 0.067,
+      "mean_latency_ms": 39.7
     },
     {
       "max_subgraph_nodes": 40,
       "max_depth": 4,
-      "avg_paths": 11.07,
-      "gold_coverage": 0.333,
-      "mean_latency_ms": 17.83
+      "avg_paths": 11.2,
+      "gold_coverage": 0.067,
+      "mean_latency_ms": 53.97
     },
     {
       "max_subgraph_nodes": 50,
       "max_depth": 4,
-      "avg_paths": 11.07,
-      "gold_coverage": 0.333,
-      "mean_latency_ms": 26.19
+      "avg_paths": 11.2,
+      "gold_coverage": 0.067,
+      "mean_latency_ms": 70.05
     }
   ],
   "depth_sweep": [
     {
       "max_subgraph_nodes": 30,
       "max_depth": 1,
-      "avg_paths": 10.53,
-      "gold_coverage": 0.067,
-      "mean_latency_ms": 2.67
+      "avg_paths": 11.07,
+      "gold_coverage": 0.133,
+      "mean_latency_ms": 30.14
     },
     {
       "max_subgraph_nodes": 30,
       "max_depth": 2,
-      "avg_paths": 11.07,
-      "gold_coverage": 0.333,
-      "mean_latency_ms": 3.53
+      "avg_paths": 11.2,
+      "gold_coverage": 0.2,
+      "mean_latency_ms": 31.09
     },
     {
       "max_subgraph_nodes": 30,
       "max_depth": 3,
-      "avg_paths": 11.07,
-      "gold_coverage": 0.267,
-      "mean_latency_ms": 6.8
+      "avg_paths": 11.2,
+      "gold_coverage": 0.067,
+      "mean_latency_ms": 35.42
     },
     {
       "max_subgraph_nodes": 30,
       "max_depth": 4,
-      "avg_paths": 11.07,
-      "gold_coverage": 0.333,
-      "mean_latency_ms": 10.28
+      "avg_paths": 11.2,
+      "gold_coverage": 0.067,
+      "mean_latency_ms": 40.07
     }
   ]
 }
