@@ -1,6 +1,6 @@
-"""Mine AlzKG from PMC FULL-TEXT via EpiGraph's relation-extraction procedure.
+"""Mine AlzKG from PMC FULL-TEXT via sentence-grounded relation extraction.
 
-This reproduces EpiGraph's pipeline (Sec. 2 + App. B.3) on real PMC open-access
+This runs a rule-based extraction pipeline on real PMC open-access
 full text instead of abstracts:
 
   1. Source: ``data/corpus/fulltext_sentences.jsonl`` -- PMC full-text articles,
@@ -8,11 +8,11 @@ full text instead of abstracts:
      (produced by ``scripts/fetch_pmc_fulltext.py``).
   2. (i) Rule-based extraction: for every sentence containing a co-occurring
      cross-layer entity pair, a per-relation template ``(subject layer,
-     trigger-phrase set, object layer)`` is applied (cf. EpiGraph Table 5). A
+     trigger-phrase set, object layer)`` is applied. A
      triplet is emitted only when a trigger phrase for that relation appears in
      the sentence -- i.e. relations are sentence-grounded, not mere whole-doc
      co-occurrence.
-  3. (ii) LLM-based extraction (MiniMax in EpiGraph): provided as an optional
+  3. (ii) LLM-based extraction: provided as an optional
      pass gated on an API key; not run in this release (no model endpoint),
      mirroring how the benchmark model tables are left for the user to populate.
   4. paper_count P = number of distinct papers (PMIDs) supporting the triplet;
@@ -38,7 +38,7 @@ from scripts.build_kg_from_corpus import (  # noqa: E402
     LAYER_COLOR, LAYER_ORDER, LAYER_SOURCE, ORIENT, compute_stats,
 )
 
-# EpiGraph Table 5, adapted to the five AlzKG layers. Each oriented layer pair
+# Curated per-relation templates over the five AlzKG layers. Each oriented layer pair
 # maps to (relation, trigger-phrase set). A relation is emitted only if some
 # trigger phrase (a lowercase substring / stem) appears in the sentence that
 # already contains the co-occurring entity pair.
@@ -176,14 +176,14 @@ def build_demo_graph(triplets, max_nodes=60, max_links=150):
              for t in sub]
     return {"meta": {"name": "AlzKG (full-text, rule-based) subgraph",
                      "description": "Top-degree subgraph of AlzKG, mined by sentence-level rule-based "
-                                    "relation extraction over PMC full-text articles (EpiGraph procedure).",
+                                    "relation extraction over PMC full-text articles.",
                      "nodes": len(nodes), "links": len(links),
                      "layers": LAYER_ORDER, "layer_color": LAYER_COLOR},
             "nodes": nodes, "links": links}
 
 
 def main():
-    ap = argparse.ArgumentParser(description="Mine AlzKG from PMC full text (EpiGraph procedure).")
+    ap = argparse.ArgumentParser(description="Mine AlzKG from PMC full text.")
     ap.add_argument("--corpus", default="data/corpus/fulltext_sentences.jsonl")
     ap.add_argument("--out_dir", default="data/alzkg")
     ap.add_argument("--docs_dir", default="docs/data")
@@ -193,7 +193,7 @@ def main():
     triplets, entity_df, n_papers, n_sentences, evidence = mine(args.corpus, args.min_papers)
     stats = compute_stats(triplets, entity_df, n_papers, args.min_papers)
     stats["source"] = "pmc_fulltext"
-    stats["extraction"] = "sentence_level_rule_based (EpiGraph Table 5)"
+    stats["extraction"] = "sentence_level_rule_based"
     stats["corpus_fulltext_papers"] = n_papers
     stats["candidate_sentences"] = n_sentences
     stats.pop("corpus_abstracts", None)

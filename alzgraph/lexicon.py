@@ -17,7 +17,7 @@ from typing import Dict, List, Tuple
 # canonical -> {layer, ci:[...], cs:[...]}
 # Hand-curated AD seed vocabulary. Always present; the large ontology-derived
 # vocabulary (data/lexicon/lexicon_full.json, built by
-# scripts/build_lexicon_from_ontologies.py following EpiGraph's ontology step)
+# scripts/build_lexicon_from_ontologies.py from public ontologies)
 # is merged on top when available.
 _SEED_LEXICON: Dict[str, dict] = {
     # ------------------------------------------------------------------ genes
@@ -123,7 +123,7 @@ def _load_lexicon() -> Dict[str, dict]:
     lex: Dict[str, dict] = {c: dict(s) for c, s in _SEED_LEXICON.items()}
     # surface (casefold) -> owning canonical, so an ontology entity that shares any
     # surface form with an existing concept is merged into it (light entity
-    # resolution in lieu of EpiGraph's UMLS CUI mapping). Seed concepts win.
+    # resolution in lieu of full UMLS CUI mapping). Seed concepts win.
     owner: Dict[str, str] = {}
     for canon, spec in lex.items():
         for s in spec.get("ci", []) + spec.get("cs", []):

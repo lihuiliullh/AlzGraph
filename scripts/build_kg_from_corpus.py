@@ -1,6 +1,6 @@
 """Mine AlzKG from the real PubMed corpus (data/corpus/abstracts.jsonl).
 
-Pipeline (mirrors the EpiGraph rule-based co-occurrence stage, on real data):
+Pipeline (rule-based co-occurrence stage, on real data):
   1. recognize AlzKG entities in each abstract (title + abstract + MeSH) using the
      dictionary NER lexicon;
   2. for every pair of co-occurring entities from two different layers, create a

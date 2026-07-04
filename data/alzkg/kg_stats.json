@@ -75,7 +75,7 @@
     "Neurofibrillary tangles": 2522
   },
   "source": "pmc_fulltext",
-  "extraction": "sentence_level_rule_based (EpiGraph Table 5)",
+  "extraction": "sentence_level_rule_based",
   "corpus_fulltext_papers": 7150,
   "candidate_sentences": 361201
 }

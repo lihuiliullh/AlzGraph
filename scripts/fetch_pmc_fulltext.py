@@ -1,6 +1,6 @@
-"""Fetch PMC open-access FULL-TEXT for the AlzGraph corpus (EpiGraph procedure).
+"""Fetch PMC open-access FULL-TEXT for the AlzGraph corpus.
 
-EpiGraph mines relations from *full-text* articles (PubMed/PMC), not abstracts.
+We mine relations from *full-text* articles (PubMed/PMC), not abstracts.
 This script reproduces that source step:
 
   1. map each cached PMID -> PMCID via the NCBI ID Converter (batched);

@@ -1,6 +1,6 @@
-"""Build a large AlzKG entity vocabulary from public ontologies (EpiGraph procedure).
+"""Build a large AlzKG entity vocabulary from public ontologies.
 
-EpiGraph constructs its 24k-entity vocabulary not by hand but by harvesting
+We construct the entity vocabulary not by hand but by harvesting
 authoritative ontologies (OMIM/GWAS for genes, ChEBI for drugs, MeSH/HPO for
 diagnostics and phenotypes), normalizing aliases, and keeping the entities that
 the literature actually grounds. This script reproduces that vocabulary step for

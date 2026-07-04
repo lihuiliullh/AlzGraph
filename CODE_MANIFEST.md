@@ -11,7 +11,7 @@ evidence-intensive reasoning benchmark (AlzBench), and a Graph-RAG retriever.
 | AD corpus collection | `scripts/fetch_pubmed.py`, `scripts/fetch_pmc_fulltext.py` | Find real AD papers via NCBI E-utilities, then download PMC open-access full text and reduce to candidate sentences (≥2 entity mentions); standard library only |
 | NER lexicon | `alzgraph/lexicon.py` | AD entity vocabulary + synonyms mapped to canonical entity + layer (case-sensitive gene symbols); merges the ontology-derived `data/lexicon/lexicon_full.json` on top of the hand-curated seed when present |
 | Ontology lexicon build | `scripts/build_lexicon_from_ontologies.py` | Compiles the large recognition vocabulary from HGNC, HPO, and ChEBI into `data/lexicon/lexicon_full.json` (raw downloads under `data/lexicon/sources/` are not tracked) |
-| AlzKG mining (primary) | `scripts/build_kg_from_fulltext.py` | Sentence-grounded relation extraction over PMC full text: an edge needs a cross-layer entity pair co-occurring in one sentence *and* a relation trigger phrase (per-relation templates adapted from EpiGraph Table 5), with true paper counts; writes `data/alzkg/*` and the demo graph |
+| AlzKG mining (primary) | `scripts/build_kg_from_fulltext.py` | Sentence-grounded relation extraction over PMC full text: an edge needs a cross-layer entity pair co-occurring in one sentence *and* a relation trigger phrase (curated per-relation templates), with true paper counts; writes `data/alzkg/*` and the demo graph |
 | AlzKG mining (abstract alternate) | `scripts/build_kg_from_corpus.py` | Abstract-level cross-layer co-occurrence builder (coarser signal) with true paper counts |
 | AlzKG schema + curated seed (optional) | `alzgraph/ontology.py`, `scripts/build_seed_kg.py` | Curated, guideline-tiered five-layer seed graph alternative |
 | PMC XML builder (optional) | `alzgraph/build_kg.py` | Co-occurrence builder for local PMC/PubMed XML files |
@@ -32,7 +32,7 @@ evidence-intensive reasoning benchmark (AlzBench), and a Graph-RAG retriever.
   papers (surfaced in paths as `[N papers]`); edges with fewer than 3 supporting
   papers are dropped. Relations are **sentence-grounded**: a cross-layer entity pair
   must co-occur in a single sentence that also contains a relation trigger phrase
-  (per-relation templates adapted from EpiGraph Table 5) — not whole-document
+  (curated per-relation templates) — not whole-document
   co-occurrence. An abstract-level co-occurrence builder
   (`scripts/build_kg_from_corpus.py`) is retained as a coarser alternate.
 - An optional curated, guideline-tiered seed graph is available via

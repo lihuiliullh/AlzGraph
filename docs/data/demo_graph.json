@@ -1,7 +1,7 @@
 {
   "meta": {
     "name": "AlzKG (full-text, rule-based) subgraph",
-    "description": "Top-degree subgraph of AlzKG, mined by sentence-level rule-based relation extraction over PMC full-text articles (EpiGraph procedure).",
+    "description": "Top-degree subgraph of AlzKG, mined by sentence-level rule-based relation extraction over PMC full-text articles.",
     "nodes": 58,
     "links": 150,
     "layers": [

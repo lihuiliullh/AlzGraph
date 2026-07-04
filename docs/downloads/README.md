@@ -88,7 +88,7 @@ co-mention ≥2 AlzKG entities:
 > **Honesty note.** Relations are mined by **sentence-grounded** extraction over
 > real PMC full text: an edge is emitted only when a cross-layer entity pair
 > *co-occurs in a single sentence* **and** that sentence contains a relation
-> **trigger phrase** (per-relation templates adapted from EpiGraph Table 5) — not
+> **trigger phrase** (drawn from curated per-relation templates) — not
 > mere whole-document co-occurrence. Each edge's `paper_count` is the **true number
 > of distinct supporting papers** (surfaced in reasoning paths as `[N papers]`),
 > keeping edges with ≥5 supporting papers. Entity recognition uses an
@@ -203,7 +203,7 @@ AlzGraph/
   scripts/
     fetch_pubmed.py            # collect real AD papers via NCBI E-utilities
     fetch_pmc_fulltext.py      # download PMC open-access full text -> candidate sentences
-    build_kg_from_fulltext.py  # mine AlzKG (sentence-grounded, EpiGraph Table 5 triggers)
+    build_kg_from_fulltext.py  # mine AlzKG (sentence-grounded relation triggers)
     build_kg_from_corpus.py    # abstract-level co-occurrence builder (alternate)
     build_seed_kg.py           # optional curated, guideline-tiered seed graph
     retrieval_ablation.py      # intrinsic Graph-RAG ablation (no LLM)
