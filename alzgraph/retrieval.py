@@ -71,7 +71,7 @@ class AlzGraphRetriever:
     def retrieve(self, query: str) -> Dict[str, object]:
         seeds = self.match_entities(query)
         if not seeds:
-            return {"seeds": [], "paths": [], "triplets": []}
+            return {"seeds": [], "paths": [], "n_candidate_paths": 0, "triplets": []}
         scores = self._pagerank(seeds)
         keep = {
             node
@@ -80,10 +80,12 @@ class AlzGraphRetriever:
             ]
         }
         keep.update(seeds)
-        paths = self.serialize_paths(keep, seeds)
+        candidates = self._candidate_paths(keep, seeds)
+        paths = self._rank_paths(candidates)
         return {
             "seeds": [self.entity_names.get(s, s) for s in seeds],
             "paths": paths,
+            "n_candidate_paths": len(candidates),
             "triplets": self._triplets_from_subgraph(keep),
         }
 
@@ -163,7 +165,8 @@ class AlzGraphRetriever:
         return score
 
     # ------------------------------------------------------------------ paths
-    def serialize_paths(self, keep: set, seeds: Iterable[str]) -> List[str]:
+    def _candidate_paths(self, keep: set, seeds: Iterable[str]) -> Dict[str, float]:
+        """All distinct reasoning paths reachable within ``max_depth`` (uncapped)."""
         keep = set(keep)
         paths: List[Tuple[float, str]] = []
         for seed in seeds:
@@ -186,12 +189,19 @@ class AlzGraphRetriever:
         dedup: Dict[str, float] = {}
         for score, text in paths:
             dedup[text] = max(score, dedup.get(text, 0))
+        return dedup
+
+    def _rank_paths(self, candidates: Dict[str, float]) -> List[str]:
+        """Keep the ``max_paths`` highest-scoring candidate paths for the LLM."""
         return [
             text
-            for text, _ in sorted(dedup.items(), key=lambda item: item[1], reverse=True)[
+            for text, _ in sorted(candidates.items(), key=lambda item: item[1], reverse=True)[
                 : self.max_paths
             ]
         ]
+
+    def serialize_paths(self, keep: set, seeds: Iterable[str]) -> List[str]:
+        return self._rank_paths(self._candidate_paths(keep, seeds))
 
     def _edge(self, head: str, tail: str) -> dict | None:
         for e in self.out_edges.get(head, []):

@@ -4,67 +4,67 @@
     {
       "max_subgraph_nodes": 10,
       "max_depth": 4,
-      "avg_paths": 11.2,
+      "avg_candidate_paths": 47.3,
       "gold_coverage": 0.067,
-      "mean_latency_ms": 29.68
+      "mean_latency_ms": 29.9
     },
     {
       "max_subgraph_nodes": 20,
       "max_depth": 4,
-      "avg_paths": 11.2,
+      "avg_candidate_paths": 461.2,
       "gold_coverage": 0.133,
-      "mean_latency_ms": 31.43
+      "mean_latency_ms": 31.47
     },
     {
       "max_subgraph_nodes": 30,
       "max_depth": 4,
-      "avg_paths": 11.2,
+      "avg_candidate_paths": 2165.8,
       "gold_coverage": 0.067,
-      "mean_latency_ms": 39.7
+      "mean_latency_ms": 40.0
     },
     {
       "max_subgraph_nodes": 40,
       "max_depth": 4,
-      "avg_paths": 11.2,
+      "avg_candidate_paths": 4856.6,
       "gold_coverage": 0.067,
-      "mean_latency_ms": 53.97
+      "mean_latency_ms": 53.85
     },
     {
       "max_subgraph_nodes": 50,
       "max_depth": 4,
-      "avg_paths": 11.2,
+      "avg_candidate_paths": 7839.1,
       "gold_coverage": 0.067,
-      "mean_latency_ms": 70.05
+      "mean_latency_ms": 69.59
     }
   ],
   "depth_sweep": [
     {
       "max_subgraph_nodes": 30,
       "max_depth": 1,
-      "avg_paths": 11.07,
+      "avg_candidate_paths": 56.1,
       "gold_coverage": 0.133,
-      "mean_latency_ms": 30.14
+      "mean_latency_ms": 30.63
     },
     {
       "max_subgraph_nodes": 30,
       "max_depth": 2,
-      "avg_paths": 11.2,
+      "avg_candidate_paths": 400.7,
       "gold_coverage": 0.2,
-      "mean_latency_ms": 31.09
+      "mean_latency_ms": 31.55
     },
     {
       "max_subgraph_nodes": 30,
       "max_depth": 3,
-      "avg_paths": 11.2,
+      "avg_candidate_paths": 1337.7,
       "gold_coverage": 0.067,
-      "mean_latency_ms": 35.42
+      "mean_latency_ms": 35.3
     },
     {
       "max_subgraph_nodes": 30,
       "max_depth": 4,
-      "avg_paths": 11.2,
+      "avg_candidate_paths": 2165.8,
       "gold_coverage": 0.067,
-      "mean_latency_ms": 40.07
+      "mean_latency_ms": 39.78
     }
   ]
 }

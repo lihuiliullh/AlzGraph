@@ -39,18 +39,18 @@ def covered(gold: str, paths: list[str]) -> bool:
 
 def run(probes: list[dict], nodes: int, depth: int) -> dict:
     r = AlzGraphRetriever("data/alzkg/triplets.json", max_subgraph_nodes=nodes, max_paths=12, max_depth=depth)
-    n_paths, n_cov, latencies = 0, 0, []
+    n_cand, n_cov, latencies = 0, 0, []
     for p in probes:
         t0 = time.perf_counter()
         out = r.retrieve(p["query"])
         latencies.append((time.perf_counter() - t0) * 1000)
-        n_paths += len(out["paths"])
+        n_cand += out["n_candidate_paths"]
         n_cov += int(covered(p["gold"], out["paths"]))
     n = max(len(probes), 1)
     return {
         "max_subgraph_nodes": nodes,
         "max_depth": depth,
-        "avg_paths": round(n_paths / n, 2),
+        "avg_candidate_paths": round(n_cand / n, 1),
         "gold_coverage": round(n_cov / n, 3),
         "mean_latency_ms": round(sum(latencies) / n, 2),
     }
@@ -64,17 +64,17 @@ def main() -> None:
     results = {"n_probes": len(probes), "subgraph_sweep": [], "depth_sweep": []}
     print(f"Probes: {len(probes)}")
     print("\n[subgraph-size sweep @ depth=4]")
-    print(f"{'nodes':>6} {'avg_paths':>10} {'gold_cov':>9} {'latency_ms':>11}")
+    print(f"{'nodes':>6} {'cand_paths':>11} {'gold_cov':>9} {'latency_ms':>11}")
     for nodes in [10, 20, 30, 40, 50]:
         row = run(probes, nodes, 4)
         results["subgraph_sweep"].append(row)
-        print(f"{nodes:>6} {row['avg_paths']:>10} {row['gold_coverage']:>9} {row['mean_latency_ms']:>11}")
+        print(f"{nodes:>6} {row['avg_candidate_paths']:>11} {row['gold_coverage']:>9} {row['mean_latency_ms']:>11}")
     print("\n[path-depth sweep @ nodes=30]")
-    print(f"{'depth':>6} {'avg_paths':>10} {'gold_cov':>9} {'latency_ms':>11}")
+    print(f"{'depth':>6} {'cand_paths':>11} {'gold_cov':>9} {'latency_ms':>11}")
     for depth in [1, 2, 3, 4]:
         row = run(probes, 30, depth)
         results["depth_sweep"].append(row)
-        print(f"{depth:>6} {row['avg_paths']:>10} {row['gold_coverage']:>9} {row['mean_latency_ms']:>11}")
+        print(f"{depth:>6} {row['avg_candidate_paths']:>11} {row['gold_coverage']:>9} {row['mean_latency_ms']:>11}")
     write_json(results, args.out)
     print(f"\nWrote {args.out}")
 

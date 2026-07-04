@@ -196,7 +196,7 @@ We evaluate with task accuracy and reasoning-oriented metrics. For CDA we report
 The Graph-RAG retriever seeds a personalized-PageRank (PPR) walk from query-mentioned entities (restart probability $0.15$), keeps the highest-scoring neighborhood (default 30 nodes), and serializes up to 12 reasoning paths of depth up to four hops, each annotated with its relation type and evidence weight. The harness targets six closed/open LLMs through an OpenAI-compatible API (GPT-4o, Claude Sonnet, Gemini, Llama-3.3-70B, Qwen-2.5-72B, Mistral) and four locally deployed models for the report-generation task. Prompts use chain-of-thought reasoning, a clinical-specialist role, and the serialized \textsc{AlzKG} paths as context; MCQ temperature is $0.0$ and generation temperature $0.3$.
 
 \subsection{AlzKG and Retrieval Analysis}
-We report intrinsic analyses computed directly from the mined graph (no LLM required). Table~\ref{tab:ablation} sweeps the retrieval budget over 15 AlzBench probe queries (T1 and T3), measuring the average number of serialized reasoning paths, \emph{gold-evidence coverage} (the fraction of probes whose gold answer concept is recovered in the retrieved paths), and mean retrieval latency. Two findings emerge. First, a larger node budget does \emph{not} improve coverage: it is highest within a compact 10--20-node neighborhood and flat-to-declining from 30 to 50 nodes ($0.13 \to 0.07$) while latency grows steeply ($30 \to 70$\,ms), so the relevant evidence is reached early and a larger budget only adds cost (we keep 30 as the default to preserve full reasoning paths). Second, retrieval depth is decisive: coverage peaks at two hops ($0.13 \to 0.20$) and then \emph{falls back} at three to four hops ($0.07$), confirming that AD reasoning is inherently \emph{multi-hop but shallow}---paths such as gene$\to$disease$\to$biomarker$\to$treatment$\to$outcome require two hops, but deeper traversal dilutes the top-ranked paths with off-target evidence. Absolute coverage is coarse (15 probes) and limited by descriptive multi-token gold phrasings in T1.
+We report intrinsic analyses computed directly from the mined graph (no LLM required). Table~\ref{tab:ablation} sweeps the retrieval budget over 15 AlzBench probe queries (T1 and T3), measuring the number of \emph{candidate} reasoning paths discovered (before truncation to the 12 highest-scoring paths handed to the model), \emph{gold-evidence coverage} (the fraction of probes whose gold answer concept is recovered in the retrieved paths), and mean retrieval latency. The candidate-path count grows combinatorially with both budgets---from 47 to 7{,}839 paths as the neighborhood expands from 10 to 50 nodes, and from 56 to 2{,}166 as depth grows from one to four hops---yet coverage does not, which is precisely the point: two findings emerge. First, a larger node budget does \emph{not} improve coverage: it peaks at a compact 20-node neighborhood ($0.13$) and settles to $0.07$ for 30--50 nodes, while latency grows steeply ($30 \to 70$\,ms), so the relevant evidence is reached early and a larger budget only multiplies off-target paths and cost (we keep 30 as the default to preserve full reasoning paths). Second, retrieval depth is decisive: coverage peaks at two hops ($0.13 \to 0.20$) and then \emph{falls back} at three to four hops ($0.07$) even as the candidate pool quadruples, confirming that AD reasoning is inherently \emph{multi-hop but shallow}---paths such as gene$\to$disease$\to$biomarker$\to$treatment$\to$outcome require two hops, but deeper traversal dilutes the top-ranked paths with off-target evidence. Absolute coverage is coarse (15 probes) and limited by descriptive multi-token gold phrasings in T1.
 
 \begin{table}[t]
 \centering
@@ -205,20 +205,20 @@ We report intrinsic analyses computed directly from the mined graph (no LLM requ
 \small
 \begin{tabular}{l c c c c}
 \toprule
-\textbf{Sweep} & \textbf{Setting} & \textbf{Avg.\ paths} & \textbf{Gold coverage} & \textbf{Latency (ms)} \\
+\textbf{Sweep} & \textbf{Setting} & \textbf{Cand.\ paths} & \textbf{Gold coverage} & \textbf{Latency (ms)} \\
 \midrule
 \multirow{5}{*}{Subgraph nodes ($d{=}4$)}
- & 10 & 11.20 & 0.067 & 29.68 \\
- & 20 & 11.20 & 0.133 & 31.43 \\
- & \textbf{30} & \textbf{11.20} & \textbf{0.067} & \textbf{39.70} \\
- & 40 & 11.20 & 0.067 & 53.97 \\
- & 50 & 11.20 & 0.067 & 70.05 \\
+ & 10 & 47 & 0.067 & 29.90 \\
+ & \textbf{20} & \textbf{461} & \textbf{0.133} & \textbf{31.47} \\
+ & 30 & 2{,}166 & 0.067 & 40.00 \\
+ & 40 & 4{,}857 & 0.067 & 53.85 \\
+ & 50 & 7{,}839 & 0.067 & 69.59 \\
 \midrule
 \multirow{4}{*}{Path depth ($n{=}30$)}
- & 1 & 11.07 & 0.133 & 30.14 \\
- & \textbf{2} & \textbf{11.20} & \textbf{0.200} & \textbf{31.09} \\
- & 3 & 11.20 & 0.067 & 35.42 \\
- & 4 & 11.20 & 0.067 & 40.07 \\
+ & 1 & 56 & 0.133 & 30.63 \\
+ & \textbf{2} & \textbf{401} & \textbf{0.200} & \textbf{31.55} \\
+ & 3 & 1{,}338 & 0.067 & 35.30 \\
+ & 4 & 2{,}166 & 0.067 & 39.78 \\
 \bottomrule
 \end{tabular}
 \end{table}
