@@ -55,32 +55,52 @@ We make an explicit \emph{reproducibility and honesty} commitment. The released 
 
 \begin{figure}[t]
 \centering
+\resizebox{\textwidth}{!}{%
 \begin{tikzpicture}[font=\small,
-  layer/.style={rounded corners=2pt,draw=#1,fill=#1!12,text=black,minimum width=2.05cm,minimum height=0.62cm,align=center,inner sep=2pt},
-  >={Stealth[length=2mm]}]
-  \node[layer=gene]      (g) at (0,0)   {\textit{APOE}\,$\varepsilon$4};
-  \node[layer=biomarker] (b) at (2.7,0) {Amyloid\\PET +};
-  \node[layer=stage]     (s) at (5.4,0) {MCI due\\to AD};
-  \node[layer=treatment] (t) at (8.1,0) {Lecanemab};
-  \node[layer=outcome]   (o) at (10.8,0){ARIA-E};
-  \draw[->,thick] (g) -- node[above,font=\scriptsize]{modulates} (b);
-  \draw[->,thick] (b) -- node[above,font=\scriptsize]{characterizes} (s);
-  \draw[->,thick] (s) -- node[above,font=\scriptsize]{treated\_with} (t);
-  \draw[->,thick] (t) -- node[above,font=\scriptsize]{has\_outcome} (o);
-  \draw[->,thick,dashed,gene] (g) to[bend right=32] node[below,font=\scriptsize]{pharmacogenomic: ARIA risk} (t);
-  % layer labels
-  \foreach \x/\name/\c in {0/gene/gene,2.7/biomarker/biomarker,5.4/stage/stage,8.1/treatment/treatment,10.8/outcome/outcome}
-    \node[font=\scriptsize\bfseries,text=\c] at (\x,0.95) {\name};
-  % bottom: pipeline
-  \node[draw,rounded corners,fill=black!4,text width=3.7cm,align=center] (q) at (1.9,-2.0)
-    {\textbf{Clinical query}\\ \scriptsize ``$\varepsilon$4/$\varepsilon$4 MCI patient: lecanemab candidate?''};
-  \node[draw,rounded corners,fill=black!4,text width=2.7cm,align=center] (r) at (6.4,-2.0)
-    {\textbf{Graph-RAG}\\ \scriptsize PPR + serialized paths};
-  \node[draw,rounded corners,fill=black!4,text width=2.2cm,align=center] (e) at (10.2,-2.0)
-    {\textbf{AlzBench}\\ \scriptsize 5 tasks};
-  \draw[->] (q) -- (r); \draw[->] (r) -- (e);
-  \draw[->,gray] (r) -- (5.4,-0.55);
-\end{tikzpicture}
+  >={Stealth[length=2.6mm]},
+  layer/.style={rounded corners=3pt,draw=#1!75,line width=0.8pt,fill=#1!8,
+                text=black,minimum width=2.7cm,minimum height=1.25cm,align=center,inner sep=3pt},
+  rel/.style={font=\scriptsize\itshape,text=black!60,inner sep=2pt,fill=white},
+  flow/.style={rounded corners=3pt,draw=black!40,line width=0.7pt,fill=black!3,
+               align=center,inner sep=6pt,minimum height=1.15cm},
+  ]
+  % ---- AlzKG: five-layer reasoning chain ----
+  \node[layer=gene]      (g) at (0,0)    {{\scriptsize\bfseries\textcolor{gene}{GENE}}\\[2pt]\itshape APOE\,$\varepsilon$4};
+  \node[layer=biomarker] (b) at (4.5,0)  {{\scriptsize\bfseries\textcolor{biomarker!88!black}{BIOMARKER}}\\[2pt]Amyloid PET\,$+$};
+  \node[layer=stage]     (s) at (9.0,0)  {{\scriptsize\bfseries\textcolor{stage!72!black}{STAGE}}\\[2pt]MCI due to AD};
+  \node[layer=treatment] (t) at (13.5,0) {{\scriptsize\bfseries\textcolor{treatment!75!black}{TREATMENT}}\\[2pt]Lecanemab};
+  \node[layer=outcome]   (o) at (18.0,0) {{\scriptsize\bfseries\textcolor{outcome}{OUTCOME}}\\[2pt]ARIA-E};
+
+  \draw[->,line width=1pt] (g) -- node[rel,above]{modulates} (b);
+  \draw[->,line width=1pt] (b) -- node[rel,above]{characterizes} (s);
+  \draw[->,line width=1pt] (s) -- node[rel,above]{treated\_with} (t);
+  \draw[->,line width=1pt] (t) -- node[rel,above]{has\_outcome} (o);
+  % genotype-dependent pharmacogenomic edge (highlighted)
+  \draw[->,dashed,line width=1pt,gene] (g.south) to[bend right=15]
+        node[rel,below,text=gene] {pharmacogenomic: elevated ARIA risk} (t.south);
+  \coordinate (ariabot) at (6.75,-1.5);
+
+  % subtle panel grouping the KG
+  \begin{scope}[on background layer]
+    \node[rounded corners=5pt,draw=black!14,fill=black!1.5,
+          fit=(g)(o)(ariabot), inner sep=10pt, inner ysep=12pt] (kgpanel) {};
+  \end{scope}
+  \node[anchor=south west,font=\scriptsize\bfseries,text=black!50]
+        at ([xshift=2pt,yshift=1.5pt]kgpanel.north west) {AlzKG\,\textperiodcentered\,five-layer knowledge graph};
+
+  % ---- Graph-RAG pipeline ----
+  \node[flow,text width=3.7cm] (q) at (2.4,-3.9)
+     {\textbf{Clinical query}\\[1pt]\scriptsize\itshape ``$\varepsilon$4/$\varepsilon$4 MCI patient:\\lecanemab candidate?''};
+  \node[flow,text width=3.2cm] (r) at (9.0,-3.9)
+     {\textbf{Graph-RAG retriever}\\[1pt]\scriptsize PPR neighborhood\\$+$ serialized paths};
+  \node[flow,text width=2.7cm] (e) at (15.6,-3.9)
+     {\textbf{AlzBench}\\[1pt]\scriptsize 5 reasoning tasks};
+  \draw[->,line width=1pt] (q) -- (r);
+  \draw[->,line width=1pt] (r) -- (e);
+  % retriever operates over the KG
+  \draw[<->,dashed,line width=0.8pt,draw=black!45] (r) -- node[rel,right]{retrieve paths} (r|-kgpanel.south);
+\end{tikzpicture}%
+}
 \caption{\textbf{Overview of \textsc{AlzGraph}.} \textsc{AlzKG} links five clinical layers (gene, biomarker, stage, treatment, outcome) with typed relations; a representative reasoning path is highlighted. Given a clinical query, the Graph-RAG retriever extracts a personalized-PageRank neighborhood and serializes multi-hop reasoning paths (including the genotype-dependent ARIA-risk edge), which are evaluated across \textsc{AlzBench}'s five tasks.}
 \label{fig:overview}
 \end{figure}
