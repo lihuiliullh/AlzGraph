@@ -174,11 +174,22 @@ python tasks/t1_clinical_decision_accuracy.py \
   --dataset data/alzbench/t1/mcq.json \
   --model manual:claude-sonnet-5 --mode graph_rag \
   --out runs/t1_mcq_graph_rag.json
+
+# 4c) Or point at a local, OpenAI-compatible model server instead (e.g. Ollama)
+#     -- no API key needed, --base-url is all it takes. This produced the
+#     paper's Llama-3.2-3B / Gemma3-4B / Qwen3-8B rows -- see
+#     data/alzbench/local_llm_eval_results.json for the numbers, the models
+#     actually available on the evaluation machine, and a real extraction-bug
+#     writeup (option_letter() vs. long chain-of-thought completions).
+python tasks/t1_clinical_decision_accuracy.py \
+  --dataset data/alzbench/t1/mcq.json \
+  --model llama3.2:latest --mode graph_rag \
+  --base-url http://localhost:11434/v1/chat/completions \
+  --out runs/t1_mcq_graph_rag.json
 ```
 
-Compare against the no-retrieval baseline by switching `--mode no_rag`. For local
-models, point `ChatClient` (in `alzgraph/common.py`) at any OpenAI-compatible
-local endpoint. The full demo pipeline is wrapped in `scripts/run_all.sh`.
+Compare against the no-retrieval baseline by switching `--mode no_rag`. The full
+demo pipeline is wrapped in `scripts/run_all.sh`.
 
 ### Task examples
 

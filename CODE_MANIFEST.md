@@ -25,6 +25,7 @@ evidence-intensive reasoning benchmark (AlzBench), and a Graph-RAG retriever.
 | T5 Deep Research Planning | `tasks/t5_deep_research_planning.py` | Builds literature-grounded research-planning instances and evaluates generated study plans |
 | KG-only MCQ baseline | `tasks/kg_baseline.py` | Deterministic, no-LLM baseline that answers MCQs from AlzKG evidence alone (lexicon NER + literature-weighted PPR); writes `data/alzkg/kg_baseline_results.json`. Measured: T1 = 0.55 (n=20), T3 = 0.30 (n=10), T4 = 0.25 (n=16, chance) accuracy vs. 0.25 random |
 | Key-free model evaluation | `alzgraph/common.py` (`ChatClient`, `manual:` model prefix) | Drop-in replacement for the OpenRouter-backed path: renders the exact prompt, queues it (no gold label) to `runs/manual_llm_queue.json`, and reads an operator-filled `runs/manual_llm_cache.json` so a task runner can be scored without any API key. Used to produce the paper's "Claude (direct)" row; see `data/alzbench/manual_llm_eval_results.json` for the measured summary and caveats |
+| Local/open-source model evaluation | `alzgraph/common.py` (`ChatClient`, `--base-url`), all `tasks/t*.py` | Every task's `--base-url` flag points `ChatClient` at any OpenAI-compatible endpoint (no API key needed when the URL isn't OpenRouter's); used to run the full harness against a local Ollama server (`http://localhost:11434/v1/chat/completions`). Also gives local calls a 1536-token floor and a raw-reasoning-trace fallback for thinking-enabled models (e.g. Qwen3), and made `option_letter()` prefer the last explicit "answer is X" phrase over the first bare A–D match (the latter matched the lowercase article "a" in long reasoning traces). Used to produce the paper's Llama-3.2-3B/Gemma3-4B/Qwen3-8B rows; see `data/alzbench/local_llm_eval_results.json` for the measured summary, the models actually available on this server, and the extraction-bug writeup |
 
 ## Data Provenance and Honesty Notes
 
@@ -41,13 +42,17 @@ evidence-intensive reasoning benchmark (AlzBench), and a Graph-RAG retriever.
   `scripts/build_seed_kg.py` (there `paper_count` carries an evidence tier 1-3).
 - The benchmark task builders construct items from curated clinical rules
   (T1 MCQ/QA, T3), a term-filtered external dataset (T4, from MedQA-USMLE), and
-  real corpus abstracts (T5). Most Graph-RAG model-evaluation cells are left
-  unpopulated in the paper because they require a third-party API key
-  (OpenRouter) this release does not embed; one row ("Claude (direct)") *is*
-  measured, using the key-free `manual:` `ChatClient` mode above, and is
-  reported together with its methodology and caveats (T1/T3 items were
-  authored by the same model that answered them; two T4 items were excluded
-  because the operator had seen their gold labels during dataset QA).
+  real corpus abstracts (T5). Some Graph-RAG model-evaluation cells (Llama-3.3-70B,
+  Qwen-2.5-72B, Mistral) are left unpopulated because they require a
+  third-party API key (OpenRouter) this release does not embed; GPT-4o and
+  Gemini are omitted from the table entirely for the same reason rather than
+  shown as unmeasured placeholders. Four rows *are* measured: "Claude (direct)"
+  via the key-free `manual:` `ChatClient` mode (T1/T3 items were authored by
+  the same model that answered them; two T4 items were excluded because the
+  operator had seen their gold labels during dataset QA), and three local
+  open-weight models (Llama-3.2-3B, Gemma3-4B, Qwen3-8B) run against this
+  machine's local Ollama server via `--base-url` — not subject to the
+  self-authorship caveat, and showing genuinely mixed, sub-ceiling results.
 
 ## Differences From Earlier Working Scripts
 

@@ -82,7 +82,7 @@ OPTION_LETTERS = ["A", "B", "C", "D", "E", "F"]
 def evaluate(args: argparse.Namespace) -> None:
     data = read_json(args.dataset)
     retriever = AlzGraphRetriever(args.triplets) if args.mode == "graph_rag" else None
-    client = ChatClient(args.model, temperature=0.0)
+    client = ChatClient(args.model, base_url=args.base_url, temperature=0.0)
     rows = []
     for item in tqdm(data[: args.sample or None]):
         labeled_options = [f"{letter}) {opt}" for letter, opt in zip(OPTION_LETTERS, item["options"])]
@@ -102,6 +102,7 @@ def evaluate(args: argparse.Namespace) -> None:
         rows.append(
             {
                 "id": item["id"],
+                "prediction": pred,
                 "pred_option": letter,
                 "gold_option": item["correct_answer"],
                 "drug_safety": drug_safety_score(selected, item.get("contraindicated", [])),
@@ -128,6 +129,12 @@ def main() -> None:
     ev.add_argument("--dataset", required=True)
     ev.add_argument("--triplets", default="data/alzkg/triplets.json")
     ev.add_argument("--model", default="openai/gpt-4o")
+    ev.add_argument(
+        "--base-url",
+        dest="base_url",
+        default="https://openrouter.ai/api/v1/chat/completions",
+        help="OpenAI-compatible chat-completions endpoint, e.g. http://localhost:11434/v1/chat/completions for Ollama (no API key needed for local endpoints).",
+    )
     ev.add_argument("--mode", choices=["no_rag", "graph_rag"], default="graph_rag")
     ev.add_argument("--sample", type=int, default=0)
     ev.add_argument("--out", default="runs/t4_predictions.json")

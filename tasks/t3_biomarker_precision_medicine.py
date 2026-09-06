@@ -124,7 +124,7 @@ def build_dataset(out: str, seed: int = 13) -> None:
 def evaluate(args: argparse.Namespace) -> None:
     data = read_json(args.dataset)
     retriever = AlzGraphRetriever(args.triplets) if args.mode == "graph_rag" else None
-    client = ChatClient(args.model, temperature=0.0)
+    client = ChatClient(args.model, base_url=args.base_url, temperature=0.0)
     rows = []
     for item in tqdm(data[: args.sample or None]):
         body = item["clinical_scenario"] + "\n" + "\n".join(item["options"])
@@ -164,6 +164,12 @@ def main() -> None:
     ev.add_argument("--dataset", required=True)
     ev.add_argument("--triplets", default="data/alzkg/triplets.json")
     ev.add_argument("--model", default="openai/gpt-4o")
+    ev.add_argument(
+        "--base-url",
+        dest="base_url",
+        default="https://openrouter.ai/api/v1/chat/completions",
+        help="OpenAI-compatible chat-completions endpoint, e.g. http://localhost:11434/v1/chat/completions for Ollama (no API key needed for local endpoints).",
+    )
     ev.add_argument("--mode", choices=["no_rag", "graph_rag"], default="graph_rag")
     ev.add_argument("--sample", type=int, default=0)
     ev.add_argument("--out", default="runs/t3_predictions.json")
