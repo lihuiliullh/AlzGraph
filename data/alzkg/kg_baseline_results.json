@@ -12,9 +12,9 @@
     "dataset": "data/alzbench/t3/bpm_mcq.json",
     "method": "kg_only_baseline",
     "n_items": 5,
-    "accuracy": 0.6,
+    "accuracy": 0.4,
     "coverage": 1.0,
-    "accuracy_on_grounded": 0.6,
+    "accuracy_on_grounded": 0.4,
     "random_baseline": 0.25
   }
 }
