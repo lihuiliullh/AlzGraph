@@ -1,0 +1,45 @@
+{
+  "method": "manual:claude-sonnet-5",
+  "description": "No-RAG vs Graph-RAG comparison using the identical AlzBench prompts/retrieval/scoring code, answered directly by Claude (Sonnet 5) through the ChatClient 'manual:' mode in alzgraph/common.py instead of a third-party API call. Reproduce by re-running the commands in CODE_MANIFEST.md's Model Comparison Protocol section with an operator (human or LLM) filling in runs/manual_llm_cache.json from runs/manual_llm_queue.json.",
+  "caveats": [
+    "T1 (mcq.json, qa.json) and T3 (bpm_mcq.json) items were authored by the same model instance that produced these predictions; the ceiling accuracy on those subsets reflects that the items test facts well within this model's parametric knowledge and is not evidence of generalization to unseen or adversarially-constructed items.",
+    "T4 items are externally sourced (MedQA-USMLE, not authored by the operator), which removes item-authorship bias but not the same-model-family evaluation bias.",
+    "Two T4 items (t4_4b426800a373, t4_d72f542a3b13) were excluded from this table because the operator viewed their gold labels during dataset curation QA before the blind answering pass; they remain in the released dataset and in the KG-only baseline (which does not involve operator judgment).",
+    "T5 has no gold reference plans (PMC abstracts do not carry expert-authored research plans), so it is reported as a qualitative case study, not a scored row."
+  ],
+  "t1_mcq": {
+    "dataset": "data/alzbench/t1/mcq.json",
+    "n_items": 20,
+    "no_rag": {"accuracy": 1.0},
+    "graph_rag": {"accuracy": 1.0}
+  },
+  "t1_qa": {
+    "dataset": "data/alzbench/t1/qa.json",
+    "n_items": 8,
+    "no_rag": {"bleu1": 0.7020, "rouge_l": 0.6763, "token_f1": 0.7366},
+    "graph_rag": {"bleu1": 0.7020, "rouge_l": 0.6763, "token_f1": 0.7366}
+  },
+  "t3": {
+    "dataset": "data/alzbench/t3/bpm_mcq.json",
+    "n_items": 10,
+    "no_rag": {"top1_accuracy": 1.0, "drug_safety": 1.0},
+    "graph_rag": {"top1_accuracy": 1.0, "drug_safety": 1.0}
+  },
+  "t4": {
+    "dataset": "data/alzbench/t4/medqa_dementia_subset_manualeval.json",
+    "n_items": 14,
+    "note": "14 of the 16 released T4 items; see caveats for the 2 excluded",
+    "no_rag": {"top1_accuracy": 1.0, "drug_safety": 1.0, "kg_evidence_coverage": 0.0},
+    "graph_rag": {"top1_accuracy": 1.0, "drug_safety": 1.0, "kg_evidence_coverage": 0.0179}
+  },
+  "t5": {
+    "dataset": "data/alzbench/t5/research_planning.json",
+    "n_items_generated": 2,
+    "note": "Qualitative case study only (no gold research plans exist for real PMC abstracts); see runs/t5_manual_norag_sample.json and runs/t5_manual_graphrag_sample.json for the full generations."
+  },
+  "kg_only_baseline_for_comparison": {
+    "t1_mcq": {"n_items": 20, "accuracy": 0.55, "random_baseline": 0.25},
+    "t3": {"n_items": 10, "accuracy": 0.30, "random_baseline": 0.25},
+    "t4_full": {"n_items": 16, "accuracy": 0.25, "random_baseline": 0.25}
+  }
+}

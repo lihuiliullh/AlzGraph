@@ -13,5 +13,30 @@
     "id": "t1_qa_003",
     "question": "What is the first-line pharmacologic treatment for mild-to-moderate Alzheimer's dementia, and what are common adverse effects?",
     "answer": "Cholinesterase inhibitors—donepezil, rivastigmine, and galantamine—are first-line for mild-to-moderate Alzheimer's dementia and provide modest symptomatic benefit. Common adverse effects are gastrointestinal (nausea, diarrhea, anorexia) and cholinergic cardiac effects such as bradycardia or syncope. Memantine, an NMDA antagonist, is added or substituted in moderate-to-severe disease."
+  },
+  {
+    "id": "t1_qa_004",
+    "question": "How does donanemab's amyloid-lowering target differ from lecanemab's, and what is a notable dosing feature of donanemab?",
+    "answer": "Donanemab targets a pyroglutamate-modified form of amyloid-β (N3pG) enriched in mature plaques, whereas lecanemab targets soluble protofibrils. A distinctive feature of donanemab is amyloid-PET-guided 'treat-to-target' dosing, where therapy may be stopped once amyloid plaque levels fall below a defined threshold on repeat PET imaging."
+  },
+  {
+    "id": "t1_qa_005",
+    "question": "What distinguishes ARIA-E from ARIA-H, and how is each typically detected on MRI?",
+    "answer": "ARIA-E reflects vasogenic edema or sulcal effusion from increased vascular permeability, while ARIA-H reflects microhemorrhage or superficial siderosis from vascular leakage of blood products. ARIA-E is best seen on FLAIR sequences and ARIA-H on gradient-echo (GRE) or susceptibility-weighted imaging (SWI); most cases of either are asymptomatic and are detected through scheduled monitoring MRIs during anti-amyloid antibody therapy."
+  },
+  {
+    "id": "t1_qa_006",
+    "question": "Why are cerebral microhemorrhage count and prior macrohemorrhage important in anti-amyloid antibody appropriate-use criteria?",
+    "answer": "Microhemorrhages and macrohemorrhages reflect underlying cerebral amyloid angiopathy or small-vessel disease, which raises the risk of ARIA-H during anti-amyloid antibody therapy. Appropriate-use criteria generally exclude patients with more than four microhemorrhages or any prior macrohemorrhage, and urge added caution or exclusion for patients on concurrent anticoagulation, given the elevated risk of clinically significant hemorrhage."
+  },
+  {
+    "id": "t1_qa_007",
+    "question": "What is the clinical significance of the APOE ε2 allele in Alzheimer's disease risk?",
+    "answer": "The APOE ε2 allele is associated with reduced Alzheimer's disease risk and later age of onset relative to ε3, opposite to the effect of ε4. ε2 carriers who do develop amyloid-positive AD also tend to have lower rates of ARIA during anti-amyloid antibody therapy compared with ε4 carriers, consistent with genotype-dependent differences in cerebrovascular amyloid burden."
+  },
+  {
+    "id": "t1_qa_008",
+    "question": "How do plasma biomarkers such as p-tau217 change the traditional diagnostic workup for suspected Alzheimer's disease?",
+    "answer": "Plasma p-tau217 offers a scalable, minimally invasive alternative to CSF sampling or amyloid-PET for detecting amyloid and tau pathology, with leading assays showing concordance with PET/CSF status approaching that of established biomarkers in research and specialist settings. It is increasingly used to triage which patients need confirmatory PET or CSF testing, though it does not yet universally replace those confirmatory tests for treatment-eligibility decisions in routine practice."
   }
 ]

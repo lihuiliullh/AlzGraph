@@ -2,7 +2,7 @@
   {
     "id": "t3_c7275f772f3e",
     "gene": "APOE e3/e4",
-    "clinical_scenario": "A patient with amyloid-positive (PET) mild AD dementia, no anticoagulation, <=4 cerebral microhemorrhages on MRI is APOE APOE e3/e4. Which treatment is most appropriate?",
+    "clinical_scenario": "A patient with amyloid-positive (PET) mild AD dementia, no anticoagulation, <=4 cerebral microhemorrhages on MRI is APOE e3/e4. Which treatment is most appropriate?",
     "options": [
       "A) Donanemab",
       "B) Lecanemab",
@@ -17,7 +17,7 @@
   {
     "id": "t3_7183803cd40a",
     "gene": "APOE e4/e4",
-    "clinical_scenario": "A patient with amyloid-positive mild AD dementia on chronic anticoagulation for atrial fibrillation is APOE APOE e4/e4. Which treatment is most appropriate?",
+    "clinical_scenario": "A patient with amyloid-positive mild AD dementia on chronic anticoagulation for atrial fibrillation is APOE e4/e4. Which treatment is most appropriate?",
     "options": [
       "A) Donanemab",
       "B) Memantine",
@@ -36,7 +36,7 @@
   {
     "id": "t3_8baef0b1d121",
     "gene": "APOE e3/e3",
-    "clinical_scenario": "A patient with amyloid-positive MCI due to AD with MRI showing >4 cerebral microhemorrhages is APOE APOE e3/e3. Which treatment is most appropriate?",
+    "clinical_scenario": "A patient with amyloid-positive MCI due to AD with MRI showing >4 cerebral microhemorrhages is APOE e3/e3. Which treatment is most appropriate?",
     "options": [
       "A) Rivastigmine",
       "B) Galantamine",
@@ -55,7 +55,7 @@
   {
     "id": "t3_7903e68d3db3",
     "gene": "APOE e3/e3",
-    "clinical_scenario": "A patient with moderate-to-severe AD dementia (MMSE 12) is APOE APOE e3/e3. Which treatment is most appropriate?",
+    "clinical_scenario": "A patient with moderate-to-severe AD dementia (MMSE 12) is APOE e3/e3. Which treatment is most appropriate?",
     "options": [
       "A) Memantine",
       "B) Aducanumab",
@@ -73,7 +73,7 @@
   {
     "id": "t3_207c105db08a",
     "gene": "APOE e3/e4",
-    "clinical_scenario": "A patient with mild AD dementia with symptomatic bradycardia and sick sinus syndrome is APOE APOE e3/e4. Which treatment is most appropriate?",
+    "clinical_scenario": "A patient with mild AD dementia with symptomatic bradycardia and sick sinus syndrome is APOE e3/e4. Which treatment is most appropriate?",
     "options": [
       "A) Memantine",
       "B) Donepezil",
@@ -88,5 +88,88 @@
       "Galantamine"
     ],
     "rationale": "Cholinesterase inhibitors increase vagal tone and can worsen bradycardia or cause syncope; memantine avoids cholinergic cardiac effects."
+  },
+  {
+    "id": "t3_3df215e29c11",
+    "gene": "APOE e3/e3",
+    "clinical_scenario": "A patient with amyloid-positive (PET) MCI due to AD, no cerebral microhemorrhages, not on anticoagulation, adequate renal and hepatic function is APOE e3/e3. Which treatment is most appropriate?",
+    "options": [
+      "A) Rivastigmine",
+      "B) Donanemab",
+      "C) Lecanemab",
+      "D) Galantamine"
+    ],
+    "correct_answer": "B",
+    "recommended": "Donanemab",
+    "avoid": [],
+    "rationale": "Amyloid-confirmed MCI due to AD without ARIA risk factors is an appropriate anti-amyloid antibody candidate per AUC; donanemab is indicated for MCI/mild AD dementia."
+  },
+  {
+    "id": "t3_616c8ab48344",
+    "gene": "APOE e4/e4",
+    "clinical_scenario": "A patient with amyloid-positive MCI due to AD on chronic oral anticoagulation for atrial fibrillation is APOE e4/e4. Which treatment is most appropriate?",
+    "options": [
+      "A) Donepezil",
+      "B) Rivastigmine",
+      "C) Lecanemab",
+      "D) Memantine"
+    ],
+    "correct_answer": "B",
+    "recommended": "Rivastigmine",
+    "avoid": [
+      "Lecanemab",
+      "Donanemab",
+      "Aducanumab"
+    ],
+    "rationale": "APOE e4 homozygosity combined with anticoagulation substantially elevates ARIA-related hemorrhage risk; AUC favors symptomatic cholinesterase-inhibitor therapy over anti-amyloid mAb initiation in this combination."
+  },
+  {
+    "id": "t3_4b7f7577dd32",
+    "gene": "APOE e3/e4",
+    "clinical_scenario": "A patient with amyloid-positive (PET) mild AD dementia with 3 punctate cerebral microhemorrhages on MRI, no anticoagulation is APOE e3/e4. Which treatment is most appropriate?",
+    "options": [
+      "A) Galantamine",
+      "B) Donanemab",
+      "C) Lecanemab",
+      "D) Rivastigmine"
+    ],
+    "correct_answer": "C",
+    "recommended": "Lecanemab",
+    "avoid": [],
+    "rationale": "AUC permits anti-amyloid antibody initiation with up to four microhemorrhages absent anticoagulation, with more frequent monitoring MRIs during the titration phase."
+  },
+  {
+    "id": "t3_6c9753e60683",
+    "gene": "APOE e3/e3",
+    "clinical_scenario": "A patient with amyloid-positive mild AD dementia with a prior lobar intracerebral hemorrhage consistent with cerebral amyloid angiopathy is APOE e3/e3. Which treatment is most appropriate?",
+    "options": [
+      "A) Donepezil",
+      "B) Rivastigmine",
+      "C) Memantine",
+      "D) Galantamine"
+    ],
+    "correct_answer": "A",
+    "recommended": "Donepezil",
+    "avoid": [
+      "Lecanemab",
+      "Donanemab",
+      "Aducanumab"
+    ],
+    "rationale": "A prior macrohemorrhage, particularly CAA-related, is an AUC exclusion for anti-amyloid antibody therapy given high recurrent ARIA-H risk; symptomatic cholinesterase-inhibitor therapy is appropriate instead."
+  },
+  {
+    "id": "t3_380d22e6ebcd",
+    "gene": "APOE e2/e3",
+    "clinical_scenario": "A patient with amyloid-positive (PET) MCI due to AD, no microhemorrhages, on low-dose aspirin only (no anticoagulant) is APOE e2/e3. Which treatment is most appropriate?",
+    "options": [
+      "A) Donanemab",
+      "B) Lecanemab",
+      "C) Galantamine",
+      "D) Memantine"
+    ],
+    "correct_answer": "A",
+    "recommended": "Donanemab",
+    "avoid": [],
+    "rationale": "The e2 allele confers comparatively low ARIA risk, and single-agent antiplatelet therapy (unlike anticoagulation) is not an AUC contraindication to anti-amyloid antibody initiation."
   }
 ]

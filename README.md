@@ -150,7 +150,7 @@ python scripts/retrieval_ablation.py
 
 # 3) KG-only MCQ baseline -- deterministic, no LLM, no API key
 #    Answers MCQs from AlzKG evidence alone (PPR over the mined graph).
-#    Measured: T1 = 0.60, T3 = 0.40 accuracy (vs. 0.25 random).
+#    Measured: T1 = 0.55 (n=20), T3 = 0.30 (n=10), T4 = 0.25 (n=16, chance) vs. 0.25 random.
 python tasks/kg_baseline.py --dataset data/alzbench/t1/mcq.json \
   --out runs/t1_kg_baseline.json
 python tasks/kg_baseline.py --dataset data/alzbench/t3/bpm_mcq.json \
@@ -162,6 +162,17 @@ python tasks/t1_clinical_decision_accuracy.py \
   --dataset data/alzbench/t1/mcq.json \
   --triplets data/alzkg/triplets.json \
   --model openai/gpt-4o --mode graph_rag \
+  --out runs/t1_mcq_graph_rag.json
+
+# 4b) No API key? Use the key-free "manual" mode instead: it queues the exact
+#     prompts to runs/manual_llm_queue.json for an operator (human or another
+#     LLM) to answer blind, then scores the filled-in runs/manual_llm_cache.json
+#     through the same metrics code. This produced the paper's "Claude (direct)"
+#     row -- see data/alzbench/manual_llm_eval_results.json for the numbers and
+#     caveats (self-authored items, ceiling accuracy).
+python tasks/t1_clinical_decision_accuracy.py \
+  --dataset data/alzbench/t1/mcq.json \
+  --model manual:claude-sonnet-5 --mode graph_rag \
   --out runs/t1_mcq_graph_rag.json
 ```
 
@@ -177,8 +188,10 @@ python tasks/t3_biomarker_precision_medicine.py build --out data/alzbench/t3/bpm
 python tasks/t3_biomarker_precision_medicine.py eval \
   --dataset data/alzbench/t3/bpm_mcq.json --model openai/gpt-4o --mode graph_rag
 
-# T4: dementia-filtered MedQA-USMLE subset
+# T4: dementia-filtered MedQA-USMLE subset (needs the `datasets` package)
 python tasks/t4_treatment_recommendation.py build --out data/alzbench/t4/medqa_dementia.json --max_items 200
+# ...or, without pip/`datasets` (fetches the same public split over HTTP):
+python scripts/build_t4_medqa_subset.py --out data/alzbench/t4/medqa_dementia_subset.json --max_items 200
 
 # T2: ADNI / memory-clinic notes are private — use the local adapter
 python tasks/t2_clinical_report_generation.py build \

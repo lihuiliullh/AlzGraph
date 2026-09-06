@@ -92,13 +92,24 @@ class AlzGraphRetriever:
     def match_entities(self, query: str) -> List[str]:
         q = f" {query.lower()} "
         hits = []
-        for entity in self.nodes:
+        # Iterate in a fixed (sorted) order rather than raw set order: since
+        # ``self.nodes`` is a set, its iteration order depends on Python's
+        # per-process string-hash seed, and without a fixed order here the
+        # length-tie-breaks below (and every downstream tie-break that
+        # depends on this function's output order) would silently vary
+        # between runs of the exact same query, breaking reproducibility.
+        for entity in sorted(self.nodes):
             if len(entity) < 3:
                 continue
             if f" {entity} " in q or entity.replace("-", " ") in q:
                 hits.append(entity)
-        # Prefer longer (more specific) matches first.
-        return sorted(set(hits), key=len, reverse=True)[:8]
+        # Prefer longer (more specific) matches first. ``hits`` already has no
+        # duplicates (each node in ``self.nodes`` is visited at most once), so
+        # do NOT re-wrap it in ``set(...)`` here: that would throw away the
+        # fixed order established above and re-introduce hash-seed-dependent
+        # tie-breaking among same-length matches on every call site downstream
+        # (e.g. which of two equal-length, equal-score seeds is tried first).
+        return sorted(hits, key=len, reverse=True)[:8]
 
     # --------------------------------------------------------------- pagerank
     def _pagerank(self, seeds: Iterable[str]) -> Dict[str, float]:
@@ -112,7 +123,7 @@ class AlzGraphRetriever:
         for head, edges in self.out_edges.items():
             for e in edges:
                 graph.add_edge(head, e["tail"], weight=e["weight"])
-        for node in self.nodes:
+        for node in sorted(self.nodes):  # fixed order: see match_entities note
             graph.add_node(node)
         personalization = {node: (1.0 if node in set(seeds) else 0.0) for node in graph.nodes}
         if sum(personalization.values()) == 0:
@@ -131,11 +142,19 @@ class AlzGraphRetriever:
         restart = self.ppr_alpha        # teleport-to-seeds probability
         seed_set = set(seeds)
         n_seeds = max(len(seed_set), 1)
-        personalization = {node: (1.0 / n_seeds if node in seed_set else 0.0) for node in self.nodes}
+        # ``sorted(self.nodes)`` rather than raw set iteration: self.nodes is a
+        # set, whose iteration order depends on Python's per-process string
+        # hash seed. That order otherwise leaks into the insertion order of
+        # every dict built below, which in turn decides tie-breaks wherever
+        # scores end up equal (e.g. the top-k cutoff in retrieve()) -- so
+        # without a fixed order, two runs of the identical query against the
+        # identical graph could keep a different set of nodes/paths.
+        nodes = sorted(self.nodes)
+        personalization = {node: (1.0 / n_seeds if node in seed_set else 0.0) for node in nodes}
 
         # Pre-normalize out-edge weights.
         out_norm: Dict[str, List[Tuple[str, float]]] = {}
-        for node in self.nodes:
+        for node in nodes:
             edges = self.out_edges.get(node, [])
             total = sum(e["weight"] for e in edges)
             if total > 0:
@@ -145,9 +164,9 @@ class AlzGraphRetriever:
 
         score = dict(personalization)
         for _ in range(iters):
-            nxt = {node: restart * personalization[node] for node in self.nodes}
+            nxt = {node: restart * personalization[node] for node in nodes}
             dangling_mass = 0.0
-            for node in self.nodes:
+            for node in nodes:
                 s = score[node]
                 if not out_norm[node]:
                     dangling_mass += s
@@ -156,7 +175,7 @@ class AlzGraphRetriever:
                     nxt[tail] += damping * s * w
             # Dangling mass teleports back to the personalization vector.
             if dangling_mass:
-                for node in self.nodes:
+                for node in nodes:
                     nxt[node] += damping * dangling_mass * personalization[node]
             delta = sum(abs(nxt[n] - score[n]) for n in self.nodes)
             score = nxt

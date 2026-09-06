@@ -20,9 +20,11 @@ evidence-intensive reasoning benchmark (AlzBench), and a Graph-RAG retriever.
 | T1 Clinical Decision Accuracy | `tasks/t1_clinical_decision_accuracy.py` | AD diagnosis/staging MCQ and open-ended QA |
 | T2 Clinical Report Generation | `tasks/t2_clinical_report_generation.py` | Cognitive + fluid/imaging biomarker panel to diagnostic impression; ADNI / memory-clinic data is private, so a local JSONL adapter preserves the evaluation logic |
 | T3 Biomarker-Driven Precision Medicine | `tasks/t3_biomarker_precision_medicine.py` | APOE-genotype and biomarker-aware anti-amyloid mAb selection with ARIA safety scoring |
-| T4 Treatment Recommendation | `tasks/t4_treatment_recommendation.py` | Dementia-filtered MedQA-USMLE / MMLU builder plus treatment safety and KG evidence coverage |
+| T4 Treatment Recommendation | `tasks/t4_treatment_recommendation.py` | Dementia-filtered MedQA-USMLE / MMLU builder (needs the `datasets` package) plus treatment safety and KG evidence coverage |
+| T4 dataset build (pip-free alternate) | `scripts/build_t4_medqa_subset.py` | Builds the same dementia-filtered MedQA-USMLE subset via the Hugging Face datasets-server HTTP API (`requests` only, no `datasets`/`pip install`); shares the word-boundary term filter in `tasks/t4_treatment_recommendation.py` and applies a small, documented manual-relevance exclusion list on top of it |
 | T5 Deep Research Planning | `tasks/t5_deep_research_planning.py` | Builds literature-grounded research-planning instances and evaluates generated study plans |
-| KG-only MCQ baseline | `tasks/kg_baseline.py` | Deterministic, no-LLM baseline that answers MCQs from AlzKG evidence alone (lexicon NER + literature-weighted PPR); writes `data/alzkg/kg_baseline_results.json`. Measured: T1 = 0.70, T3 = 0.40 accuracy vs. 0.25 random |
+| KG-only MCQ baseline | `tasks/kg_baseline.py` | Deterministic, no-LLM baseline that answers MCQs from AlzKG evidence alone (lexicon NER + literature-weighted PPR); writes `data/alzkg/kg_baseline_results.json`. Measured: T1 = 0.55 (n=20), T3 = 0.30 (n=10), T4 = 0.25 (n=16, chance) accuracy vs. 0.25 random |
+| Key-free model evaluation | `alzgraph/common.py` (`ChatClient`, `manual:` model prefix) | Drop-in replacement for the OpenRouter-backed path: renders the exact prompt, queues it (no gold label) to `runs/manual_llm_queue.json`, and reads an operator-filled `runs/manual_llm_cache.json` so a task runner can be scored without any API key. Used to produce the paper's "Claude (direct)" row; see `data/alzbench/manual_llm_eval_results.json` for the measured summary and caveats |
 
 ## Data Provenance and Honesty Notes
 
@@ -37,10 +39,15 @@ evidence-intensive reasoning benchmark (AlzBench), and a Graph-RAG retriever.
   (`scripts/build_kg_from_corpus.py`) is retained as a coarser alternate.
 - An optional curated, guideline-tiered seed graph is available via
   `scripts/build_seed_kg.py` (there `paper_count` carries an evidence tier 1-3).
-- The benchmark task builders construct items from curated clinical rules and
-  public datasets. The Graph-RAG model-evaluation tables in the paper are
-  produced by running `tasks/t*.py` against an LLM endpoint; this release ships
-  the runners and metrics, not third-party model outputs.
+- The benchmark task builders construct items from curated clinical rules
+  (T1 MCQ/QA, T3), a term-filtered external dataset (T4, from MedQA-USMLE), and
+  real corpus abstracts (T5). Most Graph-RAG model-evaluation cells are left
+  unpopulated in the paper because they require a third-party API key
+  (OpenRouter) this release does not embed; one row ("Claude (direct)") *is*
+  measured, using the key-free `manual:` `ChatClient` mode above, and is
+  reported together with its methodology and caveats (T1/T3 items were
+  authored by the same model that answered them; two T4 items were excluded
+  because the operator had seen their gold labels during dataset QA).
 
 ## Differences From Earlier Working Scripts
 

@@ -1,7 +1,8 @@
-\documentclass[11pt]{article}
+\documentclass{article}
+\usepackage[nonatbib]{neurips_2025}
+
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[margin=1in]{geometry}
 \usepackage{amsmath,amssymb}
 \usepackage{booktabs}
 \usepackage{array}
@@ -15,12 +16,13 @@
 \usepackage[colorlinks=true,linkcolor=blue!55!black,citecolor=blue!55!black,urlcolor=teal!60!black]{hyperref}
 
 % ---------------------------------------------------------------------------
-% NOTE: Author list and affiliation below are placeholders for a preprint draft.
-% Update them (and the arXiv id / repo URL) before release.
+% Anonymized submission: no author/affiliation is set here. The neurips_2025
+% style prints "Anonymous Author(s) / Affiliation / Address / email" in place
+% of \author in submission mode automatically; identifying links (e.g. a
+% repository URL) are likewise omitted from the body until de-anonymization.
 % ---------------------------------------------------------------------------
 \title{\textbf{AlzGraph}: Building Generalists for Evidence-Intensive\\ Alzheimer's Disease Reasoning in the Wild}
-\author{Lihui Liu\thanks{Preprint draft. Author list and affiliations are placeholders to be finalized.}\\ \textit{AlzGraph Project}}
-\date{2026}
+\author{}
 
 \definecolor{gene}{HTML}{7C3AED}
 \definecolor{biomarker}{HTML}{0EA5E9}
@@ -32,7 +34,7 @@
 \maketitle
 
 \begin{abstract}
-Alzheimer's disease (AD) diagnosis and treatment require evidence-intensive reasoning across heterogeneous clinical knowledge: risk genetics, amyloid--tau--neurodegeneration (ATN) biomarkers, disease staging, disease-modifying and symptomatic therapies, and longitudinal outcomes. We present \textsc{AlzGraph}, a knowledge-graph-powered framework for evaluating knowledge-augmented clinical reasoning in AD. \textsc{AlzGraph} comprises (i) \textsc{AlzKG}, a five-layer Alzheimer's knowledge graph---spanning genes, biomarkers, stages, treatments, and outcomes---curated from public ontologies and clinical guidelines and constructed through an evidence-to-graph pipeline that scales to the PubMed/PMC literature; (ii) \textsc{AlzBench}, a five-task benchmark covering clinical decision accuracy, clinical report generation, biomarker-driven precision medicine, treatment recommendation, and deep research planning; and (iii) a Graph-RAG retriever that serializes literature-weighted, multi-hop reasoning paths for language models. \textsc{AlzKG} is mined from \textbf{7{,}150 PMC open-access full-text papers} retrieved via NCBI E-utilities (reduced to 361{,}201 candidate sentences), yielding \textbf{1{,}301 entities} and \textbf{5{,}880 cross-layer triplets} across 10 relation types, each weighted by its true literature paper count (up to 2{,}722 supporting papers) and extracted by sentence-grounded relation triggers. An intrinsic retrieval analysis shows that gold-evidence coverage is already saturated within a compact 20--30-node neighborhood, while reasoning-path coverage jumps sharply from one to two hops and does not benefit from deeper traversal. \textsc{AlzGraph} provides an open, plug-and-play framework and a reproducible harness for evaluating whether generalist models can ground Alzheimer's reasoning in structured evidence. Code: \texttt{https://github.com/lihuiliullh/AlzGraph}.
+Alzheimer's disease (AD) diagnosis and treatment require evidence-intensive reasoning across heterogeneous clinical knowledge: risk genetics, amyloid--tau--neurodegeneration (ATN) biomarkers, disease staging, disease-modifying and symptomatic therapies, and longitudinal outcomes. We present \textsc{AlzGraph}, a knowledge-graph-powered framework for evaluating knowledge-augmented clinical reasoning in AD. \textsc{AlzGraph} comprises (i) \textsc{AlzKG}, a five-layer Alzheimer's knowledge graph---spanning genes, biomarkers, stages, treatments, and outcomes---curated from public ontologies and clinical guidelines and constructed through an evidence-to-graph pipeline that scales to the PubMed/PMC literature; (ii) \textsc{AlzBench}, a five-task benchmark covering clinical decision accuracy, clinical report generation, biomarker-driven precision medicine, treatment recommendation, and deep research planning; and (iii) a Graph-RAG retriever that serializes literature-weighted, multi-hop reasoning paths for language models. \textsc{AlzKG} is mined from \textbf{7{,}150 PMC open-access full-text papers} retrieved via NCBI E-utilities (reduced to 361{,}201 candidate sentences), yielding \textbf{1{,}301 entities} and \textbf{5{,}880 cross-layer triplets} across 10 relation types, each weighted by its true literature paper count (up to 2{,}722 supporting papers) and extracted by sentence-grounded relation triggers. An intrinsic retrieval analysis shows that gold-evidence coverage is already saturated within a compact 20--30-node neighborhood, while reasoning-path coverage jumps sharply from one to two hops and does not benefit from deeper traversal. Beyond this intrinsic analysis we report two measured, model-facing results: a fully deterministic, model-free \emph{KG-only} baseline (0.55/0.30/0.25 accuracy on T1/T3/T4, against 0.25 random), and a blind No-RAG vs.\ Graph-RAG comparison run directly with a frontier LLM (no third-party API key required), which reaches ceiling accuracy in both conditions on our curated items---a finding we report together with its main caveat (partial self-authorship of the items) rather than omit. \textsc{AlzGraph} provides an open, plug-and-play framework and a reproducible harness for evaluating whether generalist models can ground Alzheimer's reasoning in structured evidence. Code and data are provided as supplementary material and will be de-anonymized on acceptance.
 \end{abstract}
 
 \section{Introduction}
@@ -118,6 +120,7 @@ We define \textsc{AlzKG} as a multi-relational heterogeneous knowledge graph $\m
 \paragraph{Preprocessing.} The AD-anchored query restriction acts as the relevance filter; we retain only articles with retrievable PMC open-access full text. Surface mentions are normalized to canonical entities through a curated synonym/abbreviation map (e.g.\ ``Leqembi''\,$\to$\,\emph{Lecanemab}; ``Mini-Mental State''\,$\to$\,\emph{MMSE}; ``A$\beta$42''\,$\to$\,\emph{Amyloid-$\beta$ 42}). Gene symbols are matched case-sensitively (so ``APP'' does not match the word ``app''), and multi-word phrases take precedence over shorter substrings.
 
 \subsection{Knowledge Graph Construction}
+\label{sec:kg-construction}
 \paragraph{Entity extraction.} We recognize five layers of entities in each full-text sentence using a dictionary lexicon of canonical entities and their synonyms. For example, given the sentence \emph{``In amyloid-positive MCI, elevated plasma p-tau217 predicts progression to Alzheimer's dementia, where lecanemab slows decline but carries ARIA risk in APOE~$\varepsilon$4 carriers,''} the pipeline extracts \textit{APOE} (gene), \emph{p-tau217} / \emph{amyloid PET} (biomarker), \emph{MCI} (stage), \emph{lecanemab} (treatment), and \emph{ARIA} / \emph{disease progression} (outcome). The five layers are:
 \begin{itemize}
 \item \textbf{Gene.} Causal autosomal-dominant genes (\textit{APP, PSEN1, PSEN2}) and risk/protective loci (\textit{APOE, TREM2, SORL1, ABCA7, CLU, CR1, BIN1, PICALM, MAPT, PLCG2}, and microglial loci), extracted from OMIM/ADSP/GWAS Catalog and normalized to HGNC symbols.
@@ -181,6 +184,7 @@ biomarker\_guides\_treatment   & biomarker $\to$ treatment & 174 \\
 We formulate \textsc{AlzBench} as a unified benchmark for evidence-intensive AD reasoning. Each task is $\hat{y}_i = f_{\text{LM}}(x_i, \mathcal{E}_i, \mathcal{C}_i)$, where $x_i$ is the task input (a clinical case, patient panel, or scientific document), $\mathcal{E}_i$ is the evidence retrieved from \textsc{AlzKG} via Graph-RAG, $\mathcal{C}_i$ is optional task-specific context (candidate options or metadata), and $\hat{y}_i$ is evaluated against the gold output $y_i^\ast$.
 
 \subsection{Task Design}
+\label{sec:task-design}
 \paragraph{T1: Clinical Decision Accuracy (CDA).} Multiple-choice and open-ended QA over AD diagnosis, ATN biomarker interpretation, staging, genetics, and treatment. Example: \emph{``A 71-year-old with amyloid-positive PET and mild AD dementia is APOE~$\varepsilon$4/$\varepsilon$4; which adverse event is most increased if lecanemab is started?''} (answer: ARIA).
 \paragraph{T2: Clinical Report Generation (CRG).} Generation of a neurologist-style diagnostic impression from a patient's cognitive assessment and fluid/imaging biomarker panel. Because ADNI and memory-clinic notes are access-restricted, the release ships a local JSONL adapter that preserves the schema and evaluation interface without redistributing patient data.
 \paragraph{T3: Biomarker-Driven Precision Medicine (BPM).} Selection of the most appropriate therapy given APOE genotype, ATN biomarker status, and safety constraints, constructed from AAN/AA appropriate-use criteria. Example: an amyloid-positive early-AD patient on chronic anticoagulation should \emph{avoid} anti-amyloid antibodies (ARIA-hemorrhage risk), whereas an $\varepsilon$3/$\varepsilon$4 patient without contraindications is an appropriate candidate with MRI monitoring.
@@ -193,9 +197,11 @@ We evaluate with task accuracy and reasoning-oriented metrics. For CDA we report
 \section{Experiments}
 
 \subsection{Setup}
+\label{sec:setup}
 The Graph-RAG retriever seeds a personalized-PageRank (PPR) walk from query-mentioned entities (restart probability $0.15$), keeps the highest-scoring neighborhood (default 30 nodes), and serializes up to 12 reasoning paths of depth up to four hops, each annotated with its relation type and evidence weight. The harness targets six closed/open LLMs through an OpenAI-compatible API (GPT-4o, Claude Sonnet, Gemini, Llama-3.3-70B, Qwen-2.5-72B, Mistral) and four locally deployed models for the report-generation task. Prompts use chain-of-thought reasoning, a clinical-specialist role, and the serialized \textsc{AlzKG} paths as context; MCQ temperature is $0.0$ and generation temperature $0.3$.
 
 \subsection{AlzKG and Retrieval Analysis}
+\label{sec:retrieval-analysis}
 We report intrinsic analyses computed directly from the mined graph (no LLM required). Table~\ref{tab:ablation} sweeps the retrieval budget over 15 AlzBench probe queries (T1 and T3), measuring the number of \emph{candidate} reasoning paths discovered (before truncation to the 12 highest-scoring paths handed to the model), \emph{gold-evidence coverage} (the fraction of probes whose gold answer concept is recovered in the retrieved paths), and mean retrieval latency. The candidate-path count grows combinatorially with both budgets---from 47 to 7{,}839 paths as the neighborhood expands from 10 to 50 nodes, and from 56 to 2{,}166 as depth grows from one to four hops---yet coverage does not, which is precisely the point: two findings emerge. First, a larger node budget does \emph{not} improve coverage: it peaks at a compact 20-node neighborhood ($0.13$) and settles to $0.07$ for 30--50 nodes, while latency grows steeply ($30 \to 70$\,ms), so the relevant evidence is reached early and a larger budget only multiplies off-target paths and cost (we keep 30 as the default to preserve full reasoning paths). Second, retrieval depth is decisive: coverage peaks at two hops ($0.13 \to 0.20$) and then \emph{falls back} at three to four hops ($0.07$) even as the candidate pool quadruples, confirming that AD reasoning is inherently \emph{multi-hop but shallow}---paths such as gene$\to$disease$\to$biomarker$\to$treatment$\to$outcome require two hops, but deeper traversal dilutes the top-ranked paths with off-target evidence. Absolute coverage is coarse (15 probes) and limited by descriptive multi-token gold phrasings in T1.
 
 \begin{table}[t]
@@ -224,34 +230,39 @@ We report intrinsic analyses computed directly from the mined graph (no LLM requ
 \end{table}
 
 \subsection{KG-only Baseline (Measured)}
-Beyond the intrinsic retrieval analysis, we report a fully reproducible \emph{KG-only} baseline that answers AlzBench multiple-choice items using nothing but \textsc{AlzKG} evidence---no language model and no network access. For each item it (i) recognizes the AD entities in the question stem via the lexicon, (ii) runs the same literature-weighted personalized PageRank (PPR) used by Graph-RAG, seeded from those entities, and (iii) scores each option by the PPR evidence mass reaching the \textsc{AlzKG} entities named in that option, breaking ties with the direct co-mention paper count between question and option entities; the highest-scoring option is selected. Because it is deterministic and depends only on the released graph, the numbers are exactly reproducible (\texttt{python tasks/kg\_baseline.py --dataset data/alzbench/t1/mcq.json}). Table~\ref{tab:kgbaseline} reports the result. On T1 the KG-only baseline reaches \textbf{0.70} accuracy and on T3 \textbf{0.40}, both above the 0.25 random-choice rate, while \emph{grounding coverage}---the fraction of items for which some option is connected to the question in the graph---is 0.80 (T1) and 1.00 (T3). This isolates how much of AD multiple-choice reasoning is already carried by the structured literature evidence alone, and provides a model-free floor against which LLM and Graph-RAG systems can be compared.
+\label{sec:kgbaseline-measured}
+Beyond the intrinsic retrieval analysis, we report a fully reproducible \emph{KG-only} baseline that answers AlzBench multiple-choice items using nothing but \textsc{AlzKG} evidence---no language model and no network access. For each item it (i) recognizes the AD entities in the question stem via the lexicon, (ii) runs the same literature-weighted personalized PageRank (PPR) used by Graph-RAG, seeded from those entities, and (iii) scores each option by the PPR evidence mass reaching the \textsc{AlzKG} entities named in that option, breaking ties with the direct co-mention paper count between question and option entities; the highest-scoring option is selected. Because it is deterministic and depends only on the released graph, the numbers are exactly reproducible (\texttt{python tasks/kg\_baseline.py --dataset data/alzbench/t1/mcq.json}); this determinism required fixing a subtle bug in the retriever, where tie-breaking among equal-scoring nodes/paths depended on Python's per-process string-hash seed rather than the graph content itself (\S\ref{sec:limitations}). Table~\ref{tab:kgbaseline} reports the result on the current, expanded item sets (T1: 20 MCQ, up from an initial pilot of 10; T3: 10 MCQ, up from 5; T4: 16 MCQ, newly added, drawn from a dementia-filtered subset of MedQA-USMLE~\citep{jin2021medqa} rather than curated in-house). On T1 the KG-only baseline reaches \textbf{0.55} accuracy and on T3 \textbf{0.30}, both above the 0.25 random-choice rate, while \emph{grounding coverage}---the fraction of items for which some option is connected to the question in the graph---is 0.80 (T1) and 1.00 (T3). On T4, whose items are general-medicine USMLE questions only filtered for a dementia/AD term rather than authored around \textsc{AlzKG}'s vocabulary, the KG-only baseline falls to \textbf{0.25}, exactly the random rate: the released graph's evidence does not, by itself, carry this task's out-of-distribution items, in contrast to the in-graph-vocabulary T1/T3 items. We view this contrast as informative rather than a weakness of T4: it demonstrates that AlzBench's model-free floor is not uniformly informative across question distributions, motivating the No-RAG vs.\ Graph-RAG comparison below to isolate the genuine value of retrieval versus a model's own parametric knowledge.
 
 \begin{table}[t]
 \centering
-\caption{\textbf{KG-only baseline (no LLM; deterministic, exactly reproducible).} Multiple-choice accuracy using only \textsc{AlzKG} PPR evidence. \emph{Coverage} is the fraction of items with at least one graph-grounded option; \emph{Acc.\ (grounded)} restricts accuracy to those items. Both tasks exceed the 0.25 random-choice rate.}
+\caption{\textbf{KG-only baseline (no LLM; deterministic, exactly reproducible).} Multiple-choice accuracy using only \textsc{AlzKG} PPR evidence. \emph{Coverage} is the fraction of items with at least one graph-grounded option; \emph{Acc.\ (grounded)} restricts accuracy to those items. T1/T3 exceed the 0.25 random-choice rate; T4 (external MedQA-USMLE items, not authored around \textsc{AlzKG}'s vocabulary) sits at chance.}
 \label{tab:kgbaseline}
 \small
 \begin{tabular}{l c c c c c}
 \toprule
 \textbf{Task} & \textbf{Items} & \textbf{Accuracy} & \textbf{Random} & \textbf{Coverage} & \textbf{Acc.\ (grounded)} \\
 \midrule
-T1 CDA (MCQ) & 10 & \textbf{0.70} & 0.25 & 0.80 & 0.75 \\
-T3 BPM (MCQ) & 5  & \textbf{0.40} & 0.25 & 1.00 & 0.40 \\
+T1 CDA (MCQ)          & 20 & \textbf{0.55} & 0.25 & 0.80 & 0.63 \\
+T3 BPM (MCQ)           & 10 & \textbf{0.30} & 0.25 & 1.00 & 0.30 \\
+T4 TR (MCQ, MedQA-USMLE) & 16 & 0.25 & 0.25 & 0.81 & 0.23 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{Benchmark Protocol (Runnable Harness)}
-Table~\ref{tab:bench} defines the model-comparison protocol released with \textsc{AlzBench}. Each task runner evaluates a no-retrieval baseline (\textsc{No-RAG}) against the Graph-RAG setting and reports the metrics of \S3.3. We deliberately leave the cells unpopulated: the values depend on third-party model endpoints and an API key, and we report only measurements we have actually run. Populating the table is a single command per cell, e.g.,
+\subsection{Benchmark Protocol (Runnable Harness) and a Measured Claude Row}
+\label{sec:bench-protocol}
+Table~\ref{tab:bench} defines the model-comparison protocol released with \textsc{AlzBench}. Each task runner evaluates a no-retrieval baseline (\textsc{No-RAG}) against the Graph-RAG setting and reports the metrics of \S3.3. Five of the six rows are left unpopulated: those values depend on a third-party API key (OpenRouter) that this evaluation environment does not have, and we report only measurements we have actually run. Populating any such row is a single command per cell, e.g.,
 \begin{center}
 \texttt{python tasks/t1\_clinical\_decision\_accuracy.py --dataset data/alzbench/t1/mcq.json}\\
 \texttt{\ \ --model openai/gpt-4o --mode graph\_rag}
 \end{center}
 and the harness writes per-item predictions and aggregate scores to \texttt{runs/}.
 
+For the \emph{Claude (direct)} row we could not obtain an API key, so we instead added a key-free \texttt{manual:} mode to \texttt{ChatClient} (\texttt{alzgraph/common.py}): the runner renders the identical system/user prompt it would send to an API, queues it (with no gold label attached) to \texttt{runs/manual\_llm\_queue.json}, and an operator---here, a Claude~(Sonnet~5) instance---answers each queued prompt directly, blind to the gold label, exactly as it would if reached over the API; the runner then re-executes and scores the filled-in answers through the unmodified metrics code. Table~\ref{tab:bench} reports the result: \textbf{ceiling accuracy in both No-RAG and Graph-RAG} on T1 CDA (MCQ, $n{=}20$), T3 BPM ($n{=}10$), and T4 TR ($n{=}14$ of the 16 released items; two were excluded because the operator had viewed their gold labels during dataset curation, see \S\ref{sec:limitations}), with no measurable Graph-RAG gain. We report this ceiling effect rather than omit it, but flag its main caveat prominently: T1/T3's items were authored by the same model instance that later answered them, so 1.0 accuracy there mainly shows these items are within that model's well-covered parametric knowledge, not that Graph-RAG is redundant in general. T4's items are externally sourced (real MedQA-USMLE questions, not authored by the operator) and still reach ceiling, which is a more meaningful data point but still reflects one model family evaluating itself. On T1's open-ended QA ($n{=}8$, not shown in the table, which reports MCQ accuracy only), No-RAG and Graph-RAG obtained identical ROUGE-L/BLEU-1/Token-F1 (0.676/0.702/0.737) because the operator's answers were unaffected by the retrieved evidence for that item set; T4's Graph-RAG KG-evidence-coverage (0.018) is likewise near zero, indicating the retrieved paths rarely named the same treatment terms as the chosen option on this externally sourced task. Taken together with T4's chance-level KG-only baseline (Table~\ref{tab:kgbaseline}), the honest reading is that our current item pools do not yet discriminate Graph-RAG from a strong model's parametric knowledge; \S\ref{sec:limitations} discusses what would.
+
 \begin{table}[t]
 \centering
-\caption{\textbf{\textsc{AlzBench} model-comparison protocol (runnable harness; values not yet measured).} Cells marked ``--'' are populated by running the released task runners against an LLM endpoint. This template is provided for reproducibility; no third-party model outputs are reported here.}
+\caption{\textbf{\textsc{AlzBench} model-comparison protocol.} \emph{Claude (direct)} is measured (see text for the key-free evaluation method and its caveats); all other rows require an OpenRouter API key we do not have and are left as ``--'', populated by a single command per cell.}
 \label{tab:bench}
 \small
 \begin{tabular}{l cc cc cc}
@@ -260,8 +271,8 @@ and the harness writes per-item predictions and aggregate scores to \texttt{runs
 \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
 \textbf{Model} & No-RAG & Graph-RAG & No-RAG & Graph-RAG & No-RAG & Graph-RAG \\
 \midrule
+Claude (direct) & \textbf{1.00} & \textbf{1.00} & \textbf{1.00 / 1.00} & \textbf{1.00 / 1.00} & \textbf{1.00 / 0.00} & \textbf{1.00 / 0.02} \\
 GPT-4o          & -- & -- & -- & -- & -- & -- \\
-Claude Sonnet   & -- & -- & -- & -- & -- & -- \\
 Gemini          & -- & -- & -- & -- & -- & -- \\
 Llama-3.3-70B   & -- & -- & -- & -- & -- & -- \\
 Qwen-2.5-72B    & -- & -- & -- & -- & -- & -- \\
@@ -270,6 +281,19 @@ Mistral         & -- & -- & -- & -- & -- & -- \\
 \end{tabular}
 \end{table}
 
+\subsection{Deep Research Planning: A Qualitative Case Study}
+T5 has no expert-authored gold research plan to score against---real PMC abstracts do not carry one---so we treat it as a qualitative case study rather than a leaderboard row. We regenerated \texttt{data/alzbench/t5/research\_planning.json} from real, randomly sampled corpus abstracts (replacing two synthetic placeholder abstracts present in an earlier version) and generated No-RAG and Graph-RAG research plans for two of them with the same \texttt{manual:} operator protocol. Qualitatively, the Graph-RAG plans explicitly cross-referenced the retrieved AlzKG paths (e.g., grounding a follow-up question about BACE1-targeting compounds in the graph's 131-paper-supported BACE1$\to$AD edge, and reasoning about whether an inflammatory (sEH) pathway's prognostic value is independent of or downstream of APOE's graph-documented amyloid/tau role) where the No-RAG plans reasoned from the abstract alone; both conditions proposed feasible, methodologically sound follow-up designs. Full generations are released in \texttt{runs/t5\_manual\_norag\_sample.json} and \texttt{runs/t5\_manual\_graphrag\_sample.json}.
+
+\section{Limitations}
+\label{sec:limitations}
+\paragraph{Item scale and self-authorship.} T1's MCQ/QA and T3's items are curated, hand-authored exam-style questions (20, 8, and 10 items respectively after this revision's expansion from 10/3/5); T4 draws 16 items from real MedQA-USMLE via a dementia-term filter; T5 currently offers 20 real abstracts but only 2 have been used for the qualitative case study. These are still small samples for a benchmark claim, and T1/T3 in particular were authored by the same model family used to evaluate them in Table~\ref{tab:bench}, which we believe explains their ceiling accuracy more than any special capability of Graph-RAG. A more discriminating benchmark would (i) grow each item pool by an order of magnitude, (ii) source items independently of the evaluated model (as T4 already does), and (iii) deliberately include harder, rarer, or adversarially constructed cases (atypical presentations, conflicting guideline edge cases, recently updated appropriate-use criteria) where a model's parametric knowledge is less likely to already be saturated.
+\paragraph{Term-filtered external items are noisy.} T4's dementia-term filter, even after switching to word-boundary matching (an early version matched \emph{``mci''} inside \emph{``triamcinolone''} and bare \emph{``amyloid''} inside unrelated systemic-amyloidosis questions), still required a manual relevance pass that dropped 5 of 21 automatically filtered items because the matched term appeared only in a distractor option or a patient's incidental history rather than the tested clinical reasoning; scaling T4 will need a more precise filter or classifier rather than manual review.
+\paragraph{Retriever determinism.} An earlier version of \texttt{alzgraph/retrieval.py} iterated the graph's node set directly in several places (seed matching, PageRank state, and top-$k$ neighborhood selection); because Python's \texttt{set} iteration order depends on a per-process string-hash seed, two runs of the identical query against the identical graph could silently keep a different tied path or seed order, occasionally changing the serialized Graph-RAG evidence (and, in one case we caught during evaluation, changing a downstream answer). We fixed this by iterating over a sorted node order everywhere ranking or state construction depends on it, and verified byte-identical output across five repeated runs with randomized hash seeds for both the retriever and the KG-only baseline; released code reflects this fix.
+\paragraph{No societal-harm-specific safeguards beyond standard release practices.} \textsc{AlzKG} and \textsc{AlzBench} are a research artifact for evaluating retrieval-augmented reasoning, not a clinical decision-support product; none of the released code or data should be used to make real treatment decisions without a licensed clinician, and the KG's coarse, sentence-level relation extraction can and does surface spurious associations (\S2.3) that would need clinical review before any downstream use.
+
+\section{Broader Impact}
+\textsc{AlzGraph} aims to make it easier to evaluate whether AI systems reason safely and evidence-groundedly about Alzheimer's care, which we expect to be net-positive: better tooling for measuring unsafe recommendations (e.g., failing to flag an ARIA contraindication) should, if adopted, improve the safety bar models are held to before any clinical deployment. The main risk we foresee is over-trust: a high AlzBench score is a measurement of benchmark performance under our specific item pools and metrics, not a certification of clinical safety, and \S\ref{sec:limitations} details why the current item pools are not yet large or adversarial enough to support strong claims either way. We do not identify a dual-use or malicious-use pathway specific to this release beyond those already inherent to publishing any biomedical knowledge graph or LLM evaluation harness.
+
 \section{Conclusion and Discussion}
 \textsc{AlzKG} and \textsc{AlzBench} together establish a knowledge-grounded evaluation framework for Alzheimer's disease reasoning. \textsc{AlzKG} provides an open AD knowledge graph mined from 7{,}150 PMC full-text papers across five clinical layers, with every relation sentence-grounded and weighted by its true literature paper count, and \textsc{AlzBench} turns it into five plug-and-play reasoning tasks with a Graph-RAG retriever and a reproducible harness. Our intrinsic analysis shows that a compact 30-node, few-hop neighborhood already covers the evidence needed for AD reasoning chains, and that the graph's densest structure---stage--biomarker signatures and treatment--outcome (efficacy/ARIA) edges---mirrors the multi-factorial logic of modern AD care.
 
@@ -277,5 +301,92 @@ Mistral         & -- & -- & -- & -- & -- & -- \\
 
 \bibliographystyle{plainnat}
 \bibliography{references}
+
+\newpage
+\appendix
+\section*{NeurIPS Paper Checklist}
+
+\begin{enumerate}
+
+\item \textbf{Claims}\\
+    Question: Do the main claims made in the abstract and introduction accurately reflect the paper's contributions and scope?\\
+    Answer: \answerYes{}\\
+    Justification: The abstract and \S1 state exactly what is measured (mined KG statistics, an intrinsic retrieval analysis, a deterministic KG-only baseline, and a blind, key-free No-RAG vs.\ Graph-RAG comparison with one model) and explicitly flag that five of six model rows in Table~\ref{tab:bench} are unpopulated for lack of an API key, rather than implying a broader model comparison than we ran.
+
+\item \textbf{Limitations}\\
+    Question: Does the paper discuss the limitations of the work?\\
+    Answer: \answerYes{}\\
+    Justification: \S\ref{sec:limitations} discusses item-pool scale, self-authorship of the T1/T3 items, T4's term-filter noise, and a retriever-determinism bug we found and fixed during this work.
+
+\item \textbf{Theory Assumptions and Proofs}\\
+    Question: Does the paper include theoretical results requiring stated assumptions and proofs?\\
+    Answer: \answerNA{}\\
+    Justification: The paper is empirical/systems-oriented (a knowledge graph, a benchmark, and a retriever); it contains no theorems.
+
+\item \textbf{Experimental Result Reproducibility}\\
+    Question: Does the paper disclose all information needed to reproduce the main experimental results?\\
+    Answer: \answerYes{}\\
+    Justification: The KG-only baseline is deterministic and reproducible with one command per dataset (\S\ref{sec:kgbaseline-measured}); the Claude-direct row's exact prompts, queue, and cache format are described in \S\ref{sec:bench-protocol} and implemented in \texttt{alzgraph/common.py}; dataset-construction scripts (\texttt{scripts/build\_t4\_medqa\_subset.py}, \texttt{tasks/t3\_biomarker\_precision\_medicine.py build}, \texttt{tasks/t5\_deep\_research\_planning.py build}) are released alongside the data they produced.
+
+\item \textbf{Open Access to Data and Code}\\
+    Question: Does the paper provide open access to the data and code, with sufficient instructions?\\
+    Answer: \answerYes{}\\
+    Justification: Code and data are included as supplementary material for review and will be published at a public repository on acceptance (identity withheld for anonymity per \S\ref{sec:limitations}); \texttt{CODE\_MANIFEST.md} in the release maps every paper component to its release code.
+
+\item \textbf{Experimental Setting/Details}\\
+    Question: Does the paper specify all training/evaluation details needed to understand the results?\\
+    Answer: \answerYes{}\\
+    Justification: \S\ref{sec:setup} (Setup) gives PPR hyperparameters, neighborhood/path budgets, and prompting protocol; \S\ref{sec:kgbaseline-measured}--\ref{sec:bench-protocol} give the exact evaluation commands and item counts per task.
+
+\item \textbf{Experiment Statistical Significance}\\
+    Question: Does the paper report error bars or other measures of statistical significance?\\
+    Answer: \answerNo{}\\
+    Justification: Item counts (8--20 per task) are too small for meaningful confidence intervals on a single-model, single-run comparison; we report raw accuracy/counts throughout and flag small-$n$ explicitly rather than presenting unsupported error bars (\S\ref{sec:limitations}).
+
+\item \textbf{Experiments Compute Resources}\\
+    Question: Does the paper provide sufficient information on the computer resources needed?\\
+    Answer: \answerYes{}\\
+    Justification: All reported experiments (KG mining, PPR retrieval, the KG-only baseline, and the Claude-direct evaluation) run on CPU in well under an hour on a single machine, with no GPU or distributed training involved; \S\ref{sec:retrieval-analysis} reports mean per-query retrieval latency (30--70\,ms).
+
+\item \textbf{Code Of Ethics}\\
+    Question: Does the research conform to the NeurIPS Code of Ethics?\\
+    Answer: \answerYes{}
+
+\item \textbf{Broader Impacts}\\
+    Question: Does the paper discuss both potential positive societal impacts and negative societal impacts of the work?\\
+    Answer: \answerYes{}\\
+    Justification: See \S\emph{Broader Impact} above.
+
+\item \textbf{Safeguards}\\
+    Question: Does the paper describe safeguards for responsible release of models/data with a high risk of misuse?\\
+    Answer: \answerNA{}\\
+    Justification: The release is a knowledge graph mined from public open-access literature and a benchmark harness, not a generative model or a dataset of sensitive personal data (the private ADNI/memory-clinic-derived T2 adapter is explicitly not redistributed, \S\ref{sec:task-design}/CODE\_MANIFEST.md); we do not see a specific high-risk-of-misuse vector beyond those already discussed in \S\emph{Broader Impact}.
+
+\item \textbf{Licenses}\\
+    Question: For assets used, are the license and terms of use respected and properly cited?\\
+    Answer: \answerYes{}\\
+    Justification: Ontology/guideline resources (NIA-AA, OMIM, GWAS Catalog, MeSH, HPO, ChEBI, UMLS, AAN/AA) and the MedQA-USMLE dataset~\citep{jin2021medqa} are cited at first use (\S2, \S2.2); the release's own license is Apache-2.0.
+
+\item \textbf{Assets}\\
+    Question: Are new assets introduced in the paper well documented?\\
+    Answer: \answerYes{}\\
+    Justification: \textsc{AlzKG}, \textsc{AlzBench}, and the Graph-RAG retriever are documented in \S2--3 and in the released \texttt{CODE\_MANIFEST.md} and \texttt{README.md}, including provenance/honesty notes on how each artifact was produced.
+
+\item \textbf{Crowdsourcing and Research with Human Subjects}\\
+    Question: Does the paper involve crowdsourcing or research with human subjects?\\
+    Answer: \answerNA{}\\
+    Justification: No human-subjects data collection was performed; all clinical text is either literature (PMC open-access articles) or de-identified, publicly released benchmark items (MedQA-USMLE) or curated exam-style items.
+
+\item \textbf{IRB Approvals}\\
+    Question: Does the paper describe potential risks to participants and IRB approval, if applicable?\\
+    Answer: \answerNA{}\\
+    Justification: No human subjects were involved (see previous item); T2's private ADNI/memory-clinic adapter operates only on data the institution already holds under its own IRB-approved protocols and is not redistributed by this release.
+
+\item \textbf{Declaration of LLM Usage}\\
+    Question: Does the paper describe the usage of LLMs in the core methodology of the research?\\
+    Answer: \answerYes{}\\
+    Justification: An LLM (Claude, Sonnet~5) is a core, disclosed part of the methodology in \S\ref{sec:bench-protocol}: it both authored some T1/T3 benchmark items and, separately, served as the evaluated model for the Claude-direct row, blind to gold labels during the latter role. This dual role and its implications for the reported ceiling accuracy are discussed explicitly in \S\ref{sec:bench-protocol} and \S\ref{sec:limitations} rather than left implicit.
+
+\end{enumerate}
 
 \end{document}

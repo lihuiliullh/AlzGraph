@@ -1,0 +1,226 @@
+[
+  {
+    "id": "t4_4b426800a373",
+    "source": "MedQA-USMLE",
+    "question": "A 72-year-old woman is brought to the physician by her daughter because of a 6-month history of worsening short-term memory deficits and social withdrawal. Treatment with galantamine is initiated. Two weeks later, the patient develops vomiting, mild crampy abdominal pain, and watery, nonbloody diarrhea. Which of the following is the most appropriate pharmacotherapy?",
+    "options": [
+      "Bethanechol",
+      "Metoclopramide",
+      "Atropine",
+      "Oxybutynin"
+    ],
+    "correct_answer": "C",
+    "answer": "Atropine",
+    "contraindicated": []
+  },
+  {
+    "id": "t4_d72f542a3b13",
+    "source": "MedQA-USMLE",
+    "question": "Six days after undergoing surgical repair of a hip fracture, a previously healthy 79-year-old woman is agitated and confused. She is unarousable during the day, but then is awake and impulsive during the night, requiring frequent reorientation. Her husband says that she usually drinks one to two glasses of wine weekly. Her only current medication is oxycodone for pain. Her vital signs are within normal limits. She is distressed and oriented to person but not to place or time. Neurologic examination shows inattentiveness but no focal deficits. Urine dipstick is normal. Which of the following is the most likely cause of her current condition?",
+    "options": [
+      "Dementia",
+      "Opioid intoxication",
+      "Delirium",
+      "Urinary tract infection"
+    ],
+    "correct_answer": "C",
+    "answer": "Delirium",
+    "contraindicated": []
+  },
+  {
+    "id": "t4_25325387d354",
+    "source": "MedQA-USMLE",
+    "question": "A 65-year-old man presents to his primary care physician for a change in his behavior over the past few months. Initially, the patient was noted to be behaving inappropriately including using foul language and grabbing people unexpectedly. This has progressed to a worsening of his memory and trouble caring for himself. His temperature is 98.1°F (36.7°C), blood pressure is 162/103 mmHg, pulse is 83/min, respirations are 13/min, and oxygen saturation is 98% on room air. Physical exam is notable for an elderly man who laughs inappropriately at times and who is a poor historian. When he is engaged in conversation, he exhibits word finding difficulty and is rather inattentive. Which of the following is the most likely diagnosis?",
+    "options": [
+      "Alzheimer dementia",
+      "Frontotemporal dementia",
+      "Kluver-Bucy syndrome",
+      "Vascular dementia"
+    ],
+    "correct_answer": "B",
+    "answer": "Frontotemporal dementia",
+    "contraindicated": []
+  },
+  {
+    "id": "t4_58c0f8465112",
+    "source": "MedQA-USMLE",
+    "question": "A 78-year-old man is brought to the physician by his daughter because of increasing forgetfulness over the past 5 weeks. He had been living independently but came to live with his daughter temporarily after he complained that he was unable to perform some of his daily activities. He has left the front door wide open and tap water running on multiple occasions. He does not sleep well and wakes up 6–7 times during the night. He does not leave his room and rarely makes conversation with his daughter. He says that he used to enjoy playing the piano but has not played for several months. He has hypertension treated with amlodipine. Vital signs are within normal limits. Mental status examination shows orientation to person, place, and time and psychomotor retardation. He has a blunted affect. Short- and long-term memory is impaired. Attention and concentration are impaired. Neurologic examination shows no focal findings. Serum concentration of electrolytes, thyroid-stimulating hormone, and vitamin B12 are within the reference range. He is very concerned about his memory lapses. Which of the following is the most appropriate treatment for this patient?",
+    "options": [
+      "Fluoxetine",
+      "Aspirin",
+      "Ventriculoperitoneal shunt",
+      "Memantine"
+    ],
+    "correct_answer": "A",
+    "answer": "Fluoxetine",
+    "contraindicated": []
+  },
+  {
+    "id": "t4_74915bc4b4a9",
+    "source": "MedQA-USMLE",
+    "question": "A 62-year-old man is brought to his primary care physician by his wife who is concerned about the patient's frequent falls. Approximately 6 months ago, she started noticing that he was walking more slowly than usual. He has fallen more than 6 times in the past month, and she is worried that he will sustain a serious injury if he does not stop falling. The patient is a retired banking executive and was active as a triathlete until the age of 60. He does not smoke and drinks 2-3 alcoholic beverages per day. His family history is notable for normal pressure hydrocephalus in his mother and Alzheimer dementia in his father. His temperature is 97.8°F (36.6°C), blood pressure is 131/81 mmHg, pulse is 68/min, and respirations are 19/min. On exam, his movements appear slowed and forced. He shuffles his feet when he walks. Tone is increased in his upper and lower extremities bilaterally. This patient's condition is most strongly associated with which of the following histologic findings on brain autopsy?",
+    "options": [
+      "Accumulations of beta-pleated sheets",
+      "Atrophy of the caudate nucleus",
+      "Intracellular inclusions of alpha-synuclein",
+      "Intracellular inclusions of hyperphosphorylated tau"
+    ],
+    "correct_answer": "C",
+    "answer": "Intracellular inclusions of alpha-synuclein",
+    "contraindicated": []
+  },
+  {
+    "id": "t4_0402b186ff7b",
+    "source": "MedQA-USMLE",
+    "question": "A 70-year-old woman with no significant medical history begins to experience memory loss and personality changes. Over the next few months, her symptoms become more severe, as she experiences rapid mental deterioration. She also starts to have sudden, jerking movements in response to being startled and gait disturbances. Eventually, she lapses into a coma and dies eight months after the onset of symptoms. What process likely caused this woman's illness?",
+    "options": [
+      "Loss of dopaminergic neurons in the substantia nigra pars compacta.",
+      "Autoimmune inflammation and demyelination of the peripheral nervous system.",
+      "Conversion of a protein from an a-helix to a ß-pleated form, which resists degradation.",
+      "Frontotemporal atrophy and the accumulation of intracellular, aggregated tau protein."
+    ],
+    "correct_answer": "C",
+    "answer": "Conversion of a protein from an a-helix to a ß-pleated form, which resists degradation.",
+    "contraindicated": []
+  },
+  {
+    "id": "t4_6456d877cc64",
+    "source": "MedQA-USMLE",
+    "question": "A 72-year-old woman presents to the emergency department with altered mental status. 90 minutes ago, the patient was found by a neighbor unarousable on the couch with multiple empty bottles of medication on the floor next to her. Social history is significant for alcohol abuse. Physical examination reveals an awake female with a fluctuating level of consciousness, not oriented to time or place. No focal neurologic deficits. Which of the following additional findings would most likely be present in this patient?",
+    "options": [
+      "Hallucinations",
+      "Irreversibility",
+      "Multi-infarct dementia",
+      "Normal vital signs"
+    ],
+    "correct_answer": "A",
+    "answer": "Hallucinations",
+    "contraindicated": []
+  },
+  {
+    "id": "t4_0c0a20c12cd1",
+    "source": "MedQA-USMLE",
+    "question": "An 81-year-old man is brought to the clinic by his son to be evaluated for memory issues. The patient’s son says he has difficulty remembering recent events and names. He says the patient’s symptoms have progressively worsened over the last several years but became acutely worse just recently. Also, yesterday, the patient complained that he could not see out of his right eye, but today he can. When asked about these concerns, the patient seems to have no insight into the problem and reports feeling well. His medical history is significant for diabetes mellitus type 2 and hypertension. He had a left basal ganglia hemorrhage 12 years ago and a right middle cerebral artery infarction 4 years ago. Current medications are amlodipine, aspirin, clopidogrel, metformin, sitagliptin, and valsartan. He lives with his son and can feed himself and change his clothes. There is no history of urinary or fecal incontinence. His vitals include: blood pressure 137/82 mm Hg, pulse 78/min, respiratory rate 16/min, temperature 37.0°C (98.6°F). On physical examination, the patient is alert and oriented. He is unable to perform simple arithmetic calculations and the mini-mental status exam is inconclusive. He can write his name and comprehend written instructions. Muscle strength is 4/5 on the right side. The tone is also slightly reduced on the right side with exaggerated reflexes. His gait is hemiparetic. Which of the following is the most likely diagnosis in this patient?",
+    "options": [
+      "Alzheimer's disease",
+      "Lewy body dementia",
+      "Normal-pressure hydrocephalus",
+      "Vascular dementia"
+    ],
+    "correct_answer": "D",
+    "answer": "Vascular dementia",
+    "contraindicated": []
+  },
+  {
+    "id": "t4_b9f1a569ebd7",
+    "source": "MedQA-USMLE",
+    "question": "An investigator is studying the pattern of glutamate release from presynaptic nerve terminals in human volunteers with Alzheimer disease. The concentration of glutamate in the CA1 region of the hippocampus is measured using magnetic resonance spectroscopy after Schaffer collateral fibers are electrically stimulated. Which of the following events most likely occurs immediately prior to the release of neurotransmitters?",
+    "options": [
+      "Activation of G protein-coupled receptors",
+      "Accumulation of cAMP",
+      "Opening of ligand-gated ion channels",
+      "Influx of calcium"
+    ],
+    "correct_answer": "D",
+    "answer": "Influx of calcium",
+    "contraindicated": []
+  },
+  {
+    "id": "t4_a49532284b15",
+    "source": "MedQA-USMLE",
+    "question": "A 74-year-old woman is brought to her primary care doctor by her adult son. The son says she has been very difficult at home and is \"losing it\". He seems very frustrated about her diminishing ability to take care of herself the way she used to and no longer thinks he can trust her watching his children. At her last visit you noted mild cognitive impairment. Today, she appears withdrawn and hesitates to make eye-contact with you. She lets her son do most of the talking. Which of the following is the most appropriate next step?",
+    "options": [
+      "Discuss with the son the challenges of having a parent with dementia",
+      "Complete a mini-mental exam",
+      "Assess the patient's risk for depression",
+      "Ask the son to step out so you can speak with the patient alone"
+    ],
+    "correct_answer": "D",
+    "answer": "Ask the son to step out so you can speak with the patient alone",
+    "contraindicated": []
+  },
+  {
+    "id": "t4_81ec85efada8",
+    "source": "MedQA-USMLE",
+    "question": "A 68-year-old man presents to the emergency department with confusion. The patient lives in a nursing home and has Alzheimer dementia at baseline. His nurse noticed that he was more confused than usual and was somnolent for the past 12 hours. The patient’s nurse also noticed that he was soiling his diapers more frequently with copious amounts of urine. The patient has lost 15 pounds since his last physician appointment 3 weeks ago. Laboratory values are ordered as seen below.\n\nSerum:\nNa+: 139 mEq/L\nCl-: 100 mEq/L\nK+: 4.3 mEq/L\nHCO3-: 25 mEq/L\nBUN: 20 mg/dL\nGlucose: 99 mg/dL\nCreatinine: 1.1 mg/dL\nCa2+: 12.2 mg/dL\nPTH: 8 pg/mL\n\nThe patient is referred to another physician for a more thorough workup including laboratory work and CT imaging. Which of the following is the best long-term prophylaxis for the cause of this patient’s acute symptoms?",
+    "options": [
+      "Alendronate",
+      "Calcitonin",
+      "IV fluids",
+      "Teriparatide"
+    ],
+    "correct_answer": "A",
+    "answer": "Alendronate",
+    "contraindicated": []
+  },
+  {
+    "id": "t4_814d02365744",
+    "source": "MedQA-USMLE",
+    "question": "A 71-year-old woman presents to her physician accompanied by her son. She has no complaints, but her son states that the patient has impaired memory and poor orientation in space. She is ambulatory and is capable of self-care, but she tends to forget newly introduced information. Also, she got lost on the way from the home to the local market several times for the past 6 months, and her family is now afraid to let her go anywhere on her own. She does not have any concomitant chronic conditions nor did she have major cardiovascular events or head trauma. It is known that her father had dementia. The vital signs include: blood pressure is 130/80 mm Hg, heart rate is 62/min, respiratory rate is 11/min, and the temperature is 36.5°C (97.7°F). The respiratory, cardiologic, and abdominal examinations are unremarkable. The neurological examination shows equal, round pupils with a normal reaction to light. The eye movements are normal with no nystagmus and normal oculocephalic reflex. There is no facial droop, the facial sensation is preserved, and there is no tongue deviation noted. There is no motor or sensory deficits on the upper and lower extremities. The patient scores 18 on the Montreal Cognitive Assessment. Which of the following medications is indicated in the patient?",
+    "options": [
+      "Imipramine",
+      "Lithium",
+      "Donepezil",
+      "Sulpiride"
+    ],
+    "correct_answer": "C",
+    "answer": "Donepezil",
+    "contraindicated": []
+  },
+  {
+    "id": "t4_de722fe5c039",
+    "source": "MedQA-USMLE",
+    "question": "A 39-year-old man is brought to the physician by his wife because of personality changes over the past year. He has become increasingly irritable, loud, aggressive, and impulsive. His wife also reports jerky movements of his limbs and trunk for the past few months. His father had dementia in his mid-40s, but the details of his condition are unclear. The patient appears restless. Examination shows irregular movements of the extremities and twitching of the face and tongue. Mental status examination shows impaired memory. This patient's condition is most likely associated with which of the following changes on MRI?",
+    "options": [
+      "Reduced hippocampal volume",
+      "Multiple cortical and subcortical infarctions",
+      "Degeneration of the frontal and temporal lobes",
+      "Atrophy of the striatum"
+    ],
+    "correct_answer": "D",
+    "answer": "Atrophy of the striatum",
+    "contraindicated": []
+  },
+  {
+    "id": "t4_7635ec947cd6",
+    "source": "MedQA-USMLE",
+    "question": "A 78-year-old woman presents to the office for an annual health check-up with her family physician accompanied by her daughter. She has no complaints during this visit but her daughter states that she is having difficulty locating objects such as the television remote, car keys, and her purse. Her medical history is significant for Alzheimer’s dementia, coronary artery disease, diabetes mellitus, hypothyroidism, congestive heart failure, osteoarthritis and centrilobular emphysema. The patient takes memantine, atorvastatin, metformin, levothyroxine, lisinopril, aspirin, albuterol, and ipratropium. The patient’s vitals are within normal limits today. Physical exam reveals an elderly female in no acute distress, oriented to person, place and year, but not to month or day of the week. She has a 3/6 holosystolic murmur at the left sternal border along with an S3 gallop. There are mild crackles at the lung bases. The remainder of the exam is normal. A previous urine culture reports growth of > 100,000 CFU of Enterobacter. Urinalysis findings are offered below:\nLeukocyte esterase  positive\nWBCs 50-100 cell/HPF\nNitrites positive\nRBCs 2 cell/HPF\nEpithelial cells 2 cell/HPF\nUrine pH 5.7\nWhich of the following is the most appropriate next step?",
+    "options": [
+      "TMP-SMX",
+      "Nitrofurantoin",
+      "Levofloxacin",
+      "No treatment is necessary"
+    ],
+    "correct_answer": "D",
+    "answer": "No treatment is necessary",
+    "contraindicated": []
+  },
+  {
+    "id": "t4_6943656ffa19",
+    "source": "MedQA-USMLE",
+    "question": "A 62-year-old man is brought to the physician by his wife because of difficulties walking for the past year. He has had multiple falls over the past 4 months. Over the past 6 months, he has had progressive urinary urgency and now wears an adult diaper as is not always able to control the urge to void. His appetite has also decreased in this time period. He used to drive, but his wife convinced him to stop after she noticed that he was becoming increasingly inattentive while driving. He has type 2 diabetes mellitus and hypertension. Current medications include ramipril and metformin. His temperature is 37.1C (98.8F), pulse is 90/min and blood pressure is 132/88 mm Hg. Examination shows a broad-based gait with slow and short steps. Neurologic examination shows no focal findings. On mental status examination, he is oriented to person and place but not to time. Attention and concentration are impaired. He recalls only one of three objects after 5 minutes. Which of the following is the most appropriate therapy for this patient's symptoms?",
+    "options": [
+      "Ventricular shunting",
+      "Acetazolamide therapy",
+      "Temporal lobectomy",
+      "Donepezil therapy"
+    ],
+    "correct_answer": "A",
+    "answer": "Ventricular shunting",
+    "contraindicated": []
+  },
+  {
+    "id": "t4_42d0730e0239",
+    "source": "MedQA-USMLE",
+    "question": "A 74-year-old woman with a history of hypertension, hyperlipidemia, and type 2 diabetes mellitus is brought to her primary care doctor by her son who is concerned about the patient's ability to manage her activities of daily living. She has been living alone since her husband passed away 2 years ago. She has remained an active member of her retirement community's wine club; however, she stopped attending the meetings 3 weeks ago. She is generally able to her maintain her house, but her house appears more disorganized over the past 2 weeks. She generally drives short distances but avoids driving long distances as she occasionally gets lost when navigating new areas. She feels like her balance is getting worse, but she has not fallen. She has noticed increased urinary urgency over the past 8 months and has had 2 episodes of incontinence. Despite these changes, she reports feeling well. She drinks 4-6 glasses of wine per day. She was started on multiple medications for worsening anxiety by her psychiatrist 1 month ago. Her BMI is 31 kg/m^2. Her temperature is 99.8°F (37.7°C), blood pressure is 115/65 mmHg, pulse is 95/min, and respirations are 17/min. On examination, she is oriented to person and time but not place or situation. She does not seem to recognize her doctor despite knowing him for many years. She becomes somnolent intermittently throughout the interview. She can recall 0/3 words after 5 minutes. She has a low-frequency tremor in her right arm that increases in severity with deliberate movement. Which of the following is the most likely diagnosis in this patient?",
+    "options": [
+      "Alzheimer dementia",
+      "Delirium",
+      "Lewy body dementia",
+      "Normal pressure hydrocephalus"
+    ],
+    "correct_answer": "B",
+    "answer": "Delirium",
+    "contraindicated": []
+  }
+]

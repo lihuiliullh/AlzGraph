@@ -54,6 +54,12 @@ def option_letter(text: str) -> Optional[str]:
     return match.group(1) if match else None
 
 
+MANUAL_PREFIX = "manual:"
+MANUAL_CACHE_DEFAULT = "runs/manual_llm_cache.json"
+MANUAL_QUEUE_DEFAULT = "runs/manual_llm_queue.json"
+MANUAL_PENDING = "[[PENDING_MANUAL_ANSWER]]"
+
+
 class ChatClient:
     """Small OpenRouter-compatible client used by all generation tasks.
 
@@ -61,6 +67,18 @@ class ChatClient:
     To run local models, point ``base_url`` at any OpenAI-compatible local
     endpoint (e.g. vLLM, Ollama, llama.cpp server) or replace ``complete`` with a
     local inference wrapper.
+
+    A model name prefixed with ``manual:`` (e.g. ``manual:claude-sonnet-5``)
+    switches to a key-free, file-backed "operator-in-the-loop" mode instead of
+    calling a third-party API: ``complete`` looks up the exact message list in a
+    local answer cache and returns it verbatim; on a cache miss it appends the
+    rendered prompt (system+user messages only, no gold labels are ever part of
+    these) to a queue file and returns a pending sentinel. An operator (human or
+    another LLM instance) answers each queued prompt directly and writes the
+    answers into the cache file keyed by the same hash, after which re-running
+    the identical command reproduces the run exactly like an API-backed model
+    would, through the same prompts/retrieval/scoring code. This is how the
+    paper's Claude-evaluated rows were produced, with no OpenRouter key.
     """
 
     def __init__(
@@ -70,16 +88,42 @@ class ChatClient:
         base_url: str = "https://openrouter.ai/api/v1/chat/completions",
         temperature: float = 0.0,
         timeout: int = 120,
+        manual_cache: str | Path = MANUAL_CACHE_DEFAULT,
+        manual_queue: str | Path = MANUAL_QUEUE_DEFAULT,
     ) -> None:
         self.model = model
-        self.api_key = api_key or os.getenv("OPENROUTER_API_KEY")
         self.base_url = base_url
         self.temperature = temperature
         self.timeout = timeout
+        self.manual = model.startswith(MANUAL_PREFIX)
+        if self.manual:
+            self.manual_model = model[len(MANUAL_PREFIX) :]
+            self.manual_cache_path = Path(manual_cache)
+            self.manual_queue_path = Path(manual_queue)
+            self._cache: Dict[str, str] = read_json(self.manual_cache_path, default={})
+            self._queue: List[dict] = read_json(self.manual_queue_path, default=[])
+            self._queue_keys = {row["key"] for row in self._queue}
+            return
+        self.api_key = api_key or os.getenv("OPENROUTER_API_KEY")
         if not self.api_key:
             raise RuntimeError("Set OPENROUTER_API_KEY or pass api_key explicitly.")
 
+    def _manual_key(self, messages: List[Dict[str, str]]) -> str:
+        return stable_id(self.manual_model, json.dumps(messages, sort_keys=True), prefix="manual")
+
     def complete(self, messages: List[Dict[str, str]], max_tokens: int = 800) -> str:
+        if self.manual:
+            key = self._manual_key(messages)
+            if key in self._cache:
+                return self._cache[key]
+            if key not in self._queue_keys:
+                self._queue.append(
+                    {"key": key, "model": self.manual_model, "messages": messages, "max_tokens": max_tokens}
+                )
+                self._queue_keys.add(key)
+                write_json(self._queue, self.manual_queue_path)
+            return MANUAL_PENDING
+
         import requests
 
         headers = {

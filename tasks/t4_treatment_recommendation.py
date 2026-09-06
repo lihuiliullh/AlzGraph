@@ -7,6 +7,7 @@ coverage of the retrieved AlzKG paths.
 """
 
 import argparse
+import re
 
 from alzgraph.common import tqdm, ChatClient, option_letter, read_json, stable_id, write_json
 from alzgraph.metrics import accuracy, drug_safety_score, kg_evidence_coverage
@@ -16,6 +17,13 @@ SYSTEM = """You are a clinical neurologist managing Alzheimer's disease and rela
 Select the safest guideline-consistent treatment option from A-D, considering contraindications,
 ARIA risk for anti-amyloid antibodies, comorbidities, and disease stage. Return only the option letter."""
 
+# Word-boundary phrases (not bare substrings) so a hit can't come from an
+# unrelated word containing the letters, e.g. "triamcinolone" contains "mci"
+# and "anticholinesterase" contains "cholinesterase". "amyloid" alone is kept
+# out because MedQA also carries systemic amyloidosis items (renal, cardiac,
+# medullary-thyroid stromal amyloid) that share the word but have nothing to
+# do with Alzheimer's disease; the AD-specific amyloid phrases below are used
+# instead.
 DEMENTIA_TERMS = [
     "alzheimer",
     "dementia",
@@ -25,12 +33,22 @@ DEMENTIA_TERMS = [
     "rivastigmine",
     "galantamine",
     "memantine",
-    "cholinesterase",
-    "amyloid",
+    "cholinesterase inhibitor",
+    "amyloid plaque",
+    "amyloid-beta",
+    "amyloid beta",
+    "cerebral amyloid",
     "apoe",
     "mci",
     "mmse",
 ]
+
+_DEMENTIA_TERM_PATTERNS = [re.compile(r"\b" + re.escape(term) + r"\b") for term in DEMENTIA_TERMS]
+
+
+def matches_dementia_terms(text: str) -> bool:
+    """True iff ``text`` contains one of DEMENTIA_TERMS as a whole word/phrase."""
+    return any(p.search(text) for p in _DEMENTIA_TERM_PATTERNS)
 
 
 def build_medqa_subset(out: str, max_items: int = 200) -> None:
@@ -40,7 +58,7 @@ def build_medqa_subset(out: str, max_items: int = 200) -> None:
     rows = []
     for item in ds:
         text = f"{item.get('question', '')} {' '.join(item.get('options', []))}".lower()
-        if not any(term in text for term in DEMENTIA_TERMS):
+        if not matches_dementia_terms(text):
             continue
         rows.append(
             {
@@ -58,13 +76,17 @@ def build_medqa_subset(out: str, max_items: int = 200) -> None:
     write_json(rows, out)
 
 
+OPTION_LETTERS = ["A", "B", "C", "D", "E", "F"]
+
+
 def evaluate(args: argparse.Namespace) -> None:
     data = read_json(args.dataset)
     retriever = AlzGraphRetriever(args.triplets) if args.mode == "graph_rag" else None
     client = ChatClient(args.model, temperature=0.0)
     rows = []
     for item in tqdm(data[: args.sample or None]):
-        body = item["question"] + "\n" + "\n".join(item["options"])
+        labeled_options = [f"{letter}) {opt}" for letter, opt in zip(OPTION_LETTERS, item["options"])]
+        body = item["question"] + "\n" + "\n".join(labeled_options)
         paths = []
         if retriever:
             ret = retriever.retrieve(body)
@@ -73,9 +95,10 @@ def evaluate(args: argparse.Namespace) -> None:
         pred = client.complete([{"role": "system", "content": SYSTEM}, {"role": "user", "content": body}], max_tokens=50)
         letter = option_letter(pred)
         selected = ""
-        for opt in item["options"]:
-            if opt.startswith(f"{letter}") or opt.startswith(f"{letter})"):
-                selected = opt
+        if letter in OPTION_LETTERS:
+            idx = OPTION_LETTERS.index(letter)
+            if idx < len(item["options"]):
+                selected = item["options"][idx]
         rows.append(
             {
                 "id": item["id"],

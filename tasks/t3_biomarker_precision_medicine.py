@@ -50,6 +50,41 @@ RULES = [
         "avoid": ["Donepezil", "Rivastigmine", "Galantamine"],
         "rationale": "Cholinesterase inhibitors increase vagal tone and can worsen bradycardia or cause syncope; memantine avoids cholinergic cardiac effects.",
     },
+    {
+        "gene": "APOE e3/e3",
+        "context": "amyloid-positive (PET) MCI due to AD, no cerebral microhemorrhages, not on anticoagulation, adequate renal and hepatic function",
+        "recommended": "Donanemab",
+        "avoid": [],
+        "rationale": "Amyloid-confirmed MCI due to AD without ARIA risk factors is an appropriate anti-amyloid antibody candidate per AUC; donanemab is indicated for MCI/mild AD dementia.",
+    },
+    {
+        "gene": "APOE e4/e4",
+        "context": "amyloid-positive MCI due to AD on chronic oral anticoagulation for atrial fibrillation",
+        "recommended": "Rivastigmine",
+        "avoid": ["Lecanemab", "Donanemab", "Aducanumab"],
+        "rationale": "APOE e4 homozygosity combined with anticoagulation substantially elevates ARIA-related hemorrhage risk; AUC favors symptomatic cholinesterase-inhibitor therapy over anti-amyloid mAb initiation in this combination.",
+    },
+    {
+        "gene": "APOE e3/e4",
+        "context": "amyloid-positive (PET) mild AD dementia with 3 punctate cerebral microhemorrhages on MRI, no anticoagulation",
+        "recommended": "Lecanemab",
+        "avoid": [],
+        "rationale": "AUC permits anti-amyloid antibody initiation with up to four microhemorrhages absent anticoagulation, with more frequent monitoring MRIs during the titration phase.",
+    },
+    {
+        "gene": "APOE e3/e3",
+        "context": "amyloid-positive mild AD dementia with a prior lobar intracerebral hemorrhage consistent with cerebral amyloid angiopathy",
+        "recommended": "Donepezil",
+        "avoid": ["Lecanemab", "Donanemab", "Aducanumab"],
+        "rationale": "A prior macrohemorrhage, particularly CAA-related, is an AUC exclusion for anti-amyloid antibody therapy given high recurrent ARIA-H risk; symptomatic cholinesterase-inhibitor therapy is appropriate instead.",
+    },
+    {
+        "gene": "APOE e2/e3",
+        "context": "amyloid-positive (PET) MCI due to AD, no microhemorrhages, on low-dose aspirin only (no anticoagulant)",
+        "recommended": "Donanemab",
+        "avoid": [],
+        "rationale": "The e2 allele confers comparatively low ARIA risk, and single-agent antiplatelet therapy (unlike anticoagulation) is not an AUC contraindication to anti-amyloid antibody initiation.",
+    },
 ]
 
 SYSTEM = """You are a clinical neurologist specializing in Alzheimer's disease pharmacotherapy.
@@ -75,7 +110,7 @@ def build_dataset(out: str, seed: int = 13) -> None:
             {
                 "id": stable_id(rule["gene"], rule["context"], prefix="t3"),
                 "gene": rule["gene"],
-                "clinical_scenario": f"A patient with {rule['context']} is APOE {rule['gene']}. Which treatment is most appropriate?",
+                "clinical_scenario": f"A patient with {rule['context']} is {rule['gene']}. Which treatment is most appropriate?",
                 "options": [f"{label}) {opt}" for label, opt in zip(labels, options)],
                 "correct_answer": labels[options.index(rule["recommended"])],
                 "recommended": rule["recommended"],
