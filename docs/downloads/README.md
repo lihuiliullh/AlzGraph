@@ -2,7 +2,7 @@
 
 # AlzGraph
 
-### Building Generalists for Evidence-Intensive Alzheimer's Disease Reasoning in the Wild
+### A Knowledge Graph and Benchmark for Evidence-Grounded Alzheimer's Disease Reasoning
 
 **A knowledge-graph-powered benchmark and code release for evaluating whether AI systems can reason across Alzheimer's literature, ATN biomarkers, risk genes, anti-amyloid therapies, and clinical outcomes.**
 
@@ -13,8 +13,8 @@
   <img alt="Graph-RAG" src="https://img.shields.io/badge/Graph--RAG-PPR%20%2B%20Paths-7C3AED?style=flat-square">
   <img alt="AlzBench: 5 tasks" src="https://img.shields.io/badge/AlzBench-5%20tasks-14B8A6?style=flat-square">
   <img alt="Full-text papers: 7,150" src="https://img.shields.io/badge/PMC%20full--text%20papers-7%2C150-EAB308?style=flat-square">
-  <img alt="Entities: 1,301" src="https://img.shields.io/badge/entities-1%2C301-0EA5E9?style=flat-square">
-  <img alt="Triplets: 5,880" src="https://img.shields.io/badge/triplets-5%2C880-EC4899?style=flat-square">
+  <img alt="Entities: 1,216" src="https://img.shields.io/badge/entities-1%2C216-0EA5E9?style=flat-square">
+  <img alt="Triplets: 5,026" src="https://img.shields.io/badge/triplets-5%2C026-EC4899?style=flat-square">
 </p>
 
 <h3>5-Layer Alzheimer's Knowledge Graph · 5 Evidence-Intensive Reasoning Tasks · Graph-RAG out of the box</h3>
@@ -73,15 +73,15 @@ links them with evidence-grounded, typed relations to enable multi-hop reasoning
 | **outcome** | cognitive/functional decline, ARIA-E, ARIA-H, amyloid clearance, mortality | HPO, MeSH |
 
 The released **AlzKG** is **mined from 7,150 PMC open-access full-text papers**
-(retrieved via NCBI E-utilities), reduced to **361,201 candidate sentences** that
+(retrieved via NCBI E-utilities), reduced to **317,606 candidate sentences** that
 co-mention ≥2 AlzKG entities:
 
 | Statistic | Value |
 |---|---:|
 | PMC full-text papers mined | **7,150** |
-| Candidate sentences | **361,201** |
-| Entities | **1,301** |
-| Cross-layer triplets | **5,880** |
+| Candidate sentences | **317,606** |
+| Entities | **1,216** |
+| Cross-layer triplets | **5,026** |
 | Relation types | **10** |
 | Edge paper count (median / max) | **5 / 2,722** |
 
@@ -91,19 +91,24 @@ co-mention ≥2 AlzKG entities:
 > **trigger phrase** (drawn from curated per-relation templates) — not
 > mere whole-document co-occurrence. Each edge's `paper_count` is the **true number
 > of distinct supporting papers** (surfaced in reasoning paths as `[N papers]`),
-> keeping edges with ≥5 supporting papers. Entity recognition uses an
-> ontology-derived dictionary lexicon (`alzgraph/lexicon.py`). The benchmark
-> model-comparison tables are produced by running the task runners against an LLM
-> endpoint; this release ships the runners and metrics, not third-party model
-> outputs. A smaller curated, guideline-tiered seed graph is also available via
-> `scripts/build_seed_kg.py`.
+> keeping edges with ≥3 supporting papers. Entity recognition uses an
+> ontology-derived dictionary lexicon (`alzgraph/lexicon.py`) built from the
+> **complete HGNC gene catalog** (not a curated AD gene list) plus MeSH/HPO/ChEBI;
+> a manual precision audit found this introduces real extraction noise (short
+> gene-symbol collisions, off-topic genes) — we found and fixed several concrete
+> lexicon bugs, re-audited, and report both rounds honestly (paper Sec. 2.5,
+> `data/alzkg/extraction_audit.json`: 13%→20% fully-correct on a fresh random
+> sample). The benchmark model-comparison tables are produced by running the task
+> runners against an LLM endpoint; this release ships the runners and metrics, not
+> third-party model outputs. A smaller curated, guideline-tiered seed graph is
+> also available via `scripts/build_seed_kg.py`.
 
 Reproduce the mined graph from scratch (fetch real full text, then mine):
 
 ```bash
 python scripts/fetch_pubmed.py --max_papers 12000          # find AD papers via NCBI E-utilities
 python scripts/fetch_pmc_fulltext.py                       # download PMC open-access full text
-python scripts/build_kg_from_fulltext.py --min_papers 5    # mine the KG (prints real stats)
+python scripts/build_kg_from_fulltext.py --min_papers 3    # mine the KG (prints real stats)
 ```
 
 Mined triplets follow the schema:
@@ -143,14 +148,14 @@ pip install -r requirements.txt
 # 1) Build the literature-mined AlzKG from scratch (fetch real full text + mine)
 python scripts/fetch_pubmed.py --max_papers 12000
 python scripts/fetch_pmc_fulltext.py
-python scripts/build_kg_from_fulltext.py --min_papers 5
+python scripts/build_kg_from_fulltext.py --min_papers 3
 
 # 2) Intrinsic retrieval ablation (no API key needed)
 python scripts/retrieval_ablation.py
 
 # 3) KG-only MCQ baseline -- deterministic, no LLM, no API key
 #    Answers MCQs from AlzKG evidence alone (PPR over the mined graph).
-#    Measured: T1 = 0.60, T3 = 0.40 accuracy (vs. 0.25 random).
+#    Measured (post-fix graph): T1 = 0.50 (n=20), T3 = 0.30 (n=10), T4 = 0.375 (n=16) vs. 0.25 random.
 python tasks/kg_baseline.py --dataset data/alzbench/t1/mcq.json \
   --out runs/t1_kg_baseline.json
 python tasks/kg_baseline.py --dataset data/alzbench/t3/bpm_mcq.json \
@@ -163,11 +168,33 @@ python tasks/t1_clinical_decision_accuracy.py \
   --triplets data/alzkg/triplets.json \
   --model openai/gpt-4o --mode graph_rag \
   --out runs/t1_mcq_graph_rag.json
+
+# 4b) No API key? Use the key-free "manual" mode instead: it queues the exact
+#     prompts to runs/manual_llm_queue.json for an operator (human or another
+#     LLM) to answer blind, then scores the filled-in runs/manual_llm_cache.json
+#     through the same metrics code. This produced the paper's "Claude (direct)"
+#     row -- see data/alzbench/manual_llm_eval_results.json for the numbers and
+#     caveats (self-authored items, ceiling accuracy).
+python tasks/t1_clinical_decision_accuracy.py \
+  --dataset data/alzbench/t1/mcq.json \
+  --model manual:claude-sonnet-5 --mode graph_rag \
+  --out runs/t1_mcq_graph_rag.json
+
+# 4c) Or point at a local, OpenAI-compatible model server instead (e.g. Ollama)
+#     -- no API key needed, --base-url is all it takes. This produced the
+#     paper's Llama-3.2-3B / Gemma3-4B / Qwen3-8B rows -- see
+#     data/alzbench/local_llm_eval_results.json for the numbers, the models
+#     actually available on the evaluation machine, and a real extraction-bug
+#     writeup (option_letter() vs. long chain-of-thought completions).
+python tasks/t1_clinical_decision_accuracy.py \
+  --dataset data/alzbench/t1/mcq.json \
+  --model llama3.2:latest --mode graph_rag \
+  --base-url http://localhost:11434/v1/chat/completions \
+  --out runs/t1_mcq_graph_rag.json
 ```
 
-Compare against the no-retrieval baseline by switching `--mode no_rag`. For local
-models, point `ChatClient` (in `alzgraph/common.py`) at any OpenAI-compatible
-local endpoint. The full demo pipeline is wrapped in `scripts/run_all.sh`.
+Compare against the no-retrieval baseline by switching `--mode no_rag`. The full
+demo pipeline is wrapped in `scripts/run_all.sh`.
 
 ### Task examples
 
@@ -177,8 +204,10 @@ python tasks/t3_biomarker_precision_medicine.py build --out data/alzbench/t3/bpm
 python tasks/t3_biomarker_precision_medicine.py eval \
   --dataset data/alzbench/t3/bpm_mcq.json --model openai/gpt-4o --mode graph_rag
 
-# T4: dementia-filtered MedQA-USMLE subset
+# T4: dementia-filtered MedQA-USMLE subset (needs the `datasets` package)
 python tasks/t4_treatment_recommendation.py build --out data/alzbench/t4/medqa_dementia.json --max_items 200
+# ...or, without pip/`datasets` (fetches the same public split over HTTP):
+python scripts/build_t4_medqa_subset.py --out data/alzbench/t4/medqa_dementia_subset.json --max_items 200
 
 # T2: ADNI / memory-clinic notes are private — use the local adapter
 python tasks/t2_clinical_report_generation.py build \

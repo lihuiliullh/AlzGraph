@@ -3,9 +3,9 @@
     "dataset": "data/alzbench/t1/mcq.json",
     "method": "kg_only_baseline",
     "n_items": 20,
-    "accuracy": 0.55,
+    "accuracy": 0.5,
     "coverage": 0.8,
-    "accuracy_on_grounded": 0.625,
+    "accuracy_on_grounded": 0.5625,
     "random_baseline": 0.25
   },
   "t3": {
@@ -15,6 +15,15 @@
     "accuracy": 0.3,
     "coverage": 1.0,
     "accuracy_on_grounded": 0.3,
+    "random_baseline": 0.25
+  },
+  "t4": {
+    "dataset": "data/alzbench/t4/medqa_dementia_subset.json",
+    "method": "kg_only_baseline",
+    "n_items": 16,
+    "accuracy": 0.375,
+    "coverage": 0.75,
+    "accuracy_on_grounded": 0.4167,
     "random_baseline": 0.25
   }
 }

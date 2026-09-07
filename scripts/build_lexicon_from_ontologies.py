@@ -160,12 +160,80 @@ def good_surface(s: str) -> bool:
 
 
 # ----------------------------------------------------------------------- genes
+# A short (<=4-char) *alias* (never a gene's own approved symbol) is dropped if it
+# collides with a common English word or a common clinical abbreviation used for
+# something other than the gene -- both are recurring, auditable failure modes
+# (paper Sec. 2.5): "NOS" (alias of NOS1) colliding with the clinical abbreviation
+# "Not Otherwise Specified", "ALS" (alias of IGFALS) colliding with the disease
+# abbreviation. We only ever drop *aliases*, never a gene's own primary symbol
+# (e.g. "APP", "MET" stay recognized), because the primary symbol is still the
+# gene's one authoritative name and is already protected by case-sensitive
+# matching (Sec. 2.2: "APP" does not match "app").
+_DICT_WORDS_PATH = "/usr/share/dict/words"
+CLINICAL_ABBREV_BLOCKLIST = {
+    "NOS", "ALS", "MS", "PD", "RA", "TB", "HD", "DM", "MI", "UTI", "CVA",
+    "COPD", "CHF", "ESRD", "GERD", "HTN", "CAD", "ICU", "ER", "OR", "SOB",
+    "DOB", "PMH", "FHX", "ROS", "WNL", "NAD", "AOX", "CNS", "PNS", "GI",
+    "GU", "MSK", "ENT", "OB", "GYN", "PT", "OT", "DNR", "DNI",
+    # Found by a post-fix repeat of the Sec. 2.5 manual audit (same collision
+    # class, new verified instances, each confirmed present in the HGNC file):
+    # "CBS" as corticobasal syndrome (gene CBS = cystathionine beta-synthase,
+    # a *primary* symbol collision -- see PRIMARY_BLOCKLIST below), "NPS" as
+    # neuropsychiatric symptoms (gene NPS = neuropeptide S, also primary),
+    # "MCI" (alias of MCIDAS), and "PSP"/"CBD" (aliases of unrelated genes;
+    # both collide with dementia-adjacent clinical syndrome abbreviations).
+    # This list is curated from audited examples plus a dictionary check, not
+    # a systematic medical-abbreviation resource, so residual collisions of
+    # this exact type should be expected (Limitations).
+    "CBS", "NPS", "MCI", "PSP", "CBD",
+    # Institutional/consortium-name collisions, also audit-found: "IGF" (an
+    # animal facility, Institut de Genomique Fonctionnelle, mistaken for the
+    # IGF1 gene) and "PGC" (Psychiatric Genomics Consortium, mistaken for the
+    # PGC gene). Not in any dictionary; these are a third collision subtype
+    # (organizational acronyms) distinct from clinical abbreviations.
+    "IGF", "PGC",
+    # Domain-generic scientific vocabulary that happens to be an official
+    # HGNC alias but functions as ordinary running text throughout this
+    # literature far more often than as a gene reference: "tau"/"TAU" is an
+    # alias of MAPT, but this corpus already has dedicated tau biomarker
+    # entities (Total tau, p-tau181/217, Tau PET, neurofibrillary tangles),
+    # so recognizing bare "tau" as the *gene* floods the gene layer with
+    # pathology/biomarker mentions that are not gene references at all
+    # (audit-found, appearing twice in a single n=30 sample).
+    "TAU",
+}
+
+# Symbols in CLINICAL_ABBREV_BLOCKLIST that are some gene's own *primary*
+# approved symbol (not just an alias) and are still dropped anyway, because
+# the collision term is conventionally written in the same all-caps form as
+# the gene symbol -- case-sensitive matching (our default protection for
+# primary symbols, \S2.2) does not disambiguate "CBS" the gene from "CBS"
+# corticobasal syndrome, both written in caps. Verified via the manual audit
+# (\S2.5); each such gene loses direct-symbol recognizability rather than
+# risk misattributing the clinical term's mentions to it. "PGC" (progastricsin)
+# is dropped the same way -- it has no other alias and is overwhelmingly the
+# Psychiatric Genomics Consortium in this corpus; the distinct, AD-relevant
+# PPARGC1A ("PGC-1alpha") gene keeps its own longer aliases and is unaffected.
+PRIMARY_PROTECTED_EXCEPTIONS = {"CBS", "NPS", "PGC"}
+
+
+def _ambiguous_short_words() -> set:
+    try:
+        with open(_DICT_WORDS_PATH, encoding="latin-1") as f:
+            return {w.strip().casefold() for w in f if len(w.strip()) <= 4}
+    except OSError:
+        return set()
+
+
 def harvest_genes(src_dir: Path) -> dict:
     data = cached(src_dir, "hgnc_complete_set.txt", HGNC_URL).decode("utf-8", "replace")
     lines = data.splitlines()
     header = lines[0].split("\t")
     idx = {c: i for i, c in enumerate(header)}
-    out: dict = {}
+    dict_words = _ambiguous_short_words()
+
+    primaries: set = set()
+    records: list = []  # (symbol, alias_set)
     for line in lines[1:]:
         f = line.split("\t")
         if len(f) <= idx["symbol"]:
@@ -177,14 +245,51 @@ def harvest_genes(src_dir: Path) -> dict:
         symbol = f[idx["symbol"]].strip()
         if len(symbol) < 3:  # 1-2 char symbols are too ambiguous
             continue
-        cs = {symbol}
+        aliases = set()
         for col in ("alias_symbol", "prev_symbol"):
             raw = f[idx[col]] if idx[col] < len(f) else ""
             for a in raw.split("|"):
                 a = a.strip().strip('"')
                 if len(a) >= 3:
-                    cs.add(a)
-        out[symbol] = {"layer": "gene", "cs": sorted(cs), "ci": []}
+                    aliases.add(a)
+        primaries.add(symbol)
+        records.append((symbol, aliases))
+
+    out: dict = {}
+    for symbol, aliases in records:
+        safe = set()
+        for a in aliases:
+            if a == symbol:
+                continue
+            # An alias never overrides another gene's own approved primary
+            # symbol (fixes e.g. NANOS1's alias "NOS1" silently stripping the
+            # real NOS1 gene's primary symbol -- order-dependent in the raw
+            # HGNC file, so any gene could lose its own name to a same-string
+            # alias of an unrelated gene without this guard).
+            if a in primaries:
+                continue
+            # A short, alias-only surface that is itself a common English word
+            # or clinical abbreviation is dropped rather than risk it firing on
+            # unrelated running text (the gene's primary symbol, protected by
+            # case-sensitive matching, remains the recognition path).
+            if len(a) <= 4 and (a.casefold() in dict_words or a.upper() in CLINICAL_ABBREV_BLOCKLIST):
+                continue
+            safe.add(a)
+        # A gene's own primary symbol is normally always kept (case-sensitive
+        # matching is its baseline protection), except for a small, audit-
+        # verified set where the colliding clinical term is itself
+        # conventionally all-caps, so case sensitivity does not help (CBS,
+        # NPS). For those, the false-positive cost of the known collision
+        # outweighs the recognizability of one more incidental, non-curated
+        # gene (\S2.2), so we let recognition drop to zero surface forms
+        # rather than keep a symbol we have verified fires on the wrong
+        # concept -- such a gene is simply absent from the compiled lexicon.
+        if symbol in PRIMARY_PROTECTED_EXCEPTIONS:
+            cs = safe
+        else:
+            cs = {symbol} | safe
+        if cs:
+            out[symbol] = {"layer": "gene", "cs": sorted(cs), "ci": []}
     return out
 
 

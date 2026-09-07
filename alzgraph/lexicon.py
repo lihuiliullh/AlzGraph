@@ -113,6 +113,19 @@ _SEED_LEXICON: Dict[str, dict] = {
 }
 
 
+def _distinctive(s: str) -> bool:
+    """Whether a surface form is safe to use for *cross-concept* merge matching.
+
+    Merging two ontology records because they happen to share a surface form is
+    only sound when that shared string is distinctive enough that the overlap is
+    genuine synonymy rather than an accidental short-string collision (e.g. the
+    gene symbol "MET" casefolds to the same key as the amino acid alias "Met",
+    which must NOT fuse the gene into the amino-acid concept). We require the
+    string to be a multi-word phrase or at least 5 characters long.
+    """
+    return len(s) >= 5 or " " in s or "-" in s
+
+
 def _load_lexicon() -> Dict[str, dict]:
     """Seed vocabulary, with the large ontology-derived vocabulary merged on top
     when ``data/lexicon/lexicon_full.json`` exists (or ``$ALZKG_LEXICON``)."""
@@ -121,13 +134,19 @@ def _load_lexicon() -> Dict[str, dict]:
     from pathlib import Path
 
     lex: Dict[str, dict] = {c: dict(s) for c, s in _SEED_LEXICON.items()}
-    # surface (casefold) -> owning canonical, so an ontology entity that shares any
-    # surface form with an existing concept is merged into it (light entity
-    # resolution in lieu of full UMLS CUI mapping). Seed concepts win.
+    # surface (casefold) -> owning canonical, so an ontology entity that shares a
+    # *distinctive* surface form with an existing concept is merged into it (light
+    # entity resolution in lieu of full UMLS CUI mapping). Seed concepts win.
+    # Short/common surface forms are excluded from establishing ownership: a
+    # case-sensitive gene alias like "MET" and a case-insensitive amino-acid
+    # alias "Met" collide under casefold but are not the same real-world concept,
+    # and merging them would silently relabel every mention of the amino acid as
+    # the gene (and vice versa) -- see paper Sec. 2.5.
     owner: Dict[str, str] = {}
     for canon, spec in lex.items():
         for s in spec.get("ci", []) + spec.get("cs", []):
-            owner.setdefault(s.casefold(), canon)
+            if _distinctive(s):
+                owner.setdefault(s.casefold(), canon)
 
     path = os.environ.get("ALZKG_LEXICON") or str(
         Path(__file__).resolve().parents[1] / "data" / "lexicon" / "lexicon_full.json"
@@ -144,9 +163,15 @@ def _load_lexicon() -> Dict[str, dict]:
         surfaces = spec.get("ci", []) + spec.get("cs", [])
         target = canon if canon in lex else None
         if target is None:
-            for s in surfaces:  # merge into an existing concept sharing a surface form
-                if s.casefold() in owner:
-                    target = owner[s.casefold()]
+            for s in surfaces:  # merge into an existing concept sharing a distinctive surface form
+                if not _distinctive(s):
+                    continue
+                candidate = owner.get(s.casefold())
+                # Never fuse across layers (a gene and a drug sharing a short,
+                # accidental surface form are not the same concept even if the
+                # string passes the distinctiveness bar).
+                if candidate is not None and lex[candidate]["layer"] == spec["layer"]:
+                    target = candidate
                     break
         if target is None:
             target = canon
@@ -154,7 +179,16 @@ def _load_lexicon() -> Dict[str, dict]:
         lex[target]["ci"] = sorted(set(lex[target].get("ci", [])) | set(spec.get("ci", [])))
         lex[target]["cs"] = sorted(set(lex[target].get("cs", [])) | set(spec.get("cs", [])))
         for s in surfaces:
-            owner.setdefault(s.casefold(), target)
+            if _distinctive(s):
+                owner.setdefault(s.casefold(), target)
+
+    # Case-insensitive matching on a very short (<=3 char) string is categorically
+    # unsafe -- it fires on that string in any casing anywhere in the corpus
+    # (e.g. an amino-acid alias "Met" as `ci` would match ordinary "met"/"MET" in
+    # running English text). Require exact-case matching for anything that short;
+    # drop it if no case-sensitive form was intended.
+    for spec in lex.values():
+        spec["ci"] = [s for s in spec.get("ci", []) if len(s) > 3]
     return lex
 
 

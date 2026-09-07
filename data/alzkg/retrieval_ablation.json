@@ -4,67 +4,67 @@
     {
       "max_subgraph_nodes": 10,
       "max_depth": 4,
-      "avg_candidate_paths": 44.6,
+      "avg_candidate_paths": 45.2,
       "gold_coverage": 0.067,
-      "mean_latency_ms": 28.86
+      "mean_latency_ms": 24.73
     },
     {
       "max_subgraph_nodes": 20,
       "max_depth": 4,
-      "avg_candidate_paths": 483.2,
+      "avg_candidate_paths": 541.5,
       "gold_coverage": 0.1,
-      "mean_latency_ms": 30.24
+      "mean_latency_ms": 26.48
     },
     {
       "max_subgraph_nodes": 30,
       "max_depth": 4,
-      "avg_candidate_paths": 2049.5,
+      "avg_candidate_paths": 2063.5,
       "gold_coverage": 0.067,
-      "mean_latency_ms": 37.8
+      "mean_latency_ms": 33.93
     },
     {
       "max_subgraph_nodes": 40,
       "max_depth": 4,
-      "avg_candidate_paths": 4765.7,
+      "avg_candidate_paths": 5153.5,
       "gold_coverage": 0.067,
-      "mean_latency_ms": 53.2
+      "mean_latency_ms": 50.47
     },
     {
       "max_subgraph_nodes": 50,
       "max_depth": 4,
-      "avg_candidate_paths": 7713.0,
+      "avg_candidate_paths": 9351.9,
       "gold_coverage": 0.067,
-      "mean_latency_ms": 68.41
+      "mean_latency_ms": 72.57
     }
   ],
   "depth_sweep": [
     {
       "max_subgraph_nodes": 30,
       "max_depth": 1,
-      "avg_candidate_paths": 49.1,
+      "avg_candidate_paths": 48.1,
       "gold_coverage": 0.1,
-      "mean_latency_ms": 29.51
+      "mean_latency_ms": 24.94
     },
     {
       "max_subgraph_nodes": 30,
       "max_depth": 2,
-      "avg_candidate_paths": 356.1,
+      "avg_candidate_paths": 351.2,
       "gold_coverage": 0.167,
-      "mean_latency_ms": 30.29
+      "mean_latency_ms": 26.06
     },
     {
       "max_subgraph_nodes": 30,
       "max_depth": 3,
-      "avg_candidate_paths": 1216.6,
+      "avg_candidate_paths": 1204.2,
       "gold_coverage": 0.067,
-      "mean_latency_ms": 33.42
+      "mean_latency_ms": 29.65
     },
     {
       "max_subgraph_nodes": 30,
       "max_depth": 4,
-      "avg_candidate_paths": 2049.5,
+      "avg_candidate_paths": 2063.5,
       "gold_coverage": 0.067,
-      "mean_latency_ms": 39.69
+      "mean_latency_ms": 34.05
     }
   ]
 }

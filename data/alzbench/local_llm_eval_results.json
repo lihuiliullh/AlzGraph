@@ -1,5 +1,5 @@
 {
-  "description": "No-RAG vs Graph-RAG comparison run against locally hosted open-source models (Ollama, http://localhost:11434/v1/chat/completions, OpenAI-compatible endpoint, no API key). Replaces the GPT-4o/Gemini rows in the paper's model-comparison table, for which no API key is available in this environment. Reproduce with e.g. `python tasks/t1_clinical_decision_accuracy.py --dataset data/alzbench/t1/mcq.json --model llama3.2:latest --base-url http://localhost:11434/v1/chat/completions --mode graph_rag`.",
+  "description": "No-RAG vs Graph-RAG comparison run against locally hosted open-source models (Ollama, http://localhost:11434/v1/chat/completions, OpenAI-compatible endpoint, no API key). Replaces the GPT-4o/Gemini rows in the paper's model-comparison table, for which no API key is available in this environment. Reproduce with e.g. `python tasks/t1_clinical_decision_accuracy.py --dataset data/alzbench/t1/mcq.json --model llama3.2:latest --base-url http://localhost:11434/v1/chat/completions --mode graph_rag`. The graph_rag cells below were rerun on the post-lexicon-fix graph (paper Sec. 2.5, `data/alzkg/extraction_audit.json`); no_rag cells do not consult AlzKG and were not rerun.",
   "models": {
     "llama3.2:latest": {"params": "3.2B", "family": "Llama 3.2", "quantization": "Q4_K_M"},
     "gemma3:latest": {"params": "4.3B", "family": "Gemma 3", "quantization": "Q4_K_M"},
@@ -9,40 +9,41 @@
     "t1_mcq": {"n_items": 20, "no_rag": {"accuracy": 0.95}, "graph_rag": {"accuracy": 0.90}},
     "t1_qa": {"n_items": 8,
       "no_rag": {"bleu1": 0.1950, "rouge_l": 0.1800, "token_f1": 0.2559},
-      "graph_rag": {"bleu1": 0.1890, "rouge_l": 0.1673, "token_f1": 0.2541}},
-    "t3": {"n_items": 10, "no_rag": {"top1_accuracy": 0.30, "drug_safety": 0.70}, "graph_rag": {"top1_accuracy": 0.40, "drug_safety": 0.70}},
+      "graph_rag": {"bleu1": 0.2133, "rouge_l": 0.1771, "token_f1": 0.2805}},
+    "t3": {"n_items": 10, "no_rag": {"top1_accuracy": 0.30, "drug_safety": 0.70}, "graph_rag": {"top1_accuracy": 0.30, "drug_safety": 0.60}},
     "t4": {"n_items": 16,
       "no_rag": {"top1_accuracy": 0.375, "drug_safety": 1.0, "kg_evidence_coverage": 0.0},
-      "graph_rag": {"top1_accuracy": 0.3125, "drug_safety": 1.0, "kg_evidence_coverage": 0.0625}}
+      "graph_rag": {"top1_accuracy": 0.1875, "drug_safety": 1.0, "kg_evidence_coverage": 0.125}}
   },
   "gemma3:latest": {
     "t1_mcq": {"n_items": 20, "no_rag": {"accuracy": 0.90}, "graph_rag": {"accuracy": 0.85}},
     "t1_qa": {"n_items": 8,
       "no_rag": {"bleu1": 0.1422, "rouge_l": 0.1367, "token_f1": 0.2103},
-      "graph_rag": {"bleu1": 0.1945, "rouge_l": 0.1703, "token_f1": 0.2523}},
-    "t3": {"n_items": 10, "no_rag": {"top1_accuracy": 0.40, "drug_safety": 0.90}, "graph_rag": {"top1_accuracy": 0.40, "drug_safety": 0.80}},
+      "graph_rag": {"bleu1": 0.2132, "rouge_l": 0.1757, "token_f1": 0.2732}},
+    "t3": {"n_items": 10, "no_rag": {"top1_accuracy": 0.40, "drug_safety": 0.90}, "graph_rag": {"top1_accuracy": 0.40, "drug_safety": 0.90}},
     "t4": {"n_items": 16,
       "no_rag": {"top1_accuracy": 0.25, "drug_safety": 1.0, "kg_evidence_coverage": 0.0},
-      "graph_rag": {"top1_accuracy": 0.1875, "drug_safety": 1.0, "kg_evidence_coverage": 0.125}}
+      "graph_rag": {"top1_accuracy": 0.1875, "drug_safety": 1.0, "kg_evidence_coverage": 0.1518}}
   },
   "qwen3:latest": {
     "t1_mcq": {"n_items": 20, "no_rag": {"accuracy": 1.0}, "graph_rag": {"accuracy": 1.0}},
     "t1_qa": {"n_items": 8,
       "no_rag": {"bleu1": 0.3525, "rouge_l": 0.2239, "token_f1": 0.3784},
-      "graph_rag": {"bleu1": 0.3277, "rouge_l": 0.2213, "token_f1": 0.3418}},
-    "t3": {"n_items": 10, "no_rag": {"top1_accuracy": 0.30, "drug_safety": 0.80}, "graph_rag": {"top1_accuracy": 0.20, "drug_safety": 0.60}},
+      "graph_rag": {"bleu1": 0.3356, "rouge_l": 0.2398, "token_f1": 0.3493}},
+    "t3": {"n_items": 10, "no_rag": {"top1_accuracy": 0.30, "drug_safety": 0.80}, "graph_rag": {"top1_accuracy": 0.30, "drug_safety": 0.80}},
     "t4": {"n_items": 16,
       "no_rag": {"top1_accuracy": 0.6875, "drug_safety": 1.0, "kg_evidence_coverage": 0.0},
-      "graph_rag": {"top1_accuracy": 0.625, "drug_safety": 1.0, "kg_evidence_coverage": 0.0580}}
+      "graph_rag": {"top1_accuracy": 0.4375, "drug_safety": 1.0, "kg_evidence_coverage": 0.0580}}
   },
   "t2_illustrative_n1": {
     "note": "Single synthetic preview item (data/alzbench/t2/local_preview.json); confirms the T2 task runner and metrics work end to end, not a benchmark result. T2 has no benchmark-scale dataset because ADNI/memory-clinic notes are access-restricted (paper Sec. 5.1).",
-    "llama3.2:latest": {"no_rag": {"rouge_l": 0.1107, "token_f1": 0.1621}, "graph_rag": {"rouge_l": 0.1303, "token_f1": 0.1765}},
-    "gemma3:latest":    {"no_rag": {"rouge_l": 0.1235, "token_f1": 0.1833}, "graph_rag": {"rouge_l": 0.0942, "token_f1": 0.1507}},
-    "qwen3:latest":     {"no_rag": {"rouge_l": 0.2338, "token_f1": 0.3203}, "graph_rag": {"rouge_l": 0.2727, "token_f1": 0.3258}}
+    "llama3.2:latest": {"no_rag": {"rouge_l": 0.1107, "token_f1": 0.1621}, "graph_rag": {"rouge_l": 0.1333, "token_f1": 0.2074}},
+    "gemma3:latest":    {"no_rag": {"rouge_l": 0.1235, "token_f1": 0.1833}, "graph_rag": {"rouge_l": 0.1250, "token_f1": 0.1897}},
+    "qwen3:latest":     {"no_rag": {"rouge_l": 0.2338, "token_f1": 0.3203}, "graph_rag": {"rouge_l": 0.2388, "token_f1": 0.3134}}
   },
   "excluded": {
     "qwen3:235b-a22b": "Available locally (142GB Q4_K_M MoE) but impractical for this evaluation: a single trivial one-token test took ~4 minutes including cross-GPU load and still did not finish its reasoning trace within a 20-token budget. Not run for the full item set."
   },
-  "bug_found_and_fixed_during_this_run": "alzgraph/common.py:option_letter() originally case-folded the whole completion and returned the FIRST standalone A/B/C/D match. That is fine for a short direct answer but silently wrong for a long chain-of-thought completion (which qwen3, a thinking-enabled model, produces once it runs out of its answer budget and ChatClient falls back to the raw reasoning trace): the lowercase article 'a' folds to 'A' and gets matched before the model's actual, later conclusion. This first surfaced as an implausible T3 Graph-RAG accuracy of 0.5 (vs. 0.3 No-RAG) built mostly out of spurious 'A' extractions; spot-checking the raw traces confirmed it. Fixed to prefer the LAST explicit 'answer/option/choice is/might be X' phrase (robust to a model second-guessing itself) and fall back to the last case-sensitive bare letter otherwise. T3 Graph-RAG corrected to 0.20; T1 MCQ, T4, and the No-RAG numbers were unaffected (already short, direct completions or, for T4, an unchanged answer under the corrected extractor)."
+  "bug_found_and_fixed_during_this_run": "alzgraph/common.py:option_letter() originally case-folded the whole completion and returned the FIRST standalone A/B/C/D match. That is fine for a short direct answer but silently wrong for a long chain-of-thought completion (which qwen3, a thinking-enabled model, produces once it runs out of its answer budget and ChatClient falls back to the raw reasoning trace): the lowercase article 'a' folds to 'A' and gets matched before the model's actual, later conclusion. This first surfaced as an implausible T3 Graph-RAG accuracy of 0.5 (vs. 0.3 No-RAG) built mostly out of spurious 'A' extractions; spot-checking the raw traces confirmed it. Fixed to prefer the LAST explicit 'answer/option/choice is/might be X' phrase (robust to a model second-guessing itself) and fall back to the last case-sensitive bare letter otherwise. T3 Graph-RAG corrected to 0.20 (that run's number, pre-lexicon-fix); T1 MCQ, T4, and the No-RAG numbers were unaffected (already short, direct completions or, for T4, an unchanged answer under the corrected extractor).",
+  "graph_rag_rerun_after_lexicon_fix": "All graph_rag cells above (T1 QA excepted where noted, T2, T3, T4) were rerun after the Sec. 2.5 lexicon-disambiguation fix rebuilt AlzKG (5,880 -> 5,026 triplets). No_rag cells never touch AlzKG and were left as originally measured. The direction of Graph-RAG's effect relative to No-RAG stays mixed across models/tasks both before and after the fix, but several specific numbers moved (e.g. qwen3:latest T4 graph_rag 0.625 -> 0.4375; qwen3:latest T3 graph_rag 0.20 -> 0.30, now matching its own no_rag exactly); see paper Sec. 4.4 for the full before/after discussion."
 }
