@@ -13,8 +13,8 @@
   <img alt="Graph-RAG" src="https://img.shields.io/badge/Graph--RAG-PPR%20%2B%20Paths-7C3AED?style=flat-square">
   <img alt="AlzBench: 5 tasks" src="https://img.shields.io/badge/AlzBench-5%20tasks-14B8A6?style=flat-square">
   <img alt="Full-text papers: 7,150" src="https://img.shields.io/badge/PMC%20full--text%20papers-7%2C150-EAB308?style=flat-square">
-  <img alt="Entities: 1,216" src="https://img.shields.io/badge/entities-1%2C216-0EA5E9?style=flat-square">
-  <img alt="Triplets: 5,026" src="https://img.shields.io/badge/triplets-5%2C026-EC4899?style=flat-square">
+  <img alt="Entities: 1,224" src="https://img.shields.io/badge/entities-1%2C224-0EA5E9?style=flat-square">
+  <img alt="Triplets: 5,065" src="https://img.shields.io/badge/triplets-5%2C065-EC4899?style=flat-square">
 </p>
 
 <h3>5-Layer Alzheimer's Knowledge Graph · 5 Evidence-Intensive Reasoning Tasks · Graph-RAG out of the box</h3>
@@ -73,17 +73,17 @@ links them with evidence-grounded, typed relations to enable multi-hop reasoning
 | **outcome** | cognitive/functional decline, ARIA-E, ARIA-H, amyloid clearance, mortality | HPO, MeSH |
 
 The released **AlzKG** is **mined from 7,150 PMC open-access full-text papers**
-(retrieved via NCBI E-utilities), reduced to **317,606 candidate sentences** that
+(retrieved via NCBI E-utilities), reduced to **320,299 candidate sentences** that
 co-mention ≥2 AlzKG entities:
 
 | Statistic | Value |
 |---|---:|
 | PMC full-text papers mined | **7,150** |
-| Candidate sentences | **317,606** |
-| Entities | **1,216** |
-| Cross-layer triplets | **5,026** |
+| Candidate sentences | **320,299** |
+| Entities | **1,224** |
+| Cross-layer triplets | **5,065** |
 | Relation types | **10** |
-| Edge paper count (median / max) | **5 / 2,722** |
+| Edge paper count (median / max) | **5 / 2,735** |
 
 > **Honesty note.** Relations are mined by **sentence-grounded** extraction over
 > real PMC full text: an edge is emitted only when a cross-layer entity pair
@@ -95,10 +95,13 @@ co-mention ≥2 AlzKG entities:
 > ontology-derived dictionary lexicon (`alzgraph/lexicon.py`) built from the
 > **complete HGNC gene catalog** (not a curated AD gene list) plus MeSH/HPO/ChEBI;
 > a manual precision audit found this introduces real extraction noise (short
-> gene-symbol collisions, off-topic genes) — we found and fixed several concrete
-> lexicon bugs, re-audited, and report both rounds honestly (paper Sec. 2.5,
-> `data/alzkg/extraction_audit.json`: 13%→20% fully-correct on a fresh random
-> sample). The benchmark model-comparison tables are produced by running the task
+> gene-symbol collisions, off-topic genes, list/glossary co-occurrence artifacts)
+> — we found and fixed several concrete lexicon and data-completeness bugs,
+> re-audited (three rounds total, pooling two independent samples for the final
+> estimate after finding a single 30-item sample too noisy on its own), and
+> report every round honestly (paper Sec. 2.5/Appendix B,
+> `data/alzkg/extraction_audit.json`: 13%→21.7% fully-correct, i.e. 45%
+> correct-or-partial — a real but modest improvement). The benchmark model-comparison tables are produced by running the task
 > runners against an LLM endpoint; this release ships the runners and metrics, not
 > third-party model outputs. A smaller curated, guideline-tiered seed graph is
 > also available via `scripts/build_seed_kg.py`.
@@ -155,7 +158,7 @@ python scripts/retrieval_ablation.py
 
 # 3) KG-only MCQ baseline -- deterministic, no LLM, no API key
 #    Answers MCQs from AlzKG evidence alone (PPR over the mined graph).
-#    Measured (post-fix graph): T1 = 0.50 (n=20), T3 = 0.30 (n=10), T4 = 0.375 (n=16) vs. 0.25 random.
+#    Measured (fully corrected graph): T1 = 0.50 (n=20), T3 = 0.30 (n=10), T4 = 0.375 (n=16) vs. 0.25 random.
 python tasks/kg_baseline.py --dataset data/alzbench/t1/mcq.json \
   --out runs/t1_kg_baseline.json
 python tasks/kg_baseline.py --dataset data/alzbench/t3/bpm_mcq.json \

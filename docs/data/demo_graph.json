@@ -141,24 +141,8 @@
       "degree": 6
     },
     {
-      "id": "MMSE",
-      "label": "MMSE",
-      "layer": "biomarker",
-      "source": "NIA-AA/MeSH",
-      "color": "#0EA5E9",
-      "degree": 5
-    },
-    {
-      "id": "Amyloid-beta 42",
-      "label": "Amyloid-beta 42",
-      "layer": "biomarker",
-      "source": "NIA-AA/MeSH",
-      "color": "#0EA5E9",
-      "degree": 5
-    },
-    {
-      "id": "Cognitive impairment",
-      "label": "Cognitive impairment",
+      "id": "Mortality",
+      "label": "Mortality",
       "layer": "outcome",
       "source": "HPO/MeSH",
       "color": "#EF4444",
@@ -173,11 +157,27 @@
       "degree": 5
     },
     {
-      "id": "Mortality",
-      "label": "Mortality",
+      "id": "Cognitive impairment",
+      "label": "Cognitive impairment",
       "layer": "outcome",
       "source": "HPO/MeSH",
       "color": "#EF4444",
+      "degree": 5
+    },
+    {
+      "id": "Amyloid-beta 42",
+      "label": "Amyloid-beta 42",
+      "layer": "biomarker",
+      "source": "NIA-AA/MeSH",
+      "color": "#0EA5E9",
+      "degree": 5
+    },
+    {
+      "id": "MMSE",
+      "label": "MMSE",
+      "layer": "biomarker",
+      "source": "NIA-AA/MeSH",
+      "color": "#0EA5E9",
       "degree": 5
     },
     {
@@ -197,22 +197,6 @@
       "degree": 4
     },
     {
-      "id": "Plasma NfL",
-      "label": "Plasma NfL",
-      "layer": "biomarker",
-      "source": "NIA-AA/MeSH",
-      "color": "#0EA5E9",
-      "degree": 3
-    },
-    {
-      "id": "Depression",
-      "label": "Depression",
-      "layer": "outcome",
-      "source": "HPO/MeSH",
-      "color": "#EF4444",
-      "degree": 3
-    },
-    {
       "id": "Functional decline",
       "label": "Functional decline",
       "layer": "outcome",
@@ -229,6 +213,14 @@
       "degree": 3
     },
     {
+      "id": "Depression",
+      "label": "Depression",
+      "layer": "outcome",
+      "source": "HPO/MeSH",
+      "color": "#EF4444",
+      "degree": 3
+    },
+    {
       "id": "p-tau217",
       "label": "p-tau217",
       "layer": "biomarker",
@@ -237,8 +229,80 @@
       "degree": 3
     },
     {
+      "id": "Plasma NfL",
+      "label": "Plasma NfL",
+      "layer": "biomarker",
+      "source": "NIA-AA/MeSH",
+      "color": "#0EA5E9",
+      "degree": 3
+    },
+    {
+      "id": "Neuronal loss in central nervous system",
+      "label": "Neuronal loss in central nervous system",
+      "layer": "outcome",
+      "source": "HPO/MeSH",
+      "color": "#EF4444",
+      "degree": 2
+    },
+    {
+      "id": "SCD",
+      "label": "SCD",
+      "layer": "gene",
+      "source": "OMIM/GWAS",
+      "color": "#7C3AED",
+      "degree": 2
+    },
+    {
+      "id": "Anti-amyloid antibody",
+      "label": "Anti-amyloid antibody",
+      "layer": "treatment",
+      "source": "ChEBI/AAN",
+      "color": "#14B8A6",
+      "degree": 2
+    },
+    {
       "id": "Tau PET",
       "label": "Tau PET",
+      "layer": "biomarker",
+      "source": "NIA-AA/MeSH",
+      "color": "#0EA5E9",
+      "degree": 2
+    },
+    {
+      "id": "S-adenosyl-L-methionine",
+      "label": "S-adenosyl-L-methionine",
+      "layer": "treatment",
+      "source": "ChEBI/AAN",
+      "color": "#14B8A6",
+      "degree": 2
+    },
+    {
+      "id": "AD dementia",
+      "label": "AD dementia",
+      "layer": "stage",
+      "source": "NIA-AA/UMLS",
+      "color": "#EAB308",
+      "degree": 2
+    },
+    {
+      "id": "Atypical behavior",
+      "label": "Atypical behavior",
+      "layer": "outcome",
+      "source": "HPO/MeSH",
+      "color": "#EF4444",
+      "degree": 2
+    },
+    {
+      "id": "Blotting, Western",
+      "label": "Blotting, Western",
+      "layer": "biomarker",
+      "source": "NIA-AA/MeSH",
+      "color": "#0EA5E9",
+      "degree": 2
+    },
+    {
+      "id": "Hippocampal atrophy",
+      "label": "Hippocampal atrophy",
       "layer": "biomarker",
       "source": "NIA-AA/MeSH",
       "color": "#0EA5E9",
@@ -253,11 +317,27 @@
       "degree": 2
     },
     {
-      "id": "Atypical behavior",
-      "label": "Atypical behavior",
-      "layer": "outcome",
-      "source": "HPO/MeSH",
-      "color": "#EF4444",
+      "id": "Rivastigmine",
+      "label": "Rivastigmine",
+      "layer": "treatment",
+      "source": "ChEBI/AAN",
+      "color": "#14B8A6",
+      "degree": 2
+    },
+    {
+      "id": "p-tau181",
+      "label": "p-tau181",
+      "layer": "biomarker",
+      "source": "NIA-AA/MeSH",
+      "color": "#0EA5E9",
+      "degree": 2
+    },
+    {
+      "id": "Plasma GFAP",
+      "label": "Plasma GFAP",
+      "layer": "biomarker",
+      "source": "NIA-AA/MeSH",
+      "color": "#0EA5E9",
       "degree": 2
     },
     {
@@ -269,11 +349,11 @@
       "degree": 2
     },
     {
-      "id": "p-tau181",
-      "label": "p-tau181",
-      "layer": "biomarker",
-      "source": "NIA-AA/MeSH",
-      "color": "#0EA5E9",
+      "id": "Memantine",
+      "label": "Memantine",
+      "layer": "treatment",
+      "source": "ChEBI/AAN",
+      "color": "#14B8A6",
       "degree": 2
     },
     {
@@ -293,91 +373,11 @@
       "degree": 2
     },
     {
-      "id": "S-adenosyl-L-methionine",
-      "label": "S-adenosyl-L-methionine",
-      "layer": "treatment",
-      "source": "ChEBI/AAN",
-      "color": "#14B8A6",
-      "degree": 2
-    },
-    {
-      "id": "Neuronal loss in central nervous system",
-      "label": "Neuronal loss in central nervous system",
-      "layer": "outcome",
-      "source": "HPO/MeSH",
-      "color": "#EF4444",
-      "degree": 2
-    },
-    {
-      "id": "Anti-amyloid antibody",
-      "label": "Anti-amyloid antibody",
-      "layer": "treatment",
-      "source": "ChEBI/AAN",
-      "color": "#14B8A6",
-      "degree": 2
-    },
-    {
-      "id": "Rivastigmine",
-      "label": "Rivastigmine",
-      "layer": "treatment",
-      "source": "ChEBI/AAN",
-      "color": "#14B8A6",
-      "degree": 2
-    },
-    {
-      "id": "Hippocampal atrophy",
-      "label": "Hippocampal atrophy",
-      "layer": "biomarker",
-      "source": "NIA-AA/MeSH",
-      "color": "#0EA5E9",
-      "degree": 2
-    },
-    {
-      "id": "Memantine",
-      "label": "Memantine",
-      "layer": "treatment",
-      "source": "ChEBI/AAN",
-      "color": "#14B8A6",
-      "degree": 2
-    },
-    {
-      "id": "Plasma GFAP",
-      "label": "Plasma GFAP",
-      "layer": "biomarker",
-      "source": "NIA-AA/MeSH",
-      "color": "#0EA5E9",
-      "degree": 2
-    },
-    {
-      "id": "Blotting, Western",
-      "label": "Blotting, Western",
-      "layer": "biomarker",
-      "source": "NIA-AA/MeSH",
-      "color": "#0EA5E9",
-      "degree": 2
-    },
-    {
-      "id": "SCD",
-      "label": "SCD",
-      "layer": "gene",
-      "source": "OMIM/GWAS",
-      "color": "#7C3AED",
-      "degree": 2
-    },
-    {
-      "id": "AD dementia",
-      "label": "AD dementia",
+      "id": "Late-onset AD",
+      "label": "Late-onset AD",
       "layer": "stage",
       "source": "NIA-AA/UMLS",
       "color": "#EAB308",
-      "degree": 2
-    },
-    {
-      "id": "TREM2",
-      "label": "TREM2",
-      "layer": "gene",
-      "source": "OMIM/GWAS",
-      "color": "#7C3AED",
       "degree": 1
     },
     {
@@ -389,40 +389,8 @@
       "degree": 1
     },
     {
-      "id": "TARDBP",
-      "label": "TARDBP",
-      "layer": "gene",
-      "source": "OMIM/GWAS",
-      "color": "#7C3AED",
-      "degree": 1
-    },
-    {
-      "id": "Frontotemporal dementia",
-      "label": "Frontotemporal dementia",
-      "layer": "stage",
-      "source": "NIA-AA/UMLS",
-      "color": "#EAB308",
-      "degree": 1
-    },
-    {
-      "id": "Frequency",
-      "label": "Frequency",
-      "layer": "outcome",
-      "source": "HPO/MeSH",
-      "color": "#EF4444",
-      "degree": 1
-    },
-    {
-      "id": "Late-onset AD",
-      "label": "Late-onset AD",
-      "layer": "stage",
-      "source": "NIA-AA/UMLS",
-      "color": "#EAB308",
-      "degree": 1
-    },
-    {
-      "id": "Galantamine",
-      "label": "Galantamine",
+      "id": "carbon monoxide",
+      "label": "carbon monoxide",
       "layer": "treatment",
       "source": "ChEBI/AAN",
       "color": "#14B8A6",
@@ -445,8 +413,16 @@
       "degree": 1
     },
     {
-      "id": "Preclinical AD",
-      "label": "Preclinical AD",
+      "id": "TARDBP",
+      "label": "TARDBP",
+      "layer": "gene",
+      "source": "OMIM/GWAS",
+      "color": "#7C3AED",
+      "degree": 1
+    },
+    {
+      "id": "Frontotemporal dementia",
+      "label": "Frontotemporal dementia",
       "layer": "stage",
       "source": "NIA-AA/UMLS",
       "color": "#EAB308",
@@ -461,19 +437,27 @@
       "degree": 1
     },
     {
-      "id": "carbon monoxide",
-      "label": "carbon monoxide",
-      "layer": "treatment",
-      "source": "ChEBI/AAN",
-      "color": "#14B8A6",
-      "degree": 1
-    },
-    {
-      "id": "Anxiety",
-      "label": "Anxiety",
+      "id": "Frequency",
+      "label": "Frequency",
       "layer": "outcome",
       "source": "HPO/MeSH",
       "color": "#EF4444",
+      "degree": 1
+    },
+    {
+      "id": "TREM2",
+      "label": "TREM2",
+      "layer": "gene",
+      "source": "OMIM/GWAS",
+      "color": "#7C3AED",
+      "degree": 1
+    },
+    {
+      "id": "Preclinical AD",
+      "label": "Preclinical AD",
+      "layer": "stage",
+      "source": "NIA-AA/UMLS",
+      "color": "#EAB308",
       "degree": 1
     },
     {
@@ -491,6 +475,22 @@
       "source": "OMIM/GWAS",
       "color": "#7C3AED",
       "degree": 1
+    },
+    {
+      "id": "Galantamine",
+      "label": "Galantamine",
+      "layer": "treatment",
+      "source": "ChEBI/AAN",
+      "color": "#14B8A6",
+      "degree": 1
+    },
+    {
+      "id": "Anxiety",
+      "label": "Anxiety",
+      "layer": "outcome",
+      "source": "HPO/MeSH",
+      "color": "#EF4444",
+      "degree": 1
     }
   ],
   "links": [
@@ -498,85 +498,85 @@
       "source": "Alzheimer's disease",
       "target": "Cognitive decline",
       "relation": "associated_outcome",
-      "papers": 2722,
-      "evidence": "2722 full-text papers (sentence-level, rule-based)"
+      "papers": 2735,
+      "evidence": "2735 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "APOE",
       "target": "Alzheimer's disease",
       "relation": "risk_gene_for",
-      "papers": 1792,
-      "evidence": "1792 full-text papers (sentence-level, rule-based)"
+      "papers": 1799,
+      "evidence": "1799 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Alzheimer's disease",
       "target": "Neurofibrillary tangles",
       "relation": "characterized_by_biomarker",
-      "papers": 1729,
-      "evidence": "1729 full-text papers (sentence-level, rule-based)"
+      "papers": 1740,
+      "evidence": "1740 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Alzheimer's disease",
       "target": "Disease progression",
       "relation": "associated_outcome",
-      "papers": 1491,
-      "evidence": "1491 full-text papers (sentence-level, rule-based)"
+      "papers": 1500,
+      "evidence": "1500 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Alzheimer's disease",
       "target": "Amyloid plaques",
       "relation": "characterized_by_biomarker",
-      "papers": 1380,
-      "evidence": "1380 full-text papers (sentence-level, rule-based)"
+      "papers": 1386,
+      "evidence": "1386 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Alzheimer's disease",
       "target": "Neurodegeneration",
       "relation": "associated_outcome",
-      "papers": 1292,
-      "evidence": "1292 full-text papers (sentence-level, rule-based)"
+      "papers": 1300,
+      "evidence": "1300 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Dementia",
       "target": "Cognitive decline",
       "relation": "associated_outcome",
-      "papers": 1169,
-      "evidence": "1169 full-text papers (sentence-level, rule-based)"
+      "papers": 1184,
+      "evidence": "1184 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Alzheimer's disease",
       "target": "Cognitive impairment",
       "relation": "associated_outcome",
-      "papers": 871,
-      "evidence": "871 full-text papers (sentence-level, rule-based)"
+      "papers": 874,
+      "evidence": "874 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "APP",
       "target": "Alzheimer's disease",
       "relation": "risk_gene_for",
-      "papers": 841,
-      "evidence": "841 full-text papers (sentence-level, rule-based)"
+      "papers": 845,
+      "evidence": "845 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Mild cognitive impairment",
       "target": "Cognitive decline",
       "relation": "associated_outcome",
-      "papers": 684,
-      "evidence": "684 full-text papers (sentence-level, rule-based)"
+      "papers": 689,
+      "evidence": "689 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Alzheimer's disease",
       "target": "nitric oxide",
       "relation": "treated_with",
-      "papers": 681,
-      "evidence": "681 full-text papers (sentence-level, rule-based)"
+      "papers": 683,
+      "evidence": "683 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Alzheimer's disease",
       "target": "Mortality",
       "relation": "associated_outcome",
-      "papers": 680,
-      "evidence": "680 full-text papers (sentence-level, rule-based)"
+      "papers": 682,
+      "evidence": "682 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Alzheimer's disease",
@@ -589,8 +589,15 @@
       "source": "Alzheimer's disease",
       "target": "Memory impairment",
       "relation": "associated_outcome",
-      "papers": 600,
-      "evidence": "600 full-text papers (sentence-level, rule-based)"
+      "papers": 601,
+      "evidence": "601 full-text papers (sentence-level, rule-based)"
+    },
+    {
+      "source": "PSEN1",
+      "target": "Alzheimer's disease",
+      "relation": "risk_gene_for",
+      "papers": 599,
+      "evidence": "599 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Alzheimer's disease",
@@ -600,25 +607,18 @@
       "evidence": "597 full-text papers (sentence-level, rule-based)"
     },
     {
-      "source": "PSEN1",
-      "target": "Alzheimer's disease",
-      "relation": "risk_gene_for",
-      "papers": 597,
-      "evidence": "597 full-text papers (sentence-level, rule-based)"
-    },
-    {
       "source": "Alzheimer's disease",
       "target": "Amyloid-beta 42",
       "relation": "characterized_by_biomarker",
-      "papers": 509,
-      "evidence": "509 full-text papers (sentence-level, rule-based)"
+      "papers": 511,
+      "evidence": "511 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "APOE",
       "target": "nitric oxide",
       "relation": "pharmacogenomic_consideration",
-      "papers": 453,
-      "evidence": "453 full-text papers (sentence-level, rule-based)"
+      "papers": 456,
+      "evidence": "456 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Alzheimer's disease",
@@ -631,15 +631,22 @@
       "source": "Dementia",
       "target": "Cognitive impairment",
       "relation": "associated_outcome",
-      "papers": 426,
-      "evidence": "426 full-text papers (sentence-level, rule-based)"
+      "papers": 430,
+      "evidence": "430 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "APOE",
       "target": "Dementia",
       "relation": "risk_gene_for",
-      "papers": 398,
-      "evidence": "398 full-text papers (sentence-level, rule-based)"
+      "papers": 404,
+      "evidence": "404 full-text papers (sentence-level, rule-based)"
+    },
+    {
+      "source": "Neurodegenerative Diseases",
+      "target": "Cognitive decline",
+      "relation": "associated_outcome",
+      "papers": 393,
+      "evidence": "393 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Alzheimer's disease",
@@ -649,11 +656,11 @@
       "evidence": "392 full-text papers (sentence-level, rule-based)"
     },
     {
-      "source": "Neurodegenerative Diseases",
+      "source": "APOE",
       "target": "Cognitive decline",
-      "relation": "associated_outcome",
-      "papers": 391,
-      "evidence": "391 full-text papers (sentence-level, rule-based)"
+      "relation": "gene_associated_outcome",
+      "papers": 382,
+      "evidence": "382 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Alzheimer's disease",
@@ -661,13 +668,6 @@
       "relation": "treated_with",
       "papers": 380,
       "evidence": "380 full-text papers (sentence-level, rule-based)"
-    },
-    {
-      "source": "APOE",
-      "target": "Cognitive decline",
-      "relation": "gene_associated_outcome",
-      "papers": 379,
-      "evidence": "379 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Alzheimer's disease",
@@ -687,36 +687,36 @@
       "source": "Dementia",
       "target": "Neurodegeneration",
       "relation": "associated_outcome",
-      "papers": 344,
-      "evidence": "344 full-text papers (sentence-level, rule-based)"
+      "papers": 345,
+      "evidence": "345 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "TREM2",
       "target": "Alzheimer's disease",
       "relation": "risk_gene_for",
-      "papers": 339,
-      "evidence": "339 full-text papers (sentence-level, rule-based)"
+      "papers": 342,
+      "evidence": "342 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Alzheimer's disease",
       "target": "Amyloid PET",
       "relation": "characterized_by_biomarker",
-      "papers": 333,
-      "evidence": "333 full-text papers (sentence-level, rule-based)"
+      "papers": 334,
+      "evidence": "334 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Alzheimer's disease",
       "target": "Functional decline",
       "relation": "associated_outcome",
-      "papers": 320,
-      "evidence": "320 full-text papers (sentence-level, rule-based)"
+      "papers": 323,
+      "evidence": "323 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "APOE",
       "target": "Mild cognitive impairment",
       "relation": "risk_gene_for",
-      "papers": 313,
-      "evidence": "313 full-text papers (sentence-level, rule-based)"
+      "papers": 315,
+      "evidence": "315 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Mild cognitive impairment",
@@ -729,8 +729,15 @@
       "source": "Alzheimer's disease",
       "target": "p-tau217",
       "relation": "characterized_by_biomarker",
-      "papers": 305,
-      "evidence": "305 full-text papers (sentence-level, rule-based)"
+      "papers": 304,
+      "evidence": "304 full-text papers (sentence-level, rule-based)"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Neuronal loss in central nervous system",
+      "relation": "associated_outcome",
+      "papers": 303,
+      "evidence": "303 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Alzheimer's disease",
@@ -740,60 +747,53 @@
       "evidence": "302 full-text papers (sentence-level, rule-based)"
     },
     {
-      "source": "Alzheimer's disease",
-      "target": "Neuronal loss in central nervous system",
-      "relation": "associated_outcome",
-      "papers": 301,
-      "evidence": "301 full-text papers (sentence-level, rule-based)"
-    },
-    {
-      "source": "Alzheimer's disease",
-      "target": "Positron-Emission Tomography",
-      "relation": "characterized_by_biomarker",
-      "papers": 292,
-      "evidence": "292 full-text papers (sentence-level, rule-based)"
+      "source": "Amyloid plaques",
+      "target": "Cognitive decline",
+      "relation": "predicts_outcome",
+      "papers": 296,
+      "evidence": "296 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Dementia",
       "target": "Mortality",
       "relation": "associated_outcome",
-      "papers": 292,
-      "evidence": "292 full-text papers (sentence-level, rule-based)"
+      "papers": 295,
+      "evidence": "295 full-text papers (sentence-level, rule-based)"
     },
     {
-      "source": "Amyloid plaques",
-      "target": "Cognitive decline",
-      "relation": "predicts_outcome",
-      "papers": 291,
-      "evidence": "291 full-text papers (sentence-level, rule-based)"
+      "source": "Alzheimer's disease",
+      "target": "Positron-Emission Tomography",
+      "relation": "characterized_by_biomarker",
+      "papers": 293,
+      "evidence": "293 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Alzheimer's disease",
       "target": "N-methyl-D-aspartic acid",
       "relation": "treated_with",
-      "papers": 285,
-      "evidence": "285 full-text papers (sentence-level, rule-based)"
+      "papers": 284,
+      "evidence": "284 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Neurofibrillary tangles",
       "target": "Cognitive decline",
       "relation": "predicts_outcome",
-      "papers": 283,
-      "evidence": "283 full-text papers (sentence-level, rule-based)"
+      "papers": 284,
+      "evidence": "284 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Alzheimer's disease",
       "target": "p-tau181",
       "relation": "characterized_by_biomarker",
-      "papers": 280,
-      "evidence": "280 full-text papers (sentence-level, rule-based)"
+      "papers": 282,
+      "evidence": "282 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "APP",
       "target": "Amyloid plaques",
       "relation": "modulates_biomarker",
-      "papers": 278,
-      "evidence": "278 full-text papers (sentence-level, rule-based)"
+      "papers": 279,
+      "evidence": "279 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Alzheimer's disease",
@@ -813,8 +813,8 @@
       "source": "MMSE",
       "target": "Cognitive decline",
       "relation": "predicts_outcome",
-      "papers": 237,
-      "evidence": "237 full-text papers (sentence-level, rule-based)"
+      "papers": 238,
+      "evidence": "238 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Mild cognitive impairment",
@@ -827,13 +827,20 @@
       "source": "Dementia",
       "target": "Disease progression",
       "relation": "associated_outcome",
-      "papers": 229,
-      "evidence": "229 full-text papers (sentence-level, rule-based)"
+      "papers": 230,
+      "evidence": "230 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Alzheimer's disease",
       "target": "Hippocampal atrophy",
       "relation": "characterized_by_biomarker",
+      "papers": 229,
+      "evidence": "229 full-text papers (sentence-level, rule-based)"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Depression",
+      "relation": "associated_outcome",
       "papers": 227,
       "evidence": "227 full-text papers (sentence-level, rule-based)"
     },
@@ -846,24 +853,17 @@
     },
     {
       "source": "Alzheimer's disease",
-      "target": "Depression",
-      "relation": "associated_outcome",
-      "papers": 225,
-      "evidence": "225 full-text papers (sentence-level, rule-based)"
-    },
-    {
-      "source": "Alzheimer's disease",
       "target": "Atypical behavior",
       "relation": "associated_outcome",
-      "papers": 218,
-      "evidence": "218 full-text papers (sentence-level, rule-based)"
+      "papers": 219,
+      "evidence": "219 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "APP",
       "target": "Amyloid-beta 42",
       "relation": "modulates_biomarker",
-      "papers": 217,
-      "evidence": "217 full-text papers (sentence-level, rule-based)"
+      "papers": 218,
+      "evidence": "218 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Lecanemab",
@@ -876,29 +876,29 @@
       "source": "APOE",
       "target": "Late-onset AD",
       "relation": "risk_gene_for",
-      "papers": 206,
-      "evidence": "206 full-text papers (sentence-level, rule-based)"
+      "papers": 207,
+      "evidence": "207 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Dementia",
       "target": "Neurofibrillary tangles",
+      "relation": "characterized_by_biomarker",
+      "papers": 204,
+      "evidence": "204 full-text papers (sentence-level, rule-based)"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Plasma NfL",
       "relation": "characterized_by_biomarker",
       "papers": 203,
       "evidence": "203 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Alzheimer's disease",
-      "target": "Plasma NfL",
-      "relation": "characterized_by_biomarker",
-      "papers": 201,
-      "evidence": "201 full-text papers (sentence-level, rule-based)"
-    },
-    {
-      "source": "Alzheimer's disease",
       "target": "Tau PET",
       "relation": "characterized_by_biomarker",
-      "papers": 200,
-      "evidence": "200 full-text papers (sentence-level, rule-based)"
+      "papers": 199,
+      "evidence": "199 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Mild cognitive impairment",
@@ -911,22 +911,22 @@
       "source": "Dementia",
       "target": "nitric oxide",
       "relation": "treated_with",
-      "papers": 179,
-      "evidence": "179 full-text papers (sentence-level, rule-based)"
+      "papers": 181,
+      "evidence": "181 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "APOE",
       "target": "Amyloid plaques",
       "relation": "modulates_biomarker",
-      "papers": 178,
-      "evidence": "178 full-text papers (sentence-level, rule-based)"
+      "papers": 179,
+      "evidence": "179 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Alzheimer's disease",
       "target": "Total tau",
       "relation": "characterized_by_biomarker",
-      "papers": 177,
-      "evidence": "177 full-text papers (sentence-level, rule-based)"
+      "papers": 178,
+      "evidence": "178 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Lecanemab",
@@ -953,41 +953,41 @@
       "source": "Alzheimer's disease",
       "target": "carbon monoxide",
       "relation": "treated_with",
-      "papers": 157,
-      "evidence": "157 full-text papers (sentence-level, rule-based)"
+      "papers": 158,
+      "evidence": "158 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Dementia",
       "target": "Amyloid plaques",
       "relation": "characterized_by_biomarker",
-      "papers": 156,
-      "evidence": "156 full-text papers (sentence-level, rule-based)"
+      "papers": 158,
+      "evidence": "158 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Dementia",
       "target": "Memory impairment",
       "relation": "associated_outcome",
-      "papers": 155,
-      "evidence": "155 full-text papers (sentence-level, rule-based)"
+      "papers": 156,
+      "evidence": "156 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Neurodegenerative Diseases",
       "target": "Neurofibrillary tangles",
       "relation": "characterized_by_biomarker",
-      "papers": 153,
-      "evidence": "153 full-text papers (sentence-level, rule-based)"
-    },
-    {
-      "source": "Alzheimer's disease",
-      "target": "ARIA",
-      "relation": "associated_outcome",
-      "papers": 148,
-      "evidence": "148 full-text papers (sentence-level, rule-based)"
+      "papers": 154,
+      "evidence": "154 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Plasma NfL",
       "target": "Neurodegeneration",
       "relation": "predicts_outcome",
+      "papers": 150,
+      "evidence": "150 full-text papers (sentence-level, rule-based)"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "ARIA",
+      "relation": "associated_outcome",
       "papers": 148,
       "evidence": "148 full-text papers (sentence-level, rule-based)"
     },
@@ -1009,8 +1009,15 @@
       "source": "Dementia",
       "target": "Depression",
       "relation": "associated_outcome",
-      "papers": 142,
-      "evidence": "142 full-text papers (sentence-level, rule-based)"
+      "papers": 143,
+      "evidence": "143 full-text papers (sentence-level, rule-based)"
+    },
+    {
+      "source": "Neurodegenerative Diseases",
+      "target": "Memory impairment",
+      "relation": "associated_outcome",
+      "papers": 139,
+      "evidence": "139 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Dementia",
@@ -1020,37 +1027,30 @@
       "evidence": "138 full-text papers (sentence-level, rule-based)"
     },
     {
-      "source": "Neurodegenerative Diseases",
-      "target": "Memory impairment",
-      "relation": "associated_outcome",
-      "papers": 138,
-      "evidence": "138 full-text papers (sentence-level, rule-based)"
-    },
-    {
       "source": "TBATA",
       "target": "Alzheimer's disease",
       "relation": "risk_gene_for",
-      "papers": 136,
-      "evidence": "136 full-text papers (sentence-level, rule-based)"
-    },
-    {
-      "source": "APOE",
-      "target": "S-adenosyl-L-methionine",
-      "relation": "pharmacogenomic_consideration",
-      "papers": 135,
-      "evidence": "135 full-text papers (sentence-level, rule-based)"
-    },
-    {
-      "source": "CDR",
-      "target": "Cognitive decline",
-      "relation": "predicts_outcome",
-      "papers": 135,
-      "evidence": "135 full-text papers (sentence-level, rule-based)"
+      "papers": 138,
+      "evidence": "138 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "MAPT",
       "target": "Alzheimer's disease",
       "relation": "risk_gene_for",
+      "papers": 137,
+      "evidence": "137 full-text papers (sentence-level, rule-based)"
+    },
+    {
+      "source": "APOE",
+      "target": "S-adenosyl-L-methionine",
+      "relation": "pharmacogenomic_consideration",
+      "papers": 136,
+      "evidence": "136 full-text papers (sentence-level, rule-based)"
+    },
+    {
+      "source": "CDR",
+      "target": "Cognitive decline",
+      "relation": "predicts_outcome",
       "papers": 135,
       "evidence": "135 full-text papers (sentence-level, rule-based)"
     },
@@ -1065,8 +1065,8 @@
       "source": "Alzheimer's disease",
       "target": "S-adenosyl-L-methionine",
       "relation": "treated_with",
-      "papers": 132,
-      "evidence": "132 full-text papers (sentence-level, rule-based)"
+      "papers": 133,
+      "evidence": "133 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Dementia",
@@ -1079,19 +1079,19 @@
       "source": "PSEN1",
       "target": "Amyloid plaques",
       "relation": "modulates_biomarker",
-      "papers": 126,
-      "evidence": "126 full-text papers (sentence-level, rule-based)"
-    },
-    {
-      "source": "Alzheimer's disease",
-      "target": "Frequency",
-      "relation": "associated_outcome",
-      "papers": 120,
-      "evidence": "120 full-text papers (sentence-level, rule-based)"
+      "papers": 125,
+      "evidence": "125 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Alzheimer's disease",
       "target": "Stroke",
+      "relation": "associated_outcome",
+      "papers": 122,
+      "evidence": "122 full-text papers (sentence-level, rule-based)"
+    },
+    {
+      "source": "Alzheimer's disease",
+      "target": "Frequency",
       "relation": "associated_outcome",
       "papers": 120,
       "evidence": "120 full-text papers (sentence-level, rule-based)"
@@ -1114,8 +1114,8 @@
       "source": "Amyloid plaques",
       "target": "Disease progression",
       "relation": "predicts_outcome",
-      "papers": 118,
-      "evidence": "118 full-text papers (sentence-level, rule-based)"
+      "papers": 119,
+      "evidence": "119 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Mild cognitive impairment",
@@ -1132,6 +1132,13 @@
       "evidence": "116 full-text papers (sentence-level, rule-based)"
     },
     {
+      "source": "Hippocampal atrophy",
+      "target": "Cognitive decline",
+      "relation": "predicts_outcome",
+      "papers": 115,
+      "evidence": "115 full-text papers (sentence-level, rule-based)"
+    },
+    {
       "source": "Preclinical AD",
       "target": "Cognitive decline",
       "relation": "associated_outcome",
@@ -1146,18 +1153,25 @@
       "evidence": "114 full-text papers (sentence-level, rule-based)"
     },
     {
-      "source": "Hippocampal atrophy",
-      "target": "Cognitive decline",
-      "relation": "predicts_outcome",
-      "papers": 114,
-      "evidence": "114 full-text papers (sentence-level, rule-based)"
-    },
-    {
       "source": "CDR",
       "target": "Disease progression",
       "relation": "predicts_outcome",
-      "papers": 109,
-      "evidence": "109 full-text papers (sentence-level, rule-based)"
+      "papers": 110,
+      "evidence": "110 full-text papers (sentence-level, rule-based)"
+    },
+    {
+      "source": "Dementia",
+      "target": "Stroke",
+      "relation": "associated_outcome",
+      "papers": 110,
+      "evidence": "110 full-text papers (sentence-level, rule-based)"
+    },
+    {
+      "source": "Neurodegenerative Diseases",
+      "target": "Disease progression",
+      "relation": "associated_outcome",
+      "papers": 110,
+      "evidence": "110 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Dementia",
@@ -1167,15 +1181,8 @@
       "evidence": "109 full-text papers (sentence-level, rule-based)"
     },
     {
-      "source": "Dementia",
-      "target": "Stroke",
-      "relation": "associated_outcome",
-      "papers": 108,
-      "evidence": "108 full-text papers (sentence-level, rule-based)"
-    },
-    {
-      "source": "Neurodegenerative Diseases",
-      "target": "Disease progression",
+      "source": "Alzheimer's disease",
+      "target": "Anxiety",
       "relation": "associated_outcome",
       "papers": 108,
       "evidence": "108 full-text papers (sentence-level, rule-based)"
@@ -1188,18 +1195,11 @@
       "evidence": "107 full-text papers (sentence-level, rule-based)"
     },
     {
-      "source": "Alzheimer's disease",
-      "target": "Anxiety",
-      "relation": "associated_outcome",
-      "papers": 106,
-      "evidence": "106 full-text papers (sentence-level, rule-based)"
-    },
-    {
       "source": "Neurofibrillary tangles",
       "target": "Neurodegeneration",
       "relation": "predicts_outcome",
-      "papers": 105,
-      "evidence": "105 full-text papers (sentence-level, rule-based)"
+      "papers": 106,
+      "evidence": "106 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "p-tau217",
@@ -1223,9 +1223,23 @@
       "evidence": "101 full-text papers (sentence-level, rule-based)"
     },
     {
+      "source": "APOE",
+      "target": "Neurodegeneration",
+      "relation": "gene_associated_outcome",
+      "papers": 100,
+      "evidence": "100 full-text papers (sentence-level, rule-based)"
+    },
+    {
       "source": "Dementia",
       "target": "CDR",
       "relation": "characterized_by_biomarker",
+      "papers": 100,
+      "evidence": "100 full-text papers (sentence-level, rule-based)"
+    },
+    {
+      "source": "Dementia",
+      "target": "Atypical behavior",
+      "relation": "associated_outcome",
       "papers": 99,
       "evidence": "99 full-text papers (sentence-level, rule-based)"
     },
@@ -1244,39 +1258,25 @@
       "evidence": "99 full-text papers (sentence-level, rule-based)"
     },
     {
-      "source": "APOE",
-      "target": "Neurodegeneration",
-      "relation": "gene_associated_outcome",
-      "papers": 98,
-      "evidence": "98 full-text papers (sentence-level, rule-based)"
-    },
-    {
       "source": "Neurodegenerative Diseases",
       "target": "Cognitive impairment",
       "relation": "associated_outcome",
-      "papers": 98,
-      "evidence": "98 full-text papers (sentence-level, rule-based)"
+      "papers": 99,
+      "evidence": "99 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Neurodegenerative Diseases",
       "target": "Mortality",
       "relation": "associated_outcome",
-      "papers": 98,
-      "evidence": "98 full-text papers (sentence-level, rule-based)"
+      "papers": 99,
+      "evidence": "99 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "nitric oxide",
       "target": "Cognitive impairment",
       "relation": "has_outcome",
-      "papers": 98,
-      "evidence": "98 full-text papers (sentence-level, rule-based)"
-    },
-    {
-      "source": "Dementia",
-      "target": "Atypical behavior",
-      "relation": "associated_outcome",
-      "papers": 97,
-      "evidence": "97 full-text papers (sentence-level, rule-based)"
+      "papers": 99,
+      "evidence": "99 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "APOE",
@@ -1293,6 +1293,20 @@
       "evidence": "92 full-text papers (sentence-level, rule-based)"
     },
     {
+      "source": "Mild cognitive impairment",
+      "target": "nitric oxide",
+      "relation": "treated_with",
+      "papers": 91,
+      "evidence": "91 full-text papers (sentence-level, rule-based)"
+    },
+    {
+      "source": "nitric oxide",
+      "target": "Disease progression",
+      "relation": "has_outcome",
+      "papers": 91,
+      "evidence": "91 full-text papers (sentence-level, rule-based)"
+    },
+    {
       "source": "APP",
       "target": "Blotting, Western",
       "relation": "modulates_biomarker",
@@ -1307,16 +1321,9 @@
       "evidence": "90 full-text papers (sentence-level, rule-based)"
     },
     {
-      "source": "Mild cognitive impairment",
-      "target": "nitric oxide",
-      "relation": "treated_with",
-      "papers": 90,
-      "evidence": "90 full-text papers (sentence-level, rule-based)"
-    },
-    {
-      "source": "nitric oxide",
-      "target": "Disease progression",
-      "relation": "has_outcome",
+      "source": "Plasma NfL",
+      "target": "Cognitive decline",
+      "relation": "predicts_outcome",
       "papers": 90,
       "evidence": "90 full-text papers (sentence-level, rule-based)"
     },
@@ -1342,18 +1349,18 @@
       "evidence": "87 full-text papers (sentence-level, rule-based)"
     },
     {
-      "source": "Plasma NfL",
-      "target": "Cognitive decline",
-      "relation": "predicts_outcome",
-      "papers": 87,
-      "evidence": "87 full-text papers (sentence-level, rule-based)"
-    },
-    {
       "source": "Alzheimer's disease",
       "target": "insulin (human)",
       "relation": "treated_with",
-      "papers": 85,
-      "evidence": "85 full-text papers (sentence-level, rule-based)"
+      "papers": 86,
+      "evidence": "86 full-text papers (sentence-level, rule-based)"
+    },
+    {
+      "source": "Amyloid plaques",
+      "target": "Neurodegeneration",
+      "relation": "predicts_outcome",
+      "papers": 86,
+      "evidence": "86 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Mild cognitive impairment",
@@ -1370,16 +1377,16 @@
       "evidence": "84 full-text papers (sentence-level, rule-based)"
     },
     {
-      "source": "Tau PET",
-      "target": "Cognitive decline",
-      "relation": "predicts_outcome",
-      "papers": 84,
-      "evidence": "84 full-text papers (sentence-level, rule-based)"
-    },
-    {
       "source": "AD dementia",
       "target": "Cognitive decline",
       "relation": "associated_outcome",
+      "papers": 83,
+      "evidence": "83 full-text papers (sentence-level, rule-based)"
+    },
+    {
+      "source": "APP",
+      "target": "Neurofibrillary tangles",
+      "relation": "modulates_biomarker",
       "papers": 83,
       "evidence": "83 full-text papers (sentence-level, rule-based)"
     },
@@ -1391,18 +1398,11 @@
       "evidence": "83 full-text papers (sentence-level, rule-based)"
     },
     {
-      "source": "Amyloid plaques",
-      "target": "Neurodegeneration",
+      "source": "Tau PET",
+      "target": "Cognitive decline",
       "relation": "predicts_outcome",
       "papers": 83,
       "evidence": "83 full-text papers (sentence-level, rule-based)"
-    },
-    {
-      "source": "APP",
-      "target": "Neurofibrillary tangles",
-      "relation": "modulates_biomarker",
-      "papers": 82,
-      "evidence": "82 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Dementia",
@@ -1419,9 +1419,23 @@
       "evidence": "80 full-text papers (sentence-level, rule-based)"
     },
     {
+      "source": "MAPT",
+      "target": "Frontotemporal dementia",
+      "relation": "risk_gene_for",
+      "papers": 80,
+      "evidence": "80 full-text papers (sentence-level, rule-based)"
+    },
+    {
       "source": "SCD",
       "target": "Mild cognitive impairment",
       "relation": "risk_gene_for",
+      "papers": 80,
+      "evidence": "80 full-text papers (sentence-level, rule-based)"
+    },
+    {
+      "source": "p-tau181",
+      "target": "Cognitive decline",
+      "relation": "predicts_outcome",
       "papers": 80,
       "evidence": "80 full-text papers (sentence-level, rule-based)"
     },
@@ -1440,18 +1454,11 @@
       "evidence": "79 full-text papers (sentence-level, rule-based)"
     },
     {
-      "source": "p-tau181",
-      "target": "Cognitive decline",
-      "relation": "predicts_outcome",
-      "papers": 79,
-      "evidence": "79 full-text papers (sentence-level, rule-based)"
-    },
-    {
       "source": "APOE",
       "target": "AD dementia",
       "relation": "risk_gene_for",
-      "papers": 78,
-      "evidence": "78 full-text papers (sentence-level, rule-based)"
+      "papers": 77,
+      "evidence": "77 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "Amyloid PET",
@@ -1475,6 +1482,13 @@
       "evidence": "76 full-text papers (sentence-level, rule-based)"
     },
     {
+      "source": "p-tau217",
+      "target": "Disease progression",
+      "relation": "predicts_outcome",
+      "papers": 76,
+      "evidence": "76 full-text papers (sentence-level, rule-based)"
+    },
+    {
       "source": "SCD",
       "target": "Cognitive decline",
       "relation": "gene_associated_outcome",
@@ -1482,23 +1496,16 @@
       "evidence": "75 full-text papers (sentence-level, rule-based)"
     },
     {
-      "source": "p-tau217",
-      "target": "Disease progression",
-      "relation": "predicts_outcome",
-      "papers": 75,
-      "evidence": "75 full-text papers (sentence-level, rule-based)"
+      "source": "APOE",
+      "target": "Mortality",
+      "relation": "gene_associated_outcome",
+      "papers": 74,
+      "evidence": "74 full-text papers (sentence-level, rule-based)"
     },
     {
       "source": "CDR",
       "target": "nitric oxide",
       "relation": "biomarker_guides_treatment",
-      "papers": 74,
-      "evidence": "74 full-text papers (sentence-level, rule-based)"
-    },
-    {
-      "source": "MAPT",
-      "target": "Frontotemporal dementia",
-      "relation": "risk_gene_for",
       "papers": 74,
       "evidence": "74 full-text papers (sentence-level, rule-based)"
     },
@@ -1524,25 +1531,18 @@
       "evidence": "74 full-text papers (sentence-level, rule-based)"
     },
     {
+      "source": "APOE",
+      "target": "Neurodegenerative Diseases",
+      "relation": "risk_gene_for",
+      "papers": 73,
+      "evidence": "73 full-text papers (sentence-level, rule-based)"
+    },
+    {
       "source": "Amyloid-beta 42",
       "target": "Cognitive decline",
       "relation": "predicts_outcome",
       "papers": 73,
       "evidence": "73 full-text papers (sentence-level, rule-based)"
-    },
-    {
-      "source": "APOE",
-      "target": "Mortality",
-      "relation": "gene_associated_outcome",
-      "papers": 72,
-      "evidence": "72 full-text papers (sentence-level, rule-based)"
-    },
-    {
-      "source": "APOE",
-      "target": "Neurodegenerative Diseases",
-      "relation": "risk_gene_for",
-      "papers": 72,
-      "evidence": "72 full-text papers (sentence-level, rule-based)"
     }
   ]
 }
