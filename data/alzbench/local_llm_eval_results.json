@@ -35,6 +35,12 @@
       "no_rag": {"top1_accuracy": 0.6875, "drug_safety": 1.0, "kg_evidence_coverage": 0.0},
       "graph_rag": {"top1_accuracy": 0.625, "drug_safety": 1.0, "kg_evidence_coverage": 0.0580}}
   },
+  "t2_illustrative_n1": {
+    "note": "Single synthetic preview item (data/alzbench/t2/local_preview.json); confirms the T2 task runner and metrics work end to end, not a benchmark result. T2 has no benchmark-scale dataset because ADNI/memory-clinic notes are access-restricted (paper Sec. 5.1).",
+    "llama3.2:latest": {"no_rag": {"rouge_l": 0.1107, "token_f1": 0.1621}, "graph_rag": {"rouge_l": 0.1303, "token_f1": 0.1765}},
+    "gemma3:latest":    {"no_rag": {"rouge_l": 0.1235, "token_f1": 0.1833}, "graph_rag": {"rouge_l": 0.0942, "token_f1": 0.1507}},
+    "qwen3:latest":     {"no_rag": {"rouge_l": 0.2338, "token_f1": 0.3203}, "graph_rag": {"rouge_l": 0.2727, "token_f1": 0.3258}}
+  },
   "excluded": {
     "qwen3:235b-a22b": "Available locally (142GB Q4_K_M MoE) but impractical for this evaluation: a single trivial one-token test took ~4 minutes including cross-GPU load and still did not finish its reasoning trace within a 20-token budget. Not run for the full item set."
   },

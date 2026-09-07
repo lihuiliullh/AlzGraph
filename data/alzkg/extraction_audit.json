@@ -1,0 +1,256 @@
+{
+  "methodology": "30 triplets sampled uniformly at random (seed=42, reproducible via scripts/audit_kg_sample.py) from the 5,880 released AlzKG triplets. For each, the first supporting paper's grounding sentence (the sentence whose recognized-entity list contains both the head and tail entity) was retrieved and manually judged by a Claude (Sonnet 5) instance for whether it actually supports the claimed relation, using three labels: 'correct' (sentence supports the specific relation and direction claimed), 'partial' (a real but looser/broader/reversed-direction association), and 'incorrect' (the sentence does not support the claim, most often because one of the two entities was a false match).",
+  "tally": {
+    "correct": 4,
+    "partial": 8,
+    "incorrect": 18
+  },
+  "tally_pct": {
+    "correct": 0.133,
+    "partial": 0.267,
+    "incorrect": 0.6
+  },
+  "n": 30,
+  "rows": [
+    {
+      "triplet": "NOS1 --[risk_gene_for]--> Dementia",
+      "paper_count": 3,
+      "pmid_checked": "40670684",
+      "sentence": "Patients with a syndromic dementia diagnosis met diagnostic criteria for AD-type dementia 63 ( n = 1,804) or non-AD neurodegenerative disorders including FTD ( n = 162, that is, behavioral variant FTD and the semantic and nonfluent variants of primary progressive aphasia combined), PSP ( n = 141), CBS ( n = 101), DLB ( n = 76), PDD ( n = 39), VaD ( n = 32) and dementia–not otherwise specified (NOS) ( n = 122).",
+      "verdict": "incorrect",
+      "rationale": "Head entity is a false match: the sentence contains the clinical abbreviation 'NOS' (Not Otherwise Specified), not the gene NOS1; no gene-dementia claim is present."
+    },
+    {
+      "triplet": "AKT1 --[pharmacogenomic_consideration]--> insulin (human)",
+      "paper_count": 17,
+      "pmid_checked": "40536952",
+      "sentence": "The mechanism of insulin signal transduction is modulated by the coordinated recruitment of several signaling proteins, which undergo phosphorylation events leading to their activation/inactivation, including the insulin receptor substrates (IRSs), the biliverdin reductase-A (BVR-A) protein (Cimini et al., 2022), the phosphatidylinositol 3-kinase (PI3K), the AKT protein (or protein kinase B) (Haeusler et al., 2018; Petersen and Shulman, 2018) and the Ras–mitogen-activated protein kinase (MAPK) family proteins ( Figure 1 ).",
+      "verdict": "incorrect",
+      "rationale": "Sentence describes insulin-signaling biology (AKT as a pathway protein), not a gene-drug pharmacogenomic response relationship."
+    },
+    {
+      "triplet": "BDNF --[risk_gene_for]--> Alzheimer's disease",
+      "paper_count": 76,
+      "pmid_checked": "36438603",
+      "sentence": "Both BDNF and muscarinic cholinergic signaling have been documented to be implicated in learning and memory formation and AD pathology [ [24] , [25] , [26] , [27] ].",
+      "verdict": "partial",
+      "rationale": "Sentence links BDNF to AD pathology generally; does not support the specific epidemiological 'risk gene' framing."
+    },
+    {
+      "triplet": "TARDBP --[modulates_biomarker]--> Staining and Labeling",
+      "paper_count": 7,
+      "pmid_checked": "41204969",
+      "sentence": "IHC double staining shows polyGR+ aggregates and TDP-43 inclusions co-exist in the hippocampal sub-regions of a subset of AD autopsy brains (Fig.",
+      "verdict": "incorrect",
+      "rationale": "'Staining and Labeling' is a laboratory-technique term, not a biomarker; a mis-typed lexicon entry."
+    },
+    {
+      "triplet": "sirolimus --[has_outcome]--> Cognitive impairment",
+      "paper_count": 8,
+      "pmid_checked": "39169952",
+      "sentence": "Rapamycin (RAPA) improved cognitive deficits and attenuated neuronal damage and mitochondrial dysfunction in VaD rats by increasing the level of mitophagy and inhibiting neuronal apoptosis via the PI3K/Akt/mTOR signaling pathway ( Zheng et al., 2021 ).",
+      "verdict": "incorrect",
+      "rationale": "Direction reversed: the sentence reports the drug (as rapamycin) improving cognitive deficits, not causing cognitive impairment."
+    },
+    {
+      "triplet": "Amyloid-beta 42/40 ratio --[predicts_outcome]--> Disease progression",
+      "paper_count": 8,
+      "pmid_checked": "36544184",
+      "sentence": "Model predicted disease progression rates for CDR-SB and ADCOMS were reduced by 6.92% and 6.12%, respectively, for every 0.25 unit increase from baseline in plasma Aβ42/40 ratio.",
+      "verdict": "correct",
+      "rationale": "Sentence directly reports the ratio predicting reduced disease-progression rates."
+    },
+    {
+      "triplet": "TLR4 --[risk_gene_for]--> Alzheimer's disease",
+      "paper_count": 14,
+      "pmid_checked": "39936960",
+      "sentence": "Furthermore, TLR4 has been shown to significantly impact AD via TLR signaling [ 135 , 138 ].",
+      "verdict": "partial",
+      "rationale": "Sentence supports a general TLR4-AD mechanistic link, not a specific genetic-risk claim."
+    },
+    {
+      "triplet": "CYREN --[pharmacogenomic_consideration]--> ethanol",
+      "paper_count": 19,
+      "pmid_checked": "40791040",
+      "sentence": "Exclusion Criteria Participants were excluded if they met any of the following criteria: (1) diagnosis of neurological disorders known to impair cognitive function, such as Parkinson’s disease, vasogenic dementia and progressive supranuclear palsy; (2) history of neurological damage related to multiple sclerosis, brain trauma and other diseases; (3) brain structural abnormalities; (4) magnetic resonance imaging (MRI) showing infarction, infection, focal injury and multiple lacunar infarction; (5) contraindications to MRI, such as metallic foreign bodies, including pacemakers, aneurysm clips, artificial heart valves and metal fragments; (6) schizophrenia, bipolar disorder and other mental diseases; (7) history of alcohol or drug abuse or addiction within 2 years; (8) incomplete clinical data.",
+      "verdict": "incorrect",
+      "rationale": "Sentence is a study's MRI exclusion-criteria list; no relationship between the named entities is stated."
+    },
+    {
+      "triplet": "SLC6A3 --[pharmacogenomic_consideration]--> dopamine",
+      "paper_count": 3,
+      "pmid_checked": "40799961",
+      "sentence": "To date, the study has enrolled approximately 4,000 participants, including healthy controls (HC), de novo Parkinson’s Disease (PD) patients, prodromal individuals (aged 60 or older with a dopamine transporter [DAT] deficit and either REM sleep behavior disorder [RBD] or hyposmia), and non-manifesting carriers of LRRK2 and GBA gene mutations.",
+      "verdict": "incorrect",
+      "rationale": "Sentence is a Parkinson's-cohort recruitment description; no pharmacogenomic claim, and off-topic for an AD-focused graph."
+    },
+    {
+      "triplet": "Alzheimer's disease --[treated_with]--> dextromethorphan",
+      "paper_count": 3,
+      "pmid_checked": "36890259",
+      "sentence": "Memantine is approved for Alzheimer’s disease, and the combination drug dextromethorphan–quinidine is approved for the treatment of pseudobulbar affect.",
+      "verdict": "incorrect",
+      "rationale": "Sentence-level clause-merging error: dextromethorphan-quinidine is stated as approved for pseudobulbar affect, not AD (memantine is the AD-approved drug in the same sentence)."
+    },
+    {
+      "triplet": "TREM2 --[modulates_biomarker]--> Amyloid-beta 42",
+      "paper_count": 23,
+      "pmid_checked": "36385687",
+      "sentence": "Al also inhibits the phagocytosis of Aβ peptides via NF-κβ-mediated down-regulation of the “triggering receptor produced in myeloid cells 2” (TREM2), which leads to Aβ42 peptide buildup in the brain (Akiyama et al.",
+      "verdict": "correct",
+      "rationale": "Sentence supports TREM2 down-regulation leading to amyloid-beta 42 accumulation, albeit via an indirect (aluminum-mediated) mechanism."
+    },
+    {
+      "triplet": "GAD2 --[risk_gene_for]--> Alzheimer's disease",
+      "paper_count": 3,
+      "pmid_checked": "39210294",
+      "sentence": "In our investigation, the ALB and GAD2 were found as leading and prominent drug target receptor proteins associated with delirium and AD where donepezil (with ALB: -8.8 kcal/mol and with GAD2: -9.0 kcal/mol) and tacrine (with ALB: -8.0 kcal/mol) showed the maximum binding affinity scores with the two target proteins compared to others lead components (Fig.",
+      "verdict": "incorrect",
+      "rationale": "Sentence reports GAD2 as a computational drug-docking target, not a genetic AD risk factor."
+    },
+    {
+      "triplet": "Blood Pressure --[predicts_outcome]--> Schizophrenia",
+      "paper_count": 4,
+      "pmid_checked": "41040309",
+      "sentence": "We also observed several notable cross-tissue disease informativeness of ct-SVGs for diseases and traits – such as brain endothelial cells associated with Coronary Artery Disease (CAD) 46 and blood pressure 47 , liver Hep.3 hepatocyte subtype associated with Schizophrenia 48 , lymph node macrophages associated with lung capacity (FEV1FVC) adjusted for smoking 47 .",
+      "verdict": "incorrect",
+      "rationale": "The two terms appear as unrelated items in a list of disease-tissue associations; not connected to each other, and off-topic for AD."
+    },
+    {
+      "triplet": "Lecanemab --[has_outcome]--> Adverse events",
+      "paper_count": 63,
+      "pmid_checked": "36457865",
+      "sentence": "The sponsor conducted a combined single- and multiple-ascending dose study ( NCT01767311 ) in August 2010 to evaluate the safety, tolerability, immunogenicity, pharmacodynamic response, and pharmacology of intravenous lecanemab in participants with mild to moderate AD.",
+      "verdict": "partial",
+      "rationale": "Sentence describes a safety/tolerability trial's design, not a reported adverse-event outcome."
+    },
+    {
+      "triplet": "Plasma GFAP --[predicts_outcome]--> Cognitive decline",
+      "paper_count": 68,
+      "pmid_checked": "37202517",
+      "sentence": "Plasma levels of GFAP are increased in individuals with early Aβ pathology 71 – 73 and can predict subsequent cognitive decline and conversion to AD dementia in cognitively unimpaired individuals 74 and in patients with MCI 75 .",
+      "verdict": "correct",
+      "rationale": "Sentence directly supports GFAP predicting subsequent cognitive decline."
+    },
+    {
+      "triplet": "MET --[pharmacogenomic_consideration]--> L-lysine",
+      "paper_count": 21,
+      "pmid_checked": "40855644",
+      "sentence": "Remarkably, among all the physical associations affected by APP mutations, close to 880 interactions are specifically impacted by the APP Swedish mutation, characterised by the amino acid change at Lys‐670 and Met‐671 [ P05067 :p.Lys670_Met671delinsAsnLeu (rs281865161)].",
+      "verdict": "incorrect",
+      "rationale": "Both entities are false matches: 'Met' and 'Lys' are one-letter amino-acid codes inside a protein-mutation notation (Lys670_Met671), not the MET gene or the compound L-lysine."
+    },
+    {
+      "triplet": "AHSP --[risk_gene_for]--> Preclinical AD",
+      "paper_count": 8,
+      "pmid_checked": "36891463",
+      "sentence": "The iADRS is not intended for use in a population with preclinical AD because individuals at this stage show only subtle cognitive deficits, detectable on sensitive measures of neuropsychological performance, and no evidence of functional impairment.",
+      "verdict": "incorrect",
+      "rationale": "AHSP does not appear in the grounding sentence at all; no claim about AHSP is made."
+    },
+    {
+      "triplet": "MET --[modulates_biomarker]--> MMSE",
+      "paper_count": 8,
+      "pmid_checked": "37332353",
+      "sentence": "A first phase 2a, exploratory trial in patients with MCI or mild AD (MMSE 20–28, biomarker positive) showed that a 6-to-12-week of neflamapimod treatment partially reduced in amyloid PET (only one of the two primary endpoints on amyloid burden was met), and caused a statistical significant improvement in episodic memory, measured as secondary endpoint ( Scheltens et al., 2018 ).",
+      "verdict": "incorrect",
+      "rationale": "Same amino-acid-code collision as above; MET (gene) does not appear in the grounding sentence."
+    },
+    {
+      "triplet": "WDR12 --[risk_gene_for]--> Alzheimer's disease",
+      "paper_count": 4,
+      "pmid_checked": "40528303",
+      "sentence": "We reported SVs in LD with known AD risk loci (such as SNVs in NCK2 , WDR12 , and TMEM106B ) and on AD risk/protective genes (such as APP , SORL1 , and ABCA7 ).",
+      "verdict": "correct",
+      "rationale": "Sentence supports WDR12 as a locus in linkage disequilibrium with known AD GWAS risk loci."
+    },
+    {
+      "triplet": "Huntington Disease --[associated_outcome]--> Ataxia",
+      "paper_count": 3,
+      "pmid_checked": "40583072",
+      "sentence": "In contrast to spinocerebellar ataxia and Huntington’s disease, which are primarily characterized by motor dysfunction with dementia developing in later stages, PSEN1 -related disorders typically manifest with cognitive impairment and early-onset dementia as their core features.",
+      "verdict": "partial",
+      "rationale": "Plausible clinical association (motor dysfunction), but Huntington's disease is off-topic for an AD-focused graph."
+    },
+    {
+      "triplet": "APOE --[gene_associated_outcome]--> Mortality",
+      "paper_count": 72,
+      "pmid_checked": "36339394",
+      "sentence": "For example, a mutation resulting in a homozygous ApoE4 genotype greatly increases the risk of developing AD, likely due to the reduced ability by the body to dispose of Aβ in the brain, 9 which is suspected to result in increased Aβ plaque loads that may participate in neuronal death.",
+      "verdict": "incorrect",
+      "rationale": "Sentence discusses ApoE4-driven AD risk via amyloid accumulation; it does not mention mortality."
+    },
+    {
+      "triplet": "CD68 --[modulates_biomarker]--> Amyloid-beta 42",
+      "paper_count": 3,
+      "pmid_checked": "40806295",
+      "sentence": "In agreement with others (e.g., ref. [ 29 ]), we showed that WT or PSEN1 E280A microglia overstimulated by noxious stimuli (e.g., Aβ42 fragments, ChLNs-derived supernatant, or ChLNs-secreted Aβ42 [ 71 ]), iMG cells undergo a conversion toward an M1 (CD68 high) phenotype, which is responsible for excessive secretion of inflammatory factors, such as IL-6 and TNF-α.",
+      "verdict": "partial",
+      "rationale": "Real biological link, but the causal direction in the sentence runs the other way (Abeta42 fragments drive the CD68-high phenotype)."
+    },
+    {
+      "triplet": "Alzheimer's disease --[treated_with]--> luteolin",
+      "paper_count": 9,
+      "pmid_checked": "37570596",
+      "sentence": "In addition to the primary anti-inflammatory, antioxidant, and anti-apoptotic potential shown above, most honey ingredients, such as luteolin, myricetin, naringenin, quercetin, kaempferol, caffeic acid, ellagic acid, ferulic acid, gallic acid, and p-coumaric acid, also have a therapeutic effect on the progression of neurodegeneration associated with amyloid pathology in Alzheimer’s disease [ 54 ] and ischemia-related brain neurodegeneration of Alzheimer’s disease proteinopathy [ 175 , 176 , 177 ].",
+      "verdict": "partial",
+      "rationale": "Supported only by a preclinical/dietary-compound review, not guideline-endorsed therapy; risks conflating evidence tiers if surfaced as an AD 'treatment'."
+    },
+    {
+      "triplet": "risperidone --[has_outcome]--> Schizophrenia",
+      "paper_count": 3,
+      "pmid_checked": "40672496",
+      "sentence": "Antipsychotics There were 5 antipsychotic medications that were associated with an increased risk of developing an NDD in our initial analysis; after adjusting for a range of psychiatric comorbidities including schizophrenia, only 2 medications remained significant: quetiapine and risperidone.",
+      "verdict": "incorrect",
+      "rationale": "Reversed relation: risperidone is used to treat schizophrenia, not caused by it as an 'outcome'; sentence is also from an unrelated antipsychotic-risk study."
+    },
+    {
+      "triplet": "PGC --[pharmacogenomic_consideration]--> Physical exercise",
+      "paper_count": 3,
+      "pmid_checked": "41893345",
+      "sentence": "Eligibility Criteria Inclusion criteria were defined to select high-quality studies directly relevant to the review’s objectives: (1) peer-reviewed articles published in English; (2) studies investigating the canonical metabolic functions and non-canonical transcriptional roles of PHGDH in neurodegeneration; (3) research exploring the mechanisms by which physical exercise modulates metabolic and inflammatory pathways, specifically the AMPK/PGC-1α axis and liver–brain crosstalk; (4) both preclinical (animal and cellular models) and clinical studies were considered.",
+      "verdict": "incorrect",
+      "rationale": "Category error (physical exercise is not a pharmacological agent) and a spurious co-occurrence from a review's eligibility criteria."
+    },
+    {
+      "triplet": "Vascular dementia --[associated_outcome]--> Delirium",
+      "paper_count": 3,
+      "pmid_checked": "41674512",
+      "sentence": "In the final 0 to 2 years pre‐ and post‐diagnosis, both AD and VaD networks shift toward a shared frailty and complications profile (falls, delirium, dehydration, infections, incontinence, pressure sores, fractures), consistent with escalating functional decline and acute care needs (Figure 3 ).",
+      "verdict": "partial",
+      "rationale": "Reasonable comorbidity association (shared frailty/complications profile)."
+    },
+    {
+      "triplet": "Alzheimer's disease --[treated_with]--> clarithromycin",
+      "paper_count": 3,
+      "pmid_checked": "41134466",
+      "sentence": "Eradication of H. pylori with a combination of two antibiotics - clarithromycin and amoxicillin - was successful in 85% of AD patients and resulted in improved cognitive scores recorded two years after the treatment, compared to those in whom eradication was unsuccessful [ 112 ].",
+      "verdict": "partial",
+      "rationale": "Supported only by a single exploratory H. pylori-eradication study; not an established AD treatment."
+    },
+    {
+      "triplet": "Amyloid-beta 42 --[predicts_outcome]--> Senile plaques",
+      "paper_count": 4,
+      "pmid_checked": "40709526",
+      "sentence": "Aβ42 is the component of senile plaques, while Aβ40 is present in CSF, and a decreased Aβ42/40 ratio is a strong biomarker of early AD.",
+      "verdict": "incorrect",
+      "rationale": "Sentence states a compositional fact (Abeta42 is a component of plaques), mislabeled under the prognostic predicts_outcome relation."
+    },
+    {
+      "triplet": "ARSA --[risk_gene_for]--> Alzheimer's disease",
+      "paper_count": 8,
+      "pmid_checked": "39702440",
+      "sentence": "Case history A 73 year-old right-handed male with well-controlled hypertension, dyslipidemia, and type II diabetes diagnosed with A+/T+/N + AD[ 7 ] based on positive spinal fluid biomarkers (Table 1 ) on aspirin 81 mg (for coronary artery disease risk factors), lisinopril, fluoxetine, and insulin (Humolog/Lantus) was found to have baseline Mini–mental state examination (MMSE) 29/30 with APOE ε2/ε3 status.",
+      "verdict": "incorrect",
+      "rationale": "ARSA does not appear in the grounding sentence, which is an unrelated clinical case-history description."
+    },
+    {
+      "triplet": "IGFALS --[pharmacogenomic_consideration]--> L-glutamic acid",
+      "paper_count": 4,
+      "pmid_checked": "40652712",
+      "sentence": "723 Degeneration of serotonergic projections in ALS has also been associated with an increased glutamate-induced excitotoxicity.",
+      "verdict": "incorrect",
+      "rationale": "Substring-match bug: 'ALS' inside IGFALS collides with the disease abbreviation ALS; the sentence is about ALS neurodegeneration, not IGFALS, and off-topic for AD."
+    }
+  ]
+}

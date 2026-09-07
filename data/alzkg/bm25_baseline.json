@@ -1,0 +1,6 @@
+{
+  "method": "BM25 flat sentence retrieval, top-12, same corpus as Graph-RAG",
+  "n_probes": 30,
+  "gold_coverage": 0.567,
+  "mean_latency_ms": 289.16
+}
